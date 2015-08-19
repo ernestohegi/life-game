@@ -38,7 +38,9 @@
 
   <script>
     $(function () {
-      window.life.init({
+      var life = new window.Life();
+
+      life.init({
         container: $('#grid'),
         item: 'li',
         speed: 1,

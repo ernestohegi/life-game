@@ -153,29 +153,23 @@
         */
         updateSurvivors: function () {
             var $rows = this.$rows.clone(),
-                $thisRow, $survivor,
-                rows = this.rows,
-                thisRow, status,
-                i, j;
+                $survivor,
+                thisRowStatus,
+                backgroundColor = DEAD_COLOR;
 
-            for (i = 0; i < this.gridSize.x; i++) {
-                $thisRow = $rows.filter('[data-row='+ i +']');
+            for (var i = 0; i < this.gridSize.x; i++) {
+                for (var j = 0; j < this.gridSize.y; j++) {
+                    $survivor = $rows.filter('[data-row='+ i +']').find('[data-column='+ j +']');
+                    thisRowStatus = this.rows[i][j];
 
-                for (j = 0; j < this.gridSize.y; j++) {
-                    $survivor = $thisRow.find('[data-column='+ j +']');
-                    thisRow = rows[i][j];
-                    status = $survivor.attr(DATA_STATUS_ATTRIBUTE);
-
-                    if (status !== thisRow) {
-                        $survivor.toggleClass(SELECTED_CLASS_NAME);
-
-                        if (thisRow === LIVE) {
-                            $survivor.css(BACKGROUND_COLOR_PROPERTY, (this.colors) ? this.getRandomColor() : ALIVE_COLOR);
-                        } else {
-                            $survivor.css(BACKGROUND_COLOR_PROPERTY, DEAD_COLOR);
+                    if ($survivor.attr(DATA_STATUS_ATTRIBUTE) !== thisRowStatus) {
+                        if (thisRowStatus === LIVE) {
+                            backgroundColor = (this.colors) ? this.getRandomColor() : ALIVE_COLOR;
                         }
 
-                        $survivor.attr(DATA_STATUS_ATTRIBUTE, thisRow);
+                        $survivor.toggleClass(SELECTED_CLASS_NAME);
+                        $survivor.css(BACKGROUND_COLOR_PROPERTY, backgroundColor);
+                        $survivor.attr(DATA_STATUS_ATTRIBUTE, thisRowStatus);
                     }
                 }
             }
@@ -255,5 +249,6 @@
         }
     };
 
-    window.life = new Life();
+
+    window.Life = Life;
 })(jQuery);
