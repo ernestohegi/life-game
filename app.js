@@ -9,7 +9,6 @@
         ALIVE_COLOR                 = '#000',
         DEAD_COLOR                  = '#FFF';
 
-    // Life object
     var Life = function () {
         this.$container     = $();
         this.$survivor      = $('<span class="survivor"/>');
@@ -37,9 +36,7 @@
             this.item = params.item;
 
             this.drawGrid();
-            this.cloneGrid();
             this.updateSettings(params);
-
             this.bindEvents();
         },
         start: function () {
@@ -77,24 +74,21 @@
             this.updateSurvivors();
         },
         drawGrid: function () {
-            var elementsString = '',
-                open, close,
+            var open, close,
                 item = '',
                 survivor,
-                indexX, indexY, width;
+                width;
 
-            for (indexX = 0; indexX < this.gridSize.x; indexX++) {
-                // create row
-                open = '<' + this.item + ' data-row="' + indexX + '">';
+            for (var x = 0; x < this.gridSize.x; x++) {
+                open = '<' + this.item + ' data-row="' + x + '">';
                 item += open;
 
-                for (indexY = 0; indexY < this.gridSize.y; indexY++) {
+                for (var y = 0; y < this.gridSize.y; y++) {
                     survivor = this.$survivor.clone();
-                    survivor.attr('data-column', indexY);
+                    survivor.attr('data-column', y);
                     survivor.attr(DATA_STATUS_ATTRIBUTE, DIE);
 
                     item += survivor.wrap('<div>').parent().html();
-                    // create survivors
                 }
 
                 close = '</' + this.item + '>';
@@ -109,6 +103,8 @@
 
             this.$container.width(width);
             this.$container.parent('.container').width(width);
+
+            this.cloneGrid();
         },
         checkNeighbors: function (x, y) {
             var neighborsCount = 0;
@@ -181,14 +177,12 @@
         * Selects survivor
         */
         selectSurvivor: function ($this) {
-            var x           = $this.parent().data('row'),
-                y           = $this.data('column'),
-                newStatus   = $this.attr(DATA_STATUS_ATTRIBUTE) === DIE ? LIVE : DIE;
+            var newStatus = $this.attr(DATA_STATUS_ATTRIBUTE) === DIE ? LIVE : DIE;
 
             $this.toggleClass(SELECTED_CLASS_NAME);
             $this.attr(DATA_STATUS_ATTRIBUTE, newStatus);
 
-            this.rows[x][y] = newStatus;
+            this.rows[$this.parent().data('row')][$this.data('column')] = newStatus;
 
             $this.css(BACKGROUND_COLOR_PROPERTY, (this.colors) ? this.getRandomColor() : ALIVE_COLOR);
         },

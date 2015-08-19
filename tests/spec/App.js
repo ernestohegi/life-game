@@ -1,7 +1,7 @@
 describe("Life Game", function() {
   var life = new window.Life();
 
-  it("should be able to get a cell's destiny", function() {
+  it("should be able to get the right cell status for the next round", function() {
     var testCases = [
       {
         neighborsCount  : 1,
@@ -21,6 +21,11 @@ describe("Life Game", function() {
       {
         neighborsCount  : 4,
         isAlive         : true,
+        expected        : 'die'
+      },
+      {
+        neighborsCount  : 4,
+        isAlive         : false,
         expected        : 'die'
       },
       {
