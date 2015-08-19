@@ -212,9 +212,6 @@
                 }
             }
         },
-        /*
-        * Paul Irish code snippet for random colors generation
-        */
         getRandomColor: function () {
             return '#'+Math.floor(Math.random()*16777215).toString(16);
         },
