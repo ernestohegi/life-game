@@ -186,9 +186,10 @@
         /*
         * Selects survivor
         */
-        selectSurvivor: function ($that, x, y) {
-            var $this = $that,
-                newStatus = $this.attr(DATA_STATUS_ATTRIBUTE) === DIE ? LIVE : DIE;
+        selectSurvivor: function ($this) {
+            var x           = $this.parent().data('row'),
+                y           = $this.data('column'),
+                newStatus   = $this.attr(DATA_STATUS_ATTRIBUTE) === DIE ? LIVE : DIE;
 
             $this.toggleClass(SELECTED_CLASS_NAME);
             $this.attr(DATA_STATUS_ATTRIBUTE, newStatus);
@@ -245,21 +246,13 @@
             });
 
             // Draw seeds
-            this.$container.on('click', '.survivor', function (e) {
-                var $this = $(this);
-
-                that.selectSurvivor($this, $this.parent().data('row'), $this.data('column'));
-
-                e.preventDefault();
+            this.$container.on('click', '.survivor', function () {
+                that.selectSurvivor($(this));
             });
 
             this.$container.on('mouseover', '.survivor', function (e) {
                 if (e.ctrlKey) {
-                    var $this = $(this);
-
-                    that.selectSurvivor($this, $this.parent().data('row'), $this.data('column'));
-
-                    e.preventDefault();
+                    that.selectSurvivor($(this));
                 }
             });
         }
