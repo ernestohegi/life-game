@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <title>Backbone.js • TodoMVC</title>
-  <link rel="stylesheet" href="base.css">
+  <title>The Life Game</title>
+  <link rel="stylesheet" href="styles/base.css">
 </head>
 <body>
 
@@ -33,14 +33,12 @@
     <ul id="grid"></ul>
   </div>
 
-  <script src="jquery.min.js"></script>
-  <script src="app.js"></script>
+  <script src="src/lib/jquery.min.js"></script>
+  <script src="dist/all.js"></script>
 
   <script>
     $(function () {
-      var life = new window.Life();
-
-      life.init({
+      Life.init({
         container: $('#grid'),
         item: 'li',
         speed: 1,

@@ -1,32 +1,29 @@
-(function ($) {
+let Life = (function ($) {
     'use strict';
 
-    var BACKGROUND_COLOR_PROPERTY   = 'background-color',
-        DATA_STATUS_ATTRIBUTE       = 'data-status',
-        SELECTED_CLASS_NAME         = 'selected',
-        LIVE                        = 'live',
-        DIE                         = 'die',
-        ALIVE_COLOR                 = '#000',
-        DEAD_COLOR                  = '#FFF';
+    const BACKGROUND_COLOR_PROPERTY   = 'background-color',
+          DATA_STATUS_ATTRIBUTE       = 'data-status',
+          SELECTED_CLASS_NAME         = 'selected',
+          LIVE                        = 'live',
+          DIE                         = 'die',
+          ALIVE_COLOR                 = '#000',
+          DEAD_COLOR                  = '#FFF';
 
-    var Life = function () {
-        this.$container     = $();
-        this.$survivor      = $('<span class="survivor"/>');
-        this.$rows          = $();
-        this.rows           = [];
-        this.newRows        = [];
-        this.caterpillars   = [];
-        this.speed          = 1000;
-        this.colors         = false;
-        this.evolver        = 0;
-        this.gridSize       = {x: 40, y: 40};
-        this.total          = this.gridSize.x * this.gridSize.y;
-        this.randomColor    = ALIVE_COLOR;
-        this.item           = '';
-        this.interval       = '';
-    };
-
-    Life.prototype = {
+    return {
+        $container      : $(),
+        $survivor       : $('<span class="survivor"/>'),
+        $rows           : $(),
+        rows            : [],
+        newRows         : [],
+        caterpillars    : [],
+        speed           : 1000,
+        colors          : false,
+        evolver         : 0,
+        gridSize        : {x: 40, y: 40},
+        total           : () => { this.gridSize.x * this.gridSize.y },
+        randomColor     : ALIVE_COLOR,
+        item            : '',
+        interval        : '',
         init: function (params) {
             if (params === undefined || params.container === undefined || params.item === undefined) {
                 throw 'No params specified.';
@@ -242,7 +239,4 @@
             });
         }
     };
-
-
-    window.Life = Life;
 })(jQuery);
