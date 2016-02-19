@@ -9,6 +9,8 @@ let Life = (function ($) {
           ALIVE_COLOR                 = '#000',
           DEAD_COLOR                  = '#FFF';
 
+    let requestAnimationFrameId = '';
+
     return {
         $container      : $(),
         $survivor       : $('<span class="survivor"/>'),
@@ -20,7 +22,7 @@ let Life = (function ($) {
         colors          : false,
         evolver         : 0,
         gridSize        : {x: 40, y: 40},
-        total           : () => { this.gridSize.x * this.gridSize.y },
+        total           : () => this.gridSize.x * this.gridSize.y ,
         randomColor     : ALIVE_COLOR,
         item            : '',
         interval        : '',
@@ -37,10 +39,10 @@ let Life = (function ($) {
             this.bindEvents();
         },
         start: function () {
-            this.lifeInterval = setInterval(this.runGrid.bind(this), this.speed);
+            requestAnimationFrameId = requestAnimationFrame(this.runGrid.bind(this));
         },
         stop: function () {
-            clearInterval(this.lifeInterval);
+             cancelAnimationFrame(requestAnimationFrameId);
         },
         /*
         * Makes grid an array
@@ -69,6 +71,8 @@ let Life = (function ($) {
 
             this.updateRows(this.newRows);
             this.updateSurvivors();
+
+            requestAnimationFrameId = requestAnimationFrame(this.runGrid.bind(this));
         },
         drawGrid: function () {
             var open, close,
@@ -119,7 +123,7 @@ let Life = (function ($) {
             this.newRows[x][y] = this.getDestiny(neighborsCount, (this.newRows[x][y] === LIVE));
         },
         getDestiny: function (neighborsCount, isAlive) {
-            return (neighborsCount === 3 || (neighborsCount === 2 && isAlive)) ? LIVE : DIE
+            return (neighborsCount === 3 || (neighborsCount === 2 && isAlive)) ? LIVE : DIE;
         },
         isInsideTheXAxis: function (index) {
             return index > -1 && index <= this.gridSize.x;
@@ -129,9 +133,7 @@ let Life = (function ($) {
         },
         isNeighbor: function (xAxis, yAxis, xAxisIndex, yAxisIndex) {
             return (
-                (xAxisIndex === xAxis-1)
-                || (xAxisIndex === xAxis+1)
-                || (xAxisIndex === xAxis && yAxisIndex !== yAxis)
+                (xAxisIndex === xAxis-1) || (xAxisIndex === xAxis+1) || (xAxisIndex === xAxis && yAxisIndex !== yAxis)
             );
         },
         isNeighborAlive: function (x, y) {
