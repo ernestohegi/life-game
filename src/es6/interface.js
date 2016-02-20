@@ -7,7 +7,7 @@ let Interface = (($) => {
         colors: false,
         init: function (params) {
             this.$container = params.container;
-            this.gridSize = params.gridSize;
+
             this.bindEvents();
         },
         /*
@@ -16,21 +16,21 @@ let Interface = (($) => {
         bindEvents: function () {
             var $menu = $('#menu');
 
-            $menu.on('click', '#start', () => Life.start(this.gridSize.x, this.gridSize.y));
+            $menu.on('click', '#start', () => Life.start());
 
             $menu.on('click', '#stop', () => Life.stop());
 
             $menu.on('click', '#clear', () => {
                 Life.stop();
-                Life.drawGrid(this.gridSize.x, this.gridSize.y);
-                Life.cloneGrid(this.gridSize.x, this.gridSize.y);
+                Life.drawGrid();
+                Life.cloneGrid();
             });
 
             $menu.on('click', '#colorize', () => {
                 this.colors = !this.colors;
 
                 Life.updateSettings({
-                    colors: this.colors
+                    colors: !this.colors
                 });
             });
 

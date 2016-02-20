@@ -1,0 +1,24 @@
+{
+  "name": "life-game",
+  "description": "JavaScript version of the Life game",
+  "main": "app.js",
+  "authors": [
+    "Ernesto Hegi"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/ernestohegi/life-game",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/vendor/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^2.2.0",
+    "react": "^0.14.7"
+  }
+}

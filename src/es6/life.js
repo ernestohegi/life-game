@@ -21,34 +21,73 @@ let Life = (function ($) {
         speed           : 1000,
         colors          : false,
         evolver         : 0,
+        gridSize        : {x: 40, y: 40},
+        total           : () => this.gridSize.x * this.gridSize.y ,
         randomColor     : ALIVE_COLOR,
         item            : '',
         interval        : '',
         init: function (params) {
-            console.log(params);
-
             if (params === undefined || params.container === undefined || params.item === undefined) {
                 throw 'No params specified.';
             }
 
             this.$container = params.container;
             this.item = params.item;
-            this.total = params.gridSize.x * params.gridSize.y;
 
-            this.drawGrid(params.gridSize.x, params.gridSize.y);
+            this.drawGrid();
             this.updateSettings(params);
         },
-        drawGrid: function (gridSizeX, gridSizeY) {
+        setGridDimensions: function (x, y) {
+            this.gridSize.x = x;
+            this.gridSize.y = y;
+        },
+        start: function () {
+            requestAnimationFrameId = requestAnimationFrame(this.runGrid.bind(this));
+        },
+        stop: function () {
+             cancelAnimationFrame(requestAnimationFrameId);
+        },
+        /*
+        * Makes grid an array
+        */
+        cloneGrid: function () {
+            var i, j;
+
+            this.rows = [];
+            this.newRows = [];
+
+            for (i = 0; i < this.gridSize.x; i++) {
+                this.rows.push([]);
+                this.newRows.push([]);
+                for (j = 0; j < this.gridSize.y; j++) {
+                    this.rows[i].push(DIE);
+                    this.newRows[i].push(DIE);
+                }
+            }
+        },
+        runGrid: function () {
+            for (var i = 0; i < this.gridSize.x; i++) {
+                for (var j = 0; j < this.gridSize.y; j++) {
+                    this.checkNeighbors(i, j);
+                }
+            }
+
+            this.updateRows(this.newRows);
+            this.updateSurvivors();
+
+            requestAnimationFrameId = requestAnimationFrame(this.runGrid.bind(this));
+        },
+        drawGrid: function () {
             var open, close,
                 item = '',
                 survivor,
                 width;
 
-            for (var x = 0; x < gridSizeX; x++) {
+            for (var x = 0; x < this.gridSize.x; x++) {
                 open = '<' + this.item + ' data-row="' + x + '">';
                 item += open;
 
-                for (var y = 0; y < gridSizeY; y++) {
+                for (var y = 0; y < this.gridSize.y; y++) {
                     survivor = this.$survivor.clone();
                     survivor.attr('data-column', y);
                     survivor.attr(DATA_STATUS_ATTRIBUTE, DIE);
@@ -64,48 +103,12 @@ let Life = (function ($) {
             this.$rows = this.$container.find('li');
 
             // Get elements width after insertion to its parent
-            width = gridSizeX * this.$container.find('.survivor').width();
+            width = this.gridSize.x * this.$container.find('.survivor').width();
 
             this.$container.width(width);
             this.$container.parent('.container').width(width);
 
-            this.cloneGrid(gridSizeX, gridSizeY);
-        },
-        start: function (gridSizeX, gridSizeY) {
-            requestAnimationFrameId = requestAnimationFrame(() => this.runGrid(gridSizeX, gridSizeY));
-        },
-        stop: function () {
-             cancelAnimationFrame(requestAnimationFrameId);
-        },
-        /*
-        * Makes grid an array
-        */
-        cloneGrid: function (gridSizeX, gridSizeY) {
-            var i, j;
-
-            this.rows = [];
-            this.newRows = [];
-
-            for (i = 0; i < gridSizeX; i++) {
-                this.rows.push([]);
-                this.newRows.push([]);
-                for (j = 0; j < gridSizeY; j++) {
-                    this.rows[i].push(DIE);
-                    this.newRows[i].push(DIE);
-                }
-            }
-        },
-        runGrid: function (gridSizeX, gridSizeY) {
-            for (var i = 0; i < gridSizeX; i++) {
-                for (var j = 0; j < gridSizeY; j++) {
-                    this.checkNeighbors(i, j);
-                }
-            }
-
-            this.updateRows(this.newRows);
-            this.updateSurvivors(gridSizeX, gridSizeY);
-
-            requestAnimationFrameId = requestAnimationFrame(() => this.runGrid(gridSizeX, gridSizeY));
+            this.cloneGrid();
         },
         checkNeighbors: function (x, y) {
             var neighborsCount = 0;
@@ -125,11 +128,11 @@ let Life = (function ($) {
         getDestiny: function (neighborsCount, isAlive) {
             return (neighborsCount === 3 || (neighborsCount === 2 && isAlive)) ? LIVE : DIE;
         },
-        isInsideTheXAxis: function (index, gridSizeX) {
-            return index > -1 && index <= gridSizeX;
+        isInsideTheXAxis: function (index) {
+            return index > -1 && index <= this.gridSize.x;
         },
-        isInsideTheYAxis: function (index, gridSizeY) {
-            return index > -1 && index <= gridSizeY;
+        isInsideTheYAxis: function (index) {
+            return index > -1 && index <= this.gridSize.y;
         },
         isNeighbor: function (xAxis, yAxis, xAxisIndex, yAxisIndex) {
             return (
@@ -146,14 +149,14 @@ let Life = (function ($) {
         * Updates survivors status.
         * Updates the grid with new states.
         */
-        updateSurvivors: function (gridSizeX, gridSizeY) {
+        updateSurvivors: function () {
             var $rows = this.$rows.clone(),
                 $survivor,
                 thisRowStatus,
                 backgroundColor = DEAD_COLOR;
 
-            for (var i = 0; i < gridSizeX; i++) {
-                for (var j = 0; j < gridSizeY; j++) {
+            for (var i = 0; i < this.gridSize.x; i++) {
+                for (var j = 0; j < this.gridSize.y; j++) {
                     $survivor = $rows.filter('[data-row='+ i +']').find('[data-column='+ j +']');
                     thisRowStatus = this.rows[i][j];
 

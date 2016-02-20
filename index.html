@@ -33,7 +33,7 @@
     <ul id="grid"></ul>
   </div>
 
-  <script src="src/lib/jquery.min.js"></script>
+  <script src="src/vendor/jquery/dist/jquery.min.js"></script>
   <script src="dist/all.min.js"></script>
 
   <script>
@@ -41,11 +41,7 @@
         'use strict';
 
         Game.init({
-            container: $('#grid'),
-            gridSize: {
-                x: 40,
-                y: 40
-            }
+            container: $('#grid')
         });
     });
   </script>
