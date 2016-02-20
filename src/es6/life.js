@@ -34,7 +34,7 @@ let Life = (function ($) {
             this.$container = params.container;
             this.item = params.item;
 
-            this.drawGrid();
+            this.createGrid();
             this.updateSettings(params);
         },
         setGridDimensions: function (x, y) {
@@ -47,10 +47,7 @@ let Life = (function ($) {
         stop: function () {
              cancelAnimationFrame(requestAnimationFrameId);
         },
-        /*
-        * Makes grid an array
-        */
-        cloneGrid: function () {
+        createGrid: function () {
             var i, j;
 
             this.rows = [];
@@ -76,39 +73,6 @@ let Life = (function ($) {
             this.updateSurvivors();
 
             requestAnimationFrameId = requestAnimationFrame(this.runGrid.bind(this));
-        },
-        drawGrid: function () {
-            var open, close,
-                item = '',
-                survivor,
-                width;
-
-            for (var x = 0; x < this.gridSize.x; x++) {
-                open = '<' + this.item + ' data-row="' + x + '">';
-                item += open;
-
-                for (var y = 0; y < this.gridSize.y; y++) {
-                    survivor = this.$survivor.clone();
-                    survivor.attr('data-column', y);
-                    survivor.attr(DATA_STATUS_ATTRIBUTE, DIE);
-
-                    item += survivor.wrap('<div>').parent().html();
-                }
-
-                close = '</' + this.item + '>';
-                item += close;
-            }
-
-            this.$container.html(item);
-            this.$rows = this.$container.find('li');
-
-            // Get elements width after insertion to its parent
-            width = this.gridSize.x * this.$container.find('.survivor').width();
-
-            this.$container.width(width);
-            this.$container.parent('.container').width(width);
-
-            this.cloneGrid();
         },
         checkNeighbors: function (x, y) {
             var neighborsCount = 0;

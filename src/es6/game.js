@@ -16,14 +16,3 @@ let Game = (($) => {
         }
     };
 })(jQuery);
-
-ReactDOM.render(
-    React.createElement(
-        Organism,
-        {
-            cellContainersAmount: 10,
-            cellsAmount: 10
-        }
-    ),
-    document.getElementById('react')
-);

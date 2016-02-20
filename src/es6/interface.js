@@ -7,8 +7,20 @@ let Interface = (($) => {
         colors: false,
         init: function (params) {
             this.$container = params.container;
-
+            this.drawOrganism();
             this.bindEvents();
+        },
+        drawOrganism: () => {
+            ReactDOM.render(
+                React.createElement(
+                    Organism,
+                    {
+                        cellContainersAmount: 10,
+                        cellsAmount: 10
+                    }
+                ),
+                document.getElementById('react')
+            );
         },
         /*
         * Events binding
