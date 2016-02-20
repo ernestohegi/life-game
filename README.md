@@ -1,4 +1,8 @@
 # life-game
-JavaScript version of the Life game
+JavaScript version of Game of Life
 
-This is a work in progress and a programming exercise.
+http://en.wikipedia.org/wiki/Conway's_Game_of_Life
+
+- Clone the repo.
+- Run npm install.
+- Run gulp.
