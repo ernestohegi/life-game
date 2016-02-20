@@ -27,6 +27,8 @@ let Life = (function ($) {
         item            : '',
         interval        : '',
         init: function (params) {
+            console.log(params);
+
             if (params === undefined || params.container === undefined || params.item === undefined) {
                 throw 'No params specified.';
             }
@@ -36,7 +38,6 @@ let Life = (function ($) {
 
             this.drawGrid();
             this.updateSettings(params);
-            this.bindEvents();
         },
         start: function () {
             requestAnimationFrameId = requestAnimationFrame(this.runGrid.bind(this));
@@ -201,44 +202,6 @@ let Life = (function ($) {
         },
         getRandomColor: function () {
             return '#'+Math.floor(Math.random()*16777215).toString(16);
-        },
-        /*
-        * Events binding
-        */
-        bindEvents: function () {
-            var that = this,
-                $menu = $('#menu');
-
-            // Buttons events
-            $menu.on('click', '#start', function () {
-                that.start();
-            });
-
-            $menu.on('click', '#stop', function () {
-                that.stop();
-            });
-
-            $menu.on('click', '#clear', function () {
-                that.drawGrid();
-                that.cloneGrid();
-            });
-
-            $menu.on('click', '#colorize', function () {
-                that.updateSettings({
-                    colors: !that.colors
-                });
-            });
-
-            // Draw seeds
-            this.$container.on('click', '.survivor', function () {
-                that.selectSurvivor($(this));
-            });
-
-            this.$container.on('mouseover', '.survivor', function (e) {
-                if (e.ctrlKey) {
-                    that.selectSurvivor($(this));
-                }
-            });
         }
     };
 })(jQuery);
