@@ -38,8 +38,14 @@
 
   <script>
     $(function () {
+        'use strict';
+
         Game.init({
-            container: $('#grid')
+            container: $('#grid'),
+            gridSize: {
+                x: 40,
+                y: 40
+            }
         });
     });
   </script>

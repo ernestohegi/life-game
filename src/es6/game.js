@@ -7,11 +7,13 @@ let Game = (($) => {
                 container: params.container,
                 item: 'li',
                 speed: 1,
-                colors: false
+                colors: false,
+                gridSize: params.gridSize
             });
 
             Interface.init({
-                container: params.container
+                container: params.container,
+                gridSize: params.gridSize
             });
         }
     };
