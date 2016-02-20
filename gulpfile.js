@@ -6,26 +6,38 @@ const concat        = require("gulp-concat");
 const jshint        = require('gulp-jshint');
 const uglify        = require('gulp-uglify');
 const rename        = require('gulp-rename');
+const plumber       = require('gulp-plumber');
 
 const tasks =  [
     'jshint',
     'babel-es2015',
+    'transform-jsx-to-js',
     'uglify'
 ];
 
-const paths = {
-    jsAll: [
-        './src/es6/*.js',
-        './src/jsx/*.jsx'
-    ],
+const path = {
     es6All: './src/es6/*.js',
+    jsAll: [
+        './src/reflux/action/cell-status-action.js',
+        './src/reflux/store/cell-status-store.js',
+        './src/react/js/cell.js',
+        './src/react/js/cell-container.js',
+        './src/react/js/organism.js',
+        './src/es6/*.js'
+    ],
+    jsAllWatch: [
+        './src/es6/*.js',
+        './src/react/jsx/*.jsx'
+    ],
+    reactJsx: './src/react/jsx/*.jsx',
+    reactJsFolder: './src/react/js',
     distFolder: './dist',
     finalFileName: 'all.js',
     finalFileNameMinified: 'all.min.js'
 };
 
 gulp.task('jshint', () => {
-    return gulp.src(paths.es6All)
+    return gulp.src(path.jsAll)
         .pipe(jshint({
             esversion: 6
         }))
@@ -33,22 +45,35 @@ gulp.task('jshint', () => {
 });
 
 gulp.task('babel-es2015', ['jshint'], () => {
-    return gulp.src(paths.jsAll)
+    return gulp.src(path.jsAll)
         .pipe(sourcemaps.init())
-        .pipe(babel())
-        .pipe(concat(paths.finalFileName))
+        .pipe(babel({
+            presets: [
+                'es2015',
+                'react'
+            ]
+        }))
+        .pipe(concat(path.finalFileName))
         .pipe(sourcemaps.write('.'))
-        .pipe(gulp.dest(paths.distFolder));
+        .pipe(gulp.dest(path.distFolder));
 });
 
-gulp.task('uglify', ['babel-es2015'], () => {
-    return gulp.src(paths.distFolder + '/' + paths.finalFileName)
+gulp.task('transform-jsx-to-js', ['jshint'], () => {
+    return gulp.src(path.reactJsx)
+        .pipe(plumber())
+        .pipe(react())
+        .pipe(gulp.dest(path.reactJsFolder));
+});
+
+
+gulp.task('uglify', ['babel-es2015', 'transform-jsx-to-js'], () => {
+    return gulp.src(path.distFolder + '/' + path.finalFileName)
         .pipe(sourcemaps.init())
         .pipe(uglify())
-        .pipe(rename(paths.finalFileNameMinified))
-        .pipe(gulp.dest(paths.distFolder));
+        .pipe(rename(path.finalFileNameMinified))
+        .pipe(gulp.dest(path.distFolder));
 });
 
-gulp.task('watch', () => gulp.watch(paths.jsAll, tasks));
+gulp.task('watch', () => gulp.watch(path.jsAllWatch, tasks));
 
 gulp.task('default', tasks);

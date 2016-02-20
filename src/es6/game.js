@@ -16,3 +16,8 @@ let Game = (($) => {
         }
     };
 })(jQuery);
+
+ReactDOM.render(
+  React.createElement(Organism, null),
+  document.getElementById('react')
+);
