@@ -26,6 +26,8 @@ const path = {
         './src/es6/*.js'
     ],
     jsAllWatch: [
+        './src/reflux/action/cell-status-action.js',
+        './src/reflux/store/cell-status-store.js',
         './src/es6/*.js',
         './src/react/jsx/*.jsx'
     ],
@@ -47,6 +49,7 @@ gulp.task('jshint', () => {
 gulp.task('babel-es2015', ['jshint'], () => {
     return gulp.src(path.jsAll)
         .pipe(sourcemaps.init())
+        .pipe(plumber())
         .pipe(babel({
             presets: [
                 'es2015',

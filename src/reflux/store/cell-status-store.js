@@ -3,12 +3,13 @@ let CellStatusStore = (() => {
 
     return Reflux.createStore({
         init: function() {
-            this.listenTo(CellStatusAction, this.output);
+            this.listenTo(CellStatusAction, this.sendCellMessage);
         },
-        output: function(lives) {
-            let status = lives ? 'live' : 'dead';
-
-            this.trigger(status);
+        sendCellMessage: function(cellId, lives) {
+            this.trigger({
+                cellId,
+                status: lives ? 'live' : 'dead'
+            });
         }
     });
 })();

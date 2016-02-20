@@ -1,33 +1,33 @@
 let Cell = (() => {
     'use strict';
 
-    const DEAD_STATUS = 'dead';
+    const CELL_INITIAL_STATUS = 'dead';
 
     return React.createClass({
-        getInitialState: () => {
+        id: 0,
+        mixins: [Reflux.ListenerMixin],
+        getInitialState: function () {
             return {
-                status: DEAD_STATUS
+                status: CELL_INITIAL_STATUS
             };
         },
         componentDidMount: function () {
-            CellStatusStore.listen(this.updateCellState);
+            this.id = Number.parseInt(this.props.cellId, 10);
+
+            CellStatusStore.listen(this.updateCellState.bind(this));
         },
         updateCellState: function (data) {
-            console.log('change from a method');
-            console.log(data);
+            if ((data.cellId === this.id) === false) {
+                return false;
+            }
 
             this.setState({
-                status: 'live'
+                status: data.status
             });
         },
         render: function () {
             return (
-                React.createElement("span", {
-                    className: "cell", 
-                    "data-status":  this.state.status, 
-                    "data-column":  this.props.column
-                }
-                )
+                React.createElement("span", {className: "cell", "data-id":  this.props.cellId, "data-status":  this.state.status})
             );
         }
     });
