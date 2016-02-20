@@ -6,6 +6,12 @@ const jshint        = require('gulp-jshint');
 const uglify        = require('gulp-uglify');
 const rename        = require('gulp-rename');
 
+const tasks =  [
+    'jshint',
+    'babel-es2015',
+    'uglify'
+];
+
 gulp.task('jshint', () => {
     return gulp.src('./src/es6/*.js')
       .pipe(jshint({
@@ -31,9 +37,7 @@ gulp.task('uglify', ['babel-es2015'], () => {
 });
 
 gulp.task('watch', () => {
-    gulp.watch('src/**/*.js', [
-        'jshint',
-        'babel-es2015',
-        'uglify'
-    ]);
+    gulp.watch('src/**/*.js', tasks);
 });
+
+gulp.task('default', tasks);
