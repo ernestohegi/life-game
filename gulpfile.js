@@ -36,8 +36,6 @@ gulp.task('uglify', ['babel-es2015'], () => {
       .pipe(gulp.dest('dist'));
 });
 
-gulp.task('watch', () => {
-    gulp.watch('src/**/*.js', tasks);
-});
+gulp.task('watch', () => gulp.watch('src/**/*.js', tasks));
 
 gulp.task('default', tasks);
