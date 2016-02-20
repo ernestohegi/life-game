@@ -3,6 +3,8 @@ const babel         = require('gulp-babel');
 const sourcemaps    = require("gulp-sourcemaps");
 const concat        = require("gulp-concat");
 const jshint        = require('gulp-jshint');
+const uglify        = require('gulp-uglify');
+const rename        = require('gulp-rename');
 
 gulp.task('jshint', () => {
     return gulp.src('./src/es6/*.js')
@@ -12,7 +14,7 @@ gulp.task('jshint', () => {
       .pipe(jshint.reporter('default'))
 });
 
-gulp.task('babel-es2015', () => {
+gulp.task('babel-es2015', ['jshint'], () => {
     return gulp.src('src/**/*.js')
       .pipe(sourcemaps.init())
       .pipe(babel())
@@ -21,9 +23,17 @@ gulp.task('babel-es2015', () => {
       .pipe(gulp.dest('dist'));
 });
 
+gulp.task('uglify', ['babel-es2015'], () => {
+    return gulp.src('dist/all.js')
+      .pipe(uglify())
+      .pipe(rename('all.min.js'))
+      .pipe(gulp.dest('dist'));
+});
+
 gulp.task('watch', () => {
     gulp.watch('src/**/*.js', [
         'jshint',
-        'babel-es2015'
+        'babel-es2015',
+        'uglify'
     ]);
 });
