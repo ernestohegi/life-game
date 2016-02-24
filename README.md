@@ -1,5 +1,7 @@
 #life-game
 
+## Work in Progress
+
 JavaScript version of the Game of Life.
 
 1. Any live cell with fewer than two live neighbours dies, as if caused by under-population.
