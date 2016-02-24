@@ -129,7 +129,7 @@ let Life = (function ($) {
             this.newRows[x][y] = this.getDestiny(neighborsCount, (this.newRows[x][y] === LIVE));
         },
         getDestiny: function (neighborsCount, isAlive) {
-            return (neighborsCount === 3 || (neighborsCount === 2 && isAlive)) ? LIVE : DIE;
+            return ((isAlive && (neighborsCount === 3 || neighborsCount === 2)) || (isAlive === false && neighborsCount === 3)) ? LIVE : DIE;
         },
         isInsideTheXAxis: function (index, x) {
             return index > -1 && index !== x && index <= this.gridSize.x;

@@ -72,13 +72,16 @@ table {
 #grid li {
     overflow: hidden;
     transition: background-color 3s ease;
+    display: flex;
 }
 
 .survivor {
     display: inline-block;
-    float: left;
     width: 20px; height: 20px;
     /*transition: background-color 2s ease;*/
+    border: 1px solid;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 /* Buttons */
