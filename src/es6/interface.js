@@ -35,7 +35,7 @@ let Interface = (($) => {
             $menu.on('click', '#clear', () => {
                 Life.stop();
                 Life.drawGrid();
-                Life.cloneGrid();
+                Life.createGrid();
             });
 
             $menu.on('click', '#colorize', () => {
