@@ -20,6 +20,7 @@ module.exports = function(config) {
       'src/vendor/react/react.min.js',
       'src/vendor/react/react-dom.min.js',
       'dist/all.min.js',
+      'tests/test-cases/**/*.js',
       'tests/spec/*.js'
     ],
 
