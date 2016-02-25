@@ -21,7 +21,7 @@ let Life = (function ($) {
         speed           : 1000,
         colors          : false,
         evolver         : 0,
-        gridSize        : {x: 40, y: 40},
+        gridSize        : {},
         total           : () => this.gridSize.x * this.gridSize.y ,
         randomColor     : ALIVE_COLOR,
         item            : '',
@@ -34,11 +34,12 @@ let Life = (function ($) {
             this.$container = params.container;
             this.item = params.item;
 
+            this.setGridSize(40, 40);
             this.createGrid();
             this.drawGrid();
             this.updateSettings(params);
         },
-        setGridDimensions: function (x, y) {
+        setGridSize: function (x, y) {
             this.gridSize.x = x;
             this.gridSize.y = y;
         },
@@ -132,10 +133,13 @@ let Life = (function ($) {
             return ((isAlive && (neighborsCount === 3 || neighborsCount === 2)) || (isAlive === false && neighborsCount === 3)) ? LIVE : DIE;
         },
         isInsideTheXAxis: function (index, x) {
-            return index > -1 && index !== x && index <= this.gridSize.x;
+            return this.isInsideTheCoordinates(index, x, this.gridSize.x);
         },
         isInsideTheYAxis: function (index, y) {
-            return index > -1 && index !== y && index <= this.gridSize.y;
+            return this.isInsideTheCoordinates(index, y, this.gridSize.y);
+        },
+        isInsideTheCoordinates: function (coordinate, position, gridCoordinate) {
+            return coordinate !== undefined && position !== undefined && coordinate > -1 && coordinate <= gridCoordinate;
         },
         isNeighborAlive: function (x, y) {
             return this.rows[x] !== undefined && this.rows[x][y] !== undefined && this.rows[x][y] === LIVE;
