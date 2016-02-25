@@ -1,46 +1,55 @@
 describe("Game of Life", function() {
     it("should be able to get the right cell status for the next round", function() {
         var testCases = [
+            // Any live cell with fewer than two live neighbours dies, as if caused by under-population.
             {
                 neighborsCount: 1,
                 isAlive: true,
                 expected: 'die'
             },
+            // Any live cell with two or three live neighbours lives on to the next generation.
             {
                 neighborsCount: 2,
                 isAlive: true,
                 expected: 'live'
             },
+            // Any live cell with two or three live neighbours lives on to the next generation.
             {
                 neighborsCount: 3,
                 isAlive: true,
                 expected: 'live'
             },
+            // Any live cell with more than three live neighbours dies, as if by over-population.
             {
                 neighborsCount: 4,
                 isAlive: true,
                 expected: 'die'
             },
+            // Any live cell with more than three live neighbours dies, as if by over-population.
             {
                 neighborsCount: 5,
                 isAlive: true,
                 expected: 'die'
             },
+            // Any live cell with more than three live neighbours dies, as if by over-population.
             {
                 neighborsCount: 6,
                 isAlive: true,
                 expected: 'die'
             },
+            // Any live cell with more than three live neighbours dies, as if by over-population.
             {
                 neighborsCount: 7,
                 isAlive: true,
                 expected: 'die'
             },
+            // Any live cell with more than three live neighbours dies, as if by over-population.
             {
                 neighborsCount: 8,
                 isAlive: true,
                 expected: 'die'
             },
+            // Any live cell with more than three live neighbours dies, as if by over-population.
             {
                 neighborsCount: 8,
                 isAlive: false,
@@ -66,6 +75,7 @@ describe("Game of Life", function() {
                 isAlive: false,
                 expected: 'die'
             },
+            // Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
             {
                 neighborsCount: 3,
                 isAlive: false,
