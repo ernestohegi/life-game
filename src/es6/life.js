@@ -116,7 +116,7 @@ let Life = (function ($) {
             for(i = x-1; i <= x+1; ++i) {
                 if (this.isInsideTheXAxis(i, x)) {
                     for(j = y-1; j <= y+1; ++j) {
-                        if (this.isInsideTheYAxis(j) && this.isNeighborAlive(i, j)) {
+                        if (this.isNotItself(x, y, i, j) && this.isInsideTheYAxis(j, y) && this.isNeighborAlive(i, j)) {
                             ++neighborsCount;
                         }
                     }
@@ -124,9 +124,14 @@ let Life = (function ($) {
             }
 
             newRows[x][y] = this.getDestiny(neighborsCount, (newRows[x][y] === LIVE));
+
+            return newRows;
         },
         getDestiny: function (neighborsCount, isAlive) {
             return ((isAlive && (neighborsCount === 3 || neighborsCount === 2)) || (isAlive === false && neighborsCount === 3)) ? LIVE : DIE;
+        },
+        isNotItself: function (x, y, i, j) {
+            return (x === i && y === j) === false;
         },
         isInsideTheXAxis: function (index, x) {
             return this.isInsideTheCoordinates(index, x, gridSize.x);
@@ -138,46 +143,56 @@ let Life = (function ($) {
             return coordinate !== undefined && position !== undefined && coordinate > -1 && coordinate <= gridCoordinate;
         },
         isNeighborAlive: function (x, y) {
-            return rows[x] !== undefined && rows[x][y] !== undefined && rows[x][y] === LIVE;
+            return newRows[x] !== undefined && newRows[x][y] !== undefined && newRows[x][y] === LIVE;
         },
         updateRows: function (newRows) {
             rows = newRows;
         },
         updateSurvivors: function () {
-            var $newRows = $rows.clone(),
+            $container.html('').append(this.checkSurvivors());
+        },
+        checkSurvivors: function () {
+            let $newRows = $rows.clone(),
                 $survivor,
-                thisRowStatus,
-                backgroundColor = DEAD_COLOR;
+                thisRowStatus;
 
             for (var i = 0; i < gridSize.x; i++) {
                 for (var j = 0; j < gridSize.y; j++) {
                     $survivor = $newRows.filter('[data-row='+ i +']').find('[data-column='+ j +']');
                     thisRowStatus = rows[i][j];
 
-                    if ($survivor.attr(DATA_STATUS_ATTRIBUTE) !== thisRowStatus) {
-                        if (thisRowStatus === LIVE) {
-                            backgroundColor = (colors) ? this.getRandomColor() : ALIVE_COLOR;
-                        }
-
-                        $survivor.toggleClass(SELECTED_CLASS_NAME);
-                        $survivor.css(BACKGROUND_COLOR_PROPERTY, backgroundColor);
-                        $survivor.attr(DATA_STATUS_ATTRIBUTE, thisRowStatus);
-                    }
+                    this.updateSurvivor($survivor, thisRowStatus);
                 }
             }
 
-            $container.html('');
-            $container.append($newRows);
+            return $newRows;
+        },
+        updateSurvivor: function ($survivor, thisRowStatus) {
+            let backgroundColor = DEAD_COLOR;
+
+            if ($survivor.attr(DATA_STATUS_ATTRIBUTE) !== thisRowStatus) {
+                if (thisRowStatus === LIVE) {
+                    backgroundColor = (colors) ? this.getRandomColor() : ALIVE_COLOR;
+                }
+
+                $survivor.toggleClass(SELECTED_CLASS_NAME);
+                $survivor.css(BACKGROUND_COLOR_PROPERTY, DEAD_COLOR);
+                $survivor.attr(DATA_STATUS_ATTRIBUTE, thisRowStatus);
+            }
         },
         selectSurvivor: function ($this) {
             var newStatus = $this.attr(DATA_STATUS_ATTRIBUTE) === DIE ? LIVE : DIE;
 
+            this.setRowStatus($this.parent().data('row'), $this.data('column'), newStatus);
+
             $this.toggleClass(SELECTED_CLASS_NAME);
             $this.attr(DATA_STATUS_ATTRIBUTE, newStatus);
-
-            rows[$this.parent().data('row')][$this.data('column')] = newStatus;
-
             $this.css(BACKGROUND_COLOR_PROPERTY, (colors) ? this.getRandomColor() : ALIVE_COLOR);
+        },
+        setRowStatus: function (x, y, status) {
+            newRows[x][y] = status;
+
+            return newRows;
         },
         updateSettings: function (params) {
             if (params !== undefined) {

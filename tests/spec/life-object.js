@@ -36,4 +36,30 @@ describe("Game of Life", function() {
             expect(isInsideTheXAxis).toEqual(testCase.expectedResult);
         }
     });
+
+    it("should be able to tell whether a cell lives or die the next generation", function () {
+        // Lives
+        var checkedNeighbors;
+
+        Life.setGridSize(3, 3);
+        Life.createGrid();
+
+        Life.setRowStatus(0, 1, 'live')
+        Life.setRowStatus(0, 0, 'live')
+        Life.setRowStatus(1, 1, 'live')
+
+        checkedNeighbors = Life.checkNeighbors(1, 1);
+
+        expect(checkedNeighbors[1][1]).toEqual('live');
+
+        // Dies
+        Life.setGridSize(3, 3);
+        Life.createGrid();
+
+        Life.setRowStatus(1, 1, 'live')
+
+        checkedNeighbors = Life.checkNeighbors(1, 1);
+
+        expect(checkedNeighbors[1][1]).toEqual('die');
+    });
 });
