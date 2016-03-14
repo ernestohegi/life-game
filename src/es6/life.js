@@ -176,7 +176,7 @@ let Life = (function ($) {
                 }
 
                 $survivor.toggleClass(SELECTED_CLASS_NAME);
-                $survivor.css(BACKGROUND_COLOR_PROPERTY, DEAD_COLOR);
+                $survivor.css(BACKGROUND_COLOR_PROPERTY, backgroundColor);
                 $survivor.attr(DATA_STATUS_ATTRIBUTE, thisRowStatus);
             }
         },
