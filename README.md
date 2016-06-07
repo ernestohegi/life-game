@@ -11,8 +11,23 @@ JavaScript version of the Game of Life.
 
 http://en.wikipedia.org/wiki/Conway's_Game_of_Life
 
-Instructions:
+### Technologies
+- JavaScript
+- React
+- Reflux
+- CSS
+- HTML
+- Gulp
+- Karma
+- PhantomJS
+
+### Installation
 
 - Clone the repository.
 - Run npm install.
 - Run gulp.
+
+###Tests
+
+Karma and PhantomJS must be installed before running the tests.
+Tests can be run executing the following command `karma start karma.conf.js`.
