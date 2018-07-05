@@ -7,6 +7,7 @@
     "test": "tests"
   },
   "dependencies": {
+    "bower": "^1.8.4",
     "gulp": "^3.9.1"
   },
   "devDependencies": {
