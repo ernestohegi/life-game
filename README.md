@@ -1,4 +1,6 @@
-#life-game
+# Game of Life
+
+https://life-game.now.sh
 
 ## Work in Progress
 

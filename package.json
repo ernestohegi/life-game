@@ -8,7 +8,8 @@
   },
   "dependencies": {
     "bower": "^1.8.4",
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "serve": "^9.1.2"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.5.0",
@@ -33,7 +34,8 @@
   },
   "scripts": {
     "test": "karma start karma.conf.js",
-    "build": "bower install && gulp default"
+    "build": "bower install && gulp default",
+    "start": "serve"
   },
   "repository": {
     "type": "git",
