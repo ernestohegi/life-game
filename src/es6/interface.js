@@ -58,7 +58,7 @@ let Interface = (($) => {
             this.selectSurvivor(e.currentTarget);
         },
         handleSurvivorMouseover: function (e) {
-            if (e.ctrlKey) {
+            if (e.ctrlKey || e.altKey) {
                 this.selectSurvivor(e.currentTarget);
             }
         },

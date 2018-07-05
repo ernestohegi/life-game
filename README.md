@@ -24,8 +24,8 @@ http://en.wikipedia.org/wiki/Conway's_Game_of_Life
 ### Installation
 
 - Clone the repository.
-- Run npm install.
-- Run gulp.
+- `npm install` and `bower install`.
+- `npm run build`.
 
 ###Tests
 

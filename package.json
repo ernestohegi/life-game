@@ -32,7 +32,8 @@
     "phantomjs-prebuilt": "^2.1.4"
   },
   "scripts": {
-    "test": "karma start karma.conf.js"
+    "test": "karma start karma.conf.js",
+    "build": "bower install && gulp default"
   },
   "repository": {
     "type": "git",
