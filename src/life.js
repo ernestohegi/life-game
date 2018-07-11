@@ -1,4 +1,4 @@
-let Life = (function($) {
+const Life = (() => {
   "use strict";
 
   const LIVE = "live",
@@ -9,23 +9,20 @@ let Life = (function($) {
   let requestAnimationFrameId = "",
     newRows = [],
     rows = [],
-    gridSize = {},
+    dimensions = { x: 0, y: 0, z: 0 },
     canvasContext = {};
 
   return {
     init: function(params) {
       if (params === undefined) throw "No params specified.";
 
-      this.setUpGrid(params.x, params.y, params.z, params.canvas);
+      this.setUpGrid(params);
       this.createGrid();
       this.drawGrid();
     },
-    setUpGrid: function(x, y, z, canvas) {
-      gridSize.x = x;
-      gridSize.y = y;
-      gridSize.z = z;
-
-      canvasContext = canvas.getContext("2d");
+    setUpGrid: function(params) {
+      dimensions = params.dimensions;
+      canvasContext = params.canvas.getContext("2d");
     },
     createGrid: function() {
       let i, j;
@@ -33,33 +30,33 @@ let Life = (function($) {
       rows = [];
       newRows = [];
 
-      for (i = 0; i < gridSize.x; ++i) {
+      for (i = 0; i < dimensions.x; ++i) {
         rows.push([]);
         newRows.push([]);
 
-        for (j = 0; j < gridSize.y; ++j) {
+        for (j = 0; j < dimensions.y; ++j) {
           rows[i].push(DIE);
           newRows[i].push(DIE);
         }
       }
     },
     drawGrid: function() {
-      for (let x = 0; x < gridSize.x; x++) {
-        for (let y = 0; y < gridSize.y; y++) {
+      for (let x = 0; x < dimensions.x; x++) {
+        for (let y = 0; y < dimensions.y; y++) {
           canvasContext.fillStyle = DEAD_COLOR;
 
           canvasContext.fillRect(
-            x * gridSize.z,
-            y * gridSize.z,
-            gridSize.z,
-            gridSize.z
+            x * dimensions.z,
+            y * dimensions.z,
+            dimensions.z,
+            dimensions.z
           );
         }
       }
     },
     runGrid: function() {
-      for (let i = 0; i < gridSize.x; ++i) {
-        for (let j = 0; j < gridSize.y; ++j) {
+      for (let i = 0; i < dimensions.x; ++i) {
+        for (let j = 0; j < dimensions.y; ++j) {
           this.checkNeighbors(i, j);
         }
       }
@@ -104,10 +101,10 @@ let Life = (function($) {
       return (x === i && y === j) === false;
     },
     isInsideTheXAxis: function(index, x) {
-      return this.isInsideTheCoordinates(index, x, gridSize.x);
+      return this.isInsideTheCoordinates(index, x, dimensions.x);
     },
     isInsideTheYAxis: function(index, y) {
-      return this.isInsideTheCoordinates(index, y, gridSize.y);
+      return this.isInsideTheCoordinates(index, y, dimensions.y);
     },
     isInsideTheCoordinates: function(coordinate, position, gridCoordinate) {
       return (
@@ -125,18 +122,18 @@ let Life = (function($) {
       );
     },
     updateSurvivors: function(rows) {
-      for (let x = 0; x < gridSize.x; x++) {
-        for (let y = 0; y < gridSize.y; y++) {
+      for (let x = 0; x < dimensions.x; x++) {
+        for (let y = 0; y < dimensions.y; y++) {
           let thisRowStatus = rows[x][y];
 
           canvasContext.fillStyle =
             thisRowStatus === LIVE ? ALIVE_COLOR : DEAD_COLOR;
 
           canvasContext.fillRect(
-            x * gridSize.z,
-            y * gridSize.z,
-            gridSize.z,
-            gridSize.z
+            x * dimensions.z,
+            y * dimensions.z,
+            dimensions.z,
+            dimensions.z
           );
         }
       }
@@ -144,12 +141,13 @@ let Life = (function($) {
     selectSurvivor: function(selectedSurvivor) {
       const newStatus =
         rows[selectedSurvivor[0]][selectedSurvivor[1]] === DIE ? LIVE : DIE;
+
       this.setRowStatus(selectedSurvivor[0], selectedSurvivor[1], newStatus);
       this.updateRows(newRows);
       this.updateSurvivors(rows);
     },
-    updateRows: function (newRows) {
-        rows = newRows;
+    updateRows: function(newRows) {
+      rows = newRows;
     },
     setRowStatus: function(x, y, status) {
       newRows[x][y] = status;
@@ -157,14 +155,6 @@ let Life = (function($) {
       return newRows;
     },
     getRandomColor: function() {
-      // canvasContext.fillStyle = `
-      //   rgb(
-      //     ${Math.floor(255 - 42.5 * x)},
-      //     ${Math.floor(255 - 42.5 * y)},
-      //     0
-      //   )
-      // `;
-
       return "#" + Math.floor(Math.random() * 16777215).toString(16);
     },
     start: function() {
@@ -174,4 +164,4 @@ let Life = (function($) {
       cancelAnimationFrame(requestAnimationFrameId);
     }
   };
-})(jQuery);
+})();

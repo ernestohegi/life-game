@@ -9,7 +9,13 @@
 <body>
   <div class="container">
     <h1>
-      <a href="http://en.wikipedia.org/wiki/Conway's_Game_of_Life" target="_blank" class="externalLink"> Life </a>
+      <a
+        href="http://en.wikipedia.org/wiki/Conway's_Game_of_Life"
+        target="_blank"
+        class="externalLink"
+      >
+        Game of Life
+      </a>
     </h1>
 
     <ul id="menu">
@@ -20,28 +26,19 @@
         <span class="button" id="stop"> Stop the world </span>
       </li>
       <li>
-        <span class="button" id="clear"> Clear </span>
+        <span class="button" id="clear"> Depopulate </span>
       </li>
     </ul>
 
-    <span class="notice"> press control (ctrl) key to start drawing seeds </span>
+    <span class="notice"> Press the control key while clicking to draw seeds </span>
 
     <canvas id="game" width=800 height=800></canvas>
   </div>
 
-  <div id="react"></div>
-
-  <script src="src/vendor/jquery/dist/jquery.min.js"></script>
   <script src="dist/all.min.js"></script>
 
   <script>
-    $(function () {
-        'use strict';
-
-        Game.init({
-            container: $('#grid')
-        });
-    });
+    Game.init();
   </script>
 </body>
 </html>

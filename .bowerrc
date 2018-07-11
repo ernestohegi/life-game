@@ -1,6 +1,0 @@
-{
-    "directory": "src/vendor/",
-    "analytics": false,
-    "color": true,
-    "timeout": 120000
-}

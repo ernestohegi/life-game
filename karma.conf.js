@@ -15,10 +15,6 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'src/vendor/jquery/dist/jquery.min.js',
-      'src/vendor/reflux/dist/reflux.min.js',
-      'src/vendor/react/react.min.js',
-      'src/vendor/react/react-dom.min.js',
       'dist/all.min.js',
       'tests/test-cases/**/*.js',
       'tests/spec/*.js'
