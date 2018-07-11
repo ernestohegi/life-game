@@ -15,19 +15,15 @@ http://en.wikipedia.org/wiki/Conway's_Game_of_Life
 
 ### Technologies
 - JavaScript
-- React
-- Reflux
 - CSS
 - HTML
-- Gulp
-- Karma
-- PhantomJS
 
 ### Installation
 
 - Clone the repository.
-- `npm install` and `bower install`.
+- `npm install`.
 - `npm run build`.
+- `npm run serve`.
 
 ###Tests
 
