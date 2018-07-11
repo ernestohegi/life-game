@@ -64,8 +64,6 @@ let Life = (function($) {
       }
     },
     runGrid: function() {
-      console.log("running grid");
-
       for (let i = 0; i < gridSize.x; ++i) {
         for (let j = 0; j < gridSize.y; ++j) {
           this.checkNeighbors(i, j);
