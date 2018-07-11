@@ -2,7 +2,7 @@
   "name": "life-game",
   "version": "2.1.0",
   "description": "JavaScript version of Conway's Game of Life",
-  "main": "app.js",
+  "main": "index.html",
   "directories": {
     "test": "tests"
   },
@@ -38,10 +38,7 @@
     "start": "serve",
     "lint": "pretty-quick"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ernestohegi/life-game.git"
-  },
+  "repository": "git+https://github.com/ernestohegi/life-game.git",
   "author": "Ernesto Hegi",
   "license": "ISC",
   "bugs": {
