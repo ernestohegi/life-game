@@ -1,19 +1,14 @@
 let Life = (function($) {
   "use strict";
 
-  const BACKGROUND_COLOR_PROPERTY = "background-color",
-    DATA_STATUS_ATTRIBUTE = "data-status",
-    SELECTED_CLASS_NAME = "selected",
-    LIVE = "live",
+  const LIVE = "live",
     DIE = "die",
     ALIVE_COLOR = "#000",
     DEAD_COLOR = "#FFF";
 
   let requestAnimationFrameId = "",
-    colors = false,
     newRows = [],
     rows = [],
-    speed = 0,
     gridSize = {},
     canvasContext = {};
 
