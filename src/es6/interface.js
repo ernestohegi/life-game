@@ -4,26 +4,23 @@ let Interface = ($ => {
   const ID_TOKEN = "#",
     CLASS_TOKEN = ".",
     CLICK_EVENT_NAME = "click",
-    MOUESOVER_EVENT_NAME = "mouseover",
-    REACT_CONTAINER_ID_NAME = "react",
-    SURVIVOR_SELECTOR = CLASS_TOKEN + "survivor",
+    MOUSEMOVE_EVENT_NAME = "mousemove",
     MENU_SELECTOR = ID_TOKEN + "menu",
     START_SELECTOR = ID_TOKEN + "start",
     CLEAR_SELECTOR = ID_TOKEN + "clear",
     COLORIZE_SELECTOR = ID_TOKEN + "colorize",
-    STOP_SELECTOR = ID_TOKEN + "stop",
-    CELLS_CONTAINERS_AMOUNT = 10,
-    CELLS_AMOUNT = 10;
+    STOP_SELECTOR = ID_TOKEN + "stop";
 
   return {
     colors: false,
     init: function(params) {
       this.$container = params.container;
       this.$mainElement = $(MENU_SELECTOR);
+      this.canvas = params.canvas;
+      this.x = params.x;
+      this.y = params.y;
+      this.z = params.z;
       this.bindEvents();
-    },
-    selectSurvivor: survivorElement => {
-      Life.selectSurvivor($(survivorElement));
     },
     clearGrid: function() {
       Life.stop();
@@ -39,17 +36,32 @@ let Interface = ($ => {
 
       this.colors = colors;
     },
-    handleSurvivorClick: function(e) {
-      this.selectSurvivor(e.currentTarget);
-    },
-    handleSurvivorMouseover: function(e) {
+    handleCanvasMouseOver: function(e) {
       if (e.ctrlKey || e.altKey) {
-        this.selectSurvivor(e.currentTarget);
+        this.handleCanvasClicked(e);
       }
     },
-    /*
-        * Events binding
-        */
+    handleCanvasClicked: function(e) {
+      const x = e.offsetX;
+      const y = e.offsetY;
+
+      let selectedSurvivor = [];
+
+      for (let i = 0; i < this.x; i++) {
+        for (let j = 0; j < this.y; j++) {
+          if (
+            x >= i * this.z &&
+            x < (i + 1) * this.z &&
+            y >= j * this.z &&
+            y < (j + 1) * this.z
+          ) {
+            selectedSurvivor = [i, j];
+          }
+        }
+      }
+
+      Life.selectSurvivor(selectedSurvivor);
+    },
     bindEvents: function() {
       this.$mainElement.on(CLICK_EVENT_NAME, START_SELECTOR, () =>
         Life.start()
@@ -65,17 +77,14 @@ let Interface = ($ => {
         this.colorizeGrid
       );
 
-      // Draw seeds
-      this.$container.on(
-        CLICK_EVENT_NAME,
-        SURVIVOR_SELECTOR,
-        this.handleSurvivorClick.bind(this)
+      this.canvas.addEventListener(
+        MOUSEMOVE_EVENT_NAME,
+        this.handleCanvasMouseOver.bind(this)
       );
 
-      this.$container.on(
-        MOUESOVER_EVENT_NAME,
-        SURVIVOR_SELECTOR,
-        this.handleSurvivorMouseover.bind(this)
+      this.canvas.addEventListener(
+        CLICK_EVENT_NAME,
+        this.handleCanvasClicked.bind(this)
       );
     }
   };

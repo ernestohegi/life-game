@@ -13,39 +13,25 @@ let Life = (function($) {
     colors = false,
     newRows = [],
     rows = [],
-    gridSize = {},
-    $container = $(),
-    $rows = $(),
     speed = 0,
+    gridSize = {},
     canvasContext = {};
 
   return {
     init: function(params) {
-      if (params === undefined || params.container === undefined) {
-        throw "No params specified.";
-      }
+      if (params === undefined) throw "No params specified.";
 
-      $container = params.container;
-
-      this.setUpGrid(40, 40, 20);
+      this.setUpGrid(params.x, params.y, params.z, params.canvas);
       this.createGrid();
       this.drawGrid();
       this.updateSettings(params);
     },
-    setUpGrid: function(x, y, z) {
-      const canvas = document.getElementById("game");
-
+    setUpGrid: function(x, y, z, canvas) {
       gridSize.x = x;
       gridSize.y = y;
       gridSize.z = z;
 
       canvasContext = canvas.getContext("2d");
-    },
-    start: function() {
-      requestAnimationFrameId = requestAnimationFrame(this.runGrid.bind(this));
-    },
-    stop: function() {
-      cancelAnimationFrame(requestAnimationFrameId);
     },
     createGrid: function() {
       let i, j;
@@ -78,13 +64,16 @@ let Life = (function($) {
       }
     },
     runGrid: function() {
+      console.log("running grid");
+
       for (let i = 0; i < gridSize.x; ++i) {
         for (let j = 0; j < gridSize.y; ++j) {
           this.checkNeighbors(i, j);
         }
       }
 
-      this.updateSurvivors(newRows);
+      this.updateRows(newRows);
+      this.updateSurvivors(rows);
 
       requestAnimationFrameId = requestAnimationFrame(this.runGrid.bind(this));
     },
@@ -92,6 +81,8 @@ let Life = (function($) {
       let neighborsCount = 0,
         i,
         j;
+
+      let newRows = rows;
 
       for (i = x - 1; i <= x + 1; ++i) {
         if (this.isInsideTheXAxis(i, x)) {
@@ -141,9 +132,7 @@ let Life = (function($) {
         newRows[x][y] === LIVE
       );
     },
-    updateSurvivors: function(newRows) {
-      rows = newRows;
-
+    updateSurvivors: function(rows) {
       for (let x = 0; x < gridSize.x; x++) {
         for (let y = 0; y < gridSize.y; y++) {
           let thisRowStatus = rows[x][y];
@@ -160,21 +149,15 @@ let Life = (function($) {
         }
       }
     },
-    selectSurvivor: function($this) {
-      var newStatus = $this.attr(DATA_STATUS_ATTRIBUTE) === DIE ? LIVE : DIE;
-
-      this.setRowStatus(
-        $this.parent().data("row"),
-        $this.data("column"),
-        newStatus
-      );
-
-      $this.toggleClass(SELECTED_CLASS_NAME);
-      $this.attr(DATA_STATUS_ATTRIBUTE, newStatus);
-      $this.css(
-        BACKGROUND_COLOR_PROPERTY,
-        colors ? this.getRandomColor() : ALIVE_COLOR
-      );
+    selectSurvivor: function(selectedSurvivor) {
+      const newStatus =
+        rows[selectedSurvivor[0]][selectedSurvivor[1]] === DIE ? LIVE : DIE;
+      this.setRowStatus(selectedSurvivor[0], selectedSurvivor[1], newStatus);
+      this.updateRows(newRows);
+      this.updateSurvivors(rows);
+    },
+    updateRows: function (newRows) {
+        rows = newRows;
     },
     setRowStatus: function(x, y, status) {
       newRows[x][y] = status;
@@ -202,6 +185,12 @@ let Life = (function($) {
       // `;
 
       return "#" + Math.floor(Math.random() * 16777215).toString(16);
+    },
+    start: function() {
+      requestAnimationFrameId = requestAnimationFrame(this.runGrid.bind(this));
+    },
+    stop: function() {
+      cancelAnimationFrame(requestAnimationFrameId);
     }
   };
 })(jQuery);
