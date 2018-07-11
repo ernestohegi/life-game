@@ -30,12 +30,16 @@
     "karma-cli": "^0.1.2",
     "karma-jasmine": "^0.3.7",
     "karma-phantomjs-launcher": "^1.0.0",
-    "phantomjs-prebuilt": "^2.1.4"
+    "phantomjs-prebuilt": "^2.1.4",
+    "prettier": "^1.13.7",
+    "pretty-quick": "^1.6.0"
   },
   "scripts": {
     "test": "karma start karma.conf.js",
     "build": "bower install && gulp default",
-    "start": "serve"
+    "dev": "gulp watch",
+    "start": "serve",
+    "lint": "pretty-quick"
   },
   "repository": {
     "type": "git",

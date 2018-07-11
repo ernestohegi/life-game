@@ -1,18 +1,32 @@
-let Game = (($) => {
-    'use strict';
+let Game = ($ => {
+  "use strict";
 
-    return {
-        init: (params) => {
-            Life.init({
-                container: params.container,
-                item: 'li',
-                speed: 1,
-                colors: false
-            });
+  const x = 40;
+  const y = 40;
+  const z = 20;
 
-            Interface.init({
-                container: params.container
-            });
-        }
-    };
+  return {
+    init: params => {
+      const canvas = document.getElementById("game");
+
+      Life.init({
+        container: params.container,
+        item: "li",
+        speed: 1,
+        colors: false,
+        x,
+        y,
+        z,
+        canvas
+      });
+
+      Interface.init({
+        container: params.container,
+        x,
+        y,
+        z,
+        canvas
+      });
+    }
+  };
 })(jQuery);
