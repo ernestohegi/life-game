@@ -19,7 +19,6 @@ let Life = (function($) {
       this.setUpGrid(params.x, params.y, params.z, params.canvas);
       this.createGrid();
       this.drawGrid();
-      this.updateSettings(params);
     },
     setUpGrid: function(x, y, z, canvas) {
       gridSize.x = x;
@@ -156,17 +155,6 @@ let Life = (function($) {
       newRows[x][y] = status;
 
       return newRows;
-    },
-    updateSettings: function(params) {
-      if (params !== undefined) {
-        if (params.speed !== undefined) {
-          speed = params.speed;
-        }
-
-        if (params.colors !== undefined) {
-          colors = params.colors;
-        }
-      }
     },
     getRandomColor: function() {
       // canvasContext.fillStyle = `
