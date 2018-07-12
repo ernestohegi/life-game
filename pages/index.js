@@ -5,14 +5,7 @@ import Button from "../components/Button";
 import Copy from "../components/Copy";
 import FormColors from "../components/FormColors";
 import Link from "../components/Link";
-
-const styles = {
-  title: {
-    fontFamily: "gaegu",
-    fontSize: "4rem",
-    margin: 0
-  }
-};
+import Title from "../components/Title";
 
 class Index extends React.Component {
   constructor(props) {
@@ -95,21 +88,21 @@ class Index extends React.Component {
           />
         </Head>
 
-        <h1 style={styles.title}>
+        <Title type="h1">
           <Link
-            url="http://en.wikipedia.org/wiki/Conway's_Game_of_Life"
-            target="_blank"
-            title="Game of Life"
-          />
-        </h1>
+              url="http://en.wikipedia.org/wiki/Conway's_Game_of_Life"
+              target="_blank"
+              title="Game of Life"
+            />
+        </Title>
 
         <section>
-          <Copy text="Colors" />
+          <Title type="h2">Colors</Title>
           <FormColors />
         </section>
 
         <section>
-          <Copy text="Action buttons" />
+          <Title type="h2">Action buttons</Title>
           <Button title="Give life" onClick={this.handleStart} />
           <Button title="Stop the world" onClick={this.handleStop} />
           <Button title="Advance generation" onClick={this.handleStep} />
