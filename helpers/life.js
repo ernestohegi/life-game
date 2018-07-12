@@ -1,8 +1,9 @@
 const Life = (() => {
-  const LIVE = "live",
-    DIE = "die",
-    ALIVE_COLOR = "#FC6336",
-    DEAD_COLOR = "#5F4B8B";
+  const LIVE = "live";
+  const DIE = "die";
+
+  let aliveColor = "#FC6336";
+  let deadColor = "#5F4B8B";
 
   let requestAnimationFrameId = "",
     newRows = [],
@@ -11,21 +12,21 @@ const Life = (() => {
     canvasContext = {};
 
   return {
-    init: function(params) {
+    init(params) {
       if (params === undefined) throw "No params specified.";
 
       this.setUpGrid(params);
       this.createGrid();
       this.drawGrid();
     },
-    setUpGrid: function(params) {
+    setUpGrid(params) {
       this.setGridSize(params);
       canvasContext = params.canvas.getContext("2d");
     },
-    setGridSize: function (params) {
+    setGridSize(params) {
       dimensions = params.dimensions;
     },
-    createGrid: function() {
+    createGrid() {
       let i, j;
 
       rows = [];
@@ -41,10 +42,10 @@ const Life = (() => {
         }
       }
     },
-    drawGrid: function() {
+    drawGrid() {
       for (let x = 0; x < dimensions.x; x++) {
         for (let y = 0; y < dimensions.y; y++) {
-          canvasContext.fillStyle = DEAD_COLOR;
+          canvasContext.fillStyle = deadColor;
 
           canvasContext.fillRect(
             x * dimensions.z,
@@ -55,7 +56,7 @@ const Life = (() => {
         }
       }
     },
-    runGrid: function() {
+    advanceOneGeneration() {
       for (let i = 0; i < dimensions.x; ++i) {
         for (let j = 0; j < dimensions.y; ++j) {
           this.checkNeighbors(i, j);
@@ -64,10 +65,13 @@ const Life = (() => {
 
       this.updateRows(newRows);
       this.updateSurvivors(rows);
+    },
+    runGrid() {
+      this.advanceOneGeneration();
 
       requestAnimationFrameId = requestAnimationFrame(this.runGrid.bind(this));
     },
-    checkNeighbors: function(x, y) {
+    checkNeighbors(x, y) {
       let neighborsCount = 0,
         i,
         j;
@@ -90,22 +94,22 @@ const Life = (() => {
 
       return newRows;
     },
-    getDestiny: function(neighborsCount, isAlive) {
+    getDestiny(neighborsCount, isAlive) {
       return (isAlive && (neighborsCount === 3 || neighborsCount === 2)) ||
         (isAlive === false && neighborsCount === 3)
         ? LIVE
         : DIE;
     },
-    isNotItself: function(x, y, i, j) {
+    isNotItself(x, y, i, j) {
       return (x === i && y === j) === false;
     },
-    isInsideTheXAxis: function(index, x) {
+    isInsideTheXAxis(index, x) {
       return this.isInsideTheCoordinates(index, x, dimensions.x);
     },
-    isInsideTheYAxis: function(index, y) {
+    isInsideTheYAxis(index, y) {
       return this.isInsideTheCoordinates(index, y, dimensions.y);
     },
-    isInsideTheCoordinates: function(coordinate, position, gridCoordinate) {
+    isInsideTheCoordinates(coordinate, position, gridCoordinate) {
       return (
         coordinate !== undefined &&
         position !== undefined &&
@@ -113,20 +117,20 @@ const Life = (() => {
         coordinate <= gridCoordinate
       );
     },
-    isNeighborAlive: function(x, y) {
+    isNeighborAlive(x, y) {
       return (
         newRows[x] !== undefined &&
         newRows[x][y] !== undefined &&
         newRows[x][y] === LIVE
       );
     },
-    updateSurvivors: function(rows) {
+    updateSurvivors(rows) {
       for (let x = 0; x < dimensions.x; x++) {
         for (let y = 0; y < dimensions.y; y++) {
           let thisRowStatus = rows[x][y];
 
           canvasContext.fillStyle =
-            thisRowStatus === LIVE ? ALIVE_COLOR : DEAD_COLOR;
+            thisRowStatus === LIVE ? aliveColor : deadColor;
 
           canvasContext.fillRect(
             x * dimensions.z,
@@ -137,13 +141,13 @@ const Life = (() => {
         }
       }
     },
-    getSurvivor: function(selectedSurvivor) {
+    getSurvivor(selectedSurvivor) {
       return rows[selectedSurvivor[0]] &&
         rows[selectedSurvivor[0]][selectedSurvivor[1]]
         ? rows[selectedSurvivor[0]][selectedSurvivor[1]]
         : [];
     },
-    selectSurvivor: function(selectedSurvivor) {
+    selectSurvivor(selectedSurvivor) {
       const survivor = this.getSurvivor(selectedSurvivor);
       let newStatus;
 
@@ -155,21 +159,25 @@ const Life = (() => {
       this.updateRows(newRows);
       this.updateSurvivors(rows);
     },
-    updateRows: function(newRows) {
+    updateRows(newRows) {
       rows = newRows;
     },
-    setRowStatus: function(x, y, status) {
+    setRowStatus(x, y, status) {
       newRows[x][y] = status;
 
       return newRows;
     },
-    getRandomColor: function() {
+    getRandomColor() {
       return "#" + Math.floor(Math.random() * 16777215).toString(16);
     },
-    start: function() {
+    setColors(colors) {
+      aliveColor = colors.alive;
+      deadColor = colors.dead;
+    },
+    start() {
       requestAnimationFrameId = requestAnimationFrame(this.runGrid.bind(this));
     },
-    stop: function() {
+    stop() {
       cancelAnimationFrame(requestAnimationFrameId);
     }
   };

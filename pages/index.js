@@ -1,7 +1,18 @@
 import React from "react";
-import Life from "../helpers/life";
+import Head from "next/head";
+import Life from "../helpers/Life";
 import Button from "../components/Button";
 import Copy from "../components/Copy";
+import FormColors from "../components/FormColors";
+import Link from "../components/Link";
+
+const styles = {
+  title: {
+    fontFamily: "gaegu",
+    fontSize: "4rem",
+    margin: 0
+  }
+};
 
 class Index extends React.Component {
   constructor(props) {
@@ -18,6 +29,7 @@ class Index extends React.Component {
     this.handleDepopulate = this.handleDepopulate.bind(this);
     this.handleCanvasClicked = this.handleCanvasClicked.bind(this);
     this.handleMouseMoveOverCanvas = this.handleMouseMoveOverCanvas.bind(this);
+    this.handleStep = this.handleStep.bind(this);
   }
 
   componentDidMount() {
@@ -69,24 +81,41 @@ class Index extends React.Component {
     }
   }
 
+  handleStep() {
+    Life.advanceOneGeneration();
+  }
+
   render() {
     return (
       <React.Fragment>
-        <h1>
-          <a
-            href="http://en.wikipedia.org/wiki/Conway's_Game_of_Life"
+        <Head>
+          <link
+            href="https://fonts.googleapis.com/css?family=Gaegu|Roboto"
+            rel="stylesheet"
+          />
+        </Head>
+
+        <h1 style={styles.title}>
+          <Link
+            url="http://en.wikipedia.org/wiki/Conway's_Game_of_Life"
             target="_blank"
-            className="externalLink"
-          >
-            Game of Life
-          </a>
+            title="Game of Life"
+          />
         </h1>
 
-        <Button title="Give life" onClick={this.handleStart} />
-        <Button title="Stop the world" onClick={this.handleStop} />
-        <Button title="Depopulate" onClick={this.handleDepopulate} />
+        <section>
+          <Copy text="Colors" />
+          <FormColors />
+        </section>
 
-        <Copy text="Press the control key while clicking to draw seeds" />
+        <section>
+          <Copy text="Action buttons" />
+          <Button title="Give life" onClick={this.handleStart} />
+          <Button title="Stop the world" onClick={this.handleStop} />
+          <Button title="Advance generation" onClick={this.handleStep} />
+          <Button title="Depopulate" onClick={this.handleDepopulate} />
+          <Copy text="Press the control key while clicking to draw seeds" />
+        </section>
 
         <canvas
           id="game"
@@ -94,7 +123,7 @@ class Index extends React.Component {
           height={800}
           onClick={this.handleCanvasClicked}
           onMouseMove={this.handleMouseMoveOverCanvas}
-          ref={node => this.canvas = node}
+          ref={node => (this.canvas = node)}
         />
       </React.Fragment>
     );
