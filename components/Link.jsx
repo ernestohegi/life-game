@@ -1,13 +1,20 @@
 import React from "react";
 
-const linkStyle = {
-  textDecoration: "none"
-};
-
 class Link extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      linkStyle: {
+        textDecoration: "none",
+        color: "#FC6336"
+      }
+    };
+  }
+
   render() {
     return (
-      <a href={this.props.url} target={this.props.target} style={linkStyle}>
+      <a href={this.props.url} target={this.props.target} style={this.state.linkStyle}>
         {this.props.title}
       </a>
     );
