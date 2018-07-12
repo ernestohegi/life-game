@@ -21,10 +21,13 @@ const Life = (() => {
     },
     setUpGrid(params) {
       this.setGridSize(params);
-      canvasContext = params.canvas.getContext("2d");
+      this.setCanvasContext(params);
     },
     setGridSize(params) {
       dimensions = params.dimensions;
+    },
+    setCanvasContext(params) {
+      canvasContext = params.canvas.getContext("2d");
     },
     createGrid() {
       let i, j;

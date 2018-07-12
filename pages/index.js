@@ -4,6 +4,7 @@ import Life from "../helpers/Life";
 import Button from "../components/Button";
 import Copy from "../components/Copy";
 import FormColors from "../components/FormColors";
+import FormCanvasDimensions from "../components/FormCanvasDimensions";
 import Link from "../components/Link";
 import Title from "../components/Title";
 
@@ -11,10 +12,12 @@ class Index extends React.Component {
   constructor(props) {
     super(props);
 
-    this.dimensions = {
-      x: 40,
-      y: 40,
-      z: 20
+    this.state = {
+      dimensions: {
+        x: 40,
+        y: 40,
+        z: 20
+      }
     };
 
     this.handleStart = this.handleStart.bind(this);
@@ -23,12 +26,16 @@ class Index extends React.Component {
     this.handleCanvasClicked = this.handleCanvasClicked.bind(this);
     this.handleMouseMoveOverCanvas = this.handleMouseMoveOverCanvas.bind(this);
     this.handleStep = this.handleStep.bind(this);
+    this.handleFormColorsSubmit = this.handleFormColorsSubmit.bind(this);
+    this.handleFormCanvasDimensionsSubmit = this.handleFormCanvasDimensionsSubmit.bind(
+      this
+    );
   }
 
   componentDidMount() {
     Life.init({
       canvas: this.canvas,
-      dimensions: this.dimensions
+      dimensions: this.state.dimensions
     });
   }
 
@@ -52,13 +59,13 @@ class Index extends React.Component {
 
     let selectedSurvivor = [];
 
-    for (let i = 0; i < this.dimensions.x; i++) {
-      for (let j = 0; j < this.dimensions.y; j++) {
+    for (let i = 0; i < this.state.dimensions.x; i++) {
+      for (let j = 0; j < this.state.dimensions.y; j++) {
         if (
-          x >= i * this.dimensions.z &&
-          x < (i + 1) * this.dimensions.z &&
-          y >= j * this.dimensions.z &&
-          y < (j + 1) * this.dimensions.z
+          x >= i * this.state.dimensions.z &&
+          x < (i + 1) * this.state.dimensions.z &&
+          y >= j * this.state.dimensions.z &&
+          y < (j + 1) * this.state.dimensions.z
         ) {
           selectedSurvivor = [i, j];
         }
@@ -78,6 +85,21 @@ class Index extends React.Component {
     Life.advanceOneGeneration();
   }
 
+  handleFormColorsSubmit(colors) {
+    Life.setColors(colors);
+  }
+
+  handleFormCanvasDimensionsSubmit(dimensions) {
+    this.setState(
+      {
+        dimensions
+      },
+      () => {
+        Life.setGridSize(this.state.dimensions);
+      }
+    );
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -90,15 +112,22 @@ class Index extends React.Component {
 
         <Title type="h1">
           <Link
-              url="http://en.wikipedia.org/wiki/Conway's_Game_of_Life"
-              target="_blank"
-              title="Game of Life"
-            />
+            url="http://en.wikipedia.org/wiki/Conway's_Game_of_Life"
+            target="_blank"
+            title="Game of Life"
+          />
         </Title>
 
         <section>
           <Title type="h2">Colors</Title>
-          <FormColors />
+          <FormColors handleFormButtonClick={this.handleFormColorsSubmit} />
+        </section>
+
+        <section>
+          <Title type="h2">Dimensions</Title>
+          <FormCanvasDimensions
+            handleFormButtonClick={this.handleFormCanvasDimensionsSubmit}
+          />
         </section>
 
         <section>
@@ -112,8 +141,8 @@ class Index extends React.Component {
 
         <canvas
           id="game"
-          width={800}
-          height={800}
+          width={this.state.dimensions.x * this.state.dimensions.z}
+          height={this.state.dimensions.y * this.state.dimensions.z}
           onClick={this.handleCanvasClicked}
           onMouseMove={this.handleMouseMoveOverCanvas}
           ref={node => (this.canvas = node)}

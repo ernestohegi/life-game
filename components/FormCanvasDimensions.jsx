@@ -1,11 +1,12 @@
 import React from "react";
 import Button from "./Button";
+import Life from "../helpers/Life";
 
 const inputStyle = {
   marginRight: "10px"
 };
 
-class FormColors extends React.Component {
+class FormCanvasDimensions extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -31,16 +32,23 @@ class FormColors extends React.Component {
       <form>
         <input
           type="text"
-          name="alive"
+          name="x"
           onChange={this.handleInputChange}
-          placeholder="Alive color"
+          placeholder="Width"
           style={inputStyle}
         />
         <input
           type="text"
-          name="dead"
+          name="y"
           onChange={this.handleInputChange}
-          placeholder="Dead color"
+          placeholder="Height"
+          style={inputStyle}
+        />
+        <input
+          type="text"
+          name="z"
+          onChange={this.handleInputChange}
+          placeholder="Depth"
           style={inputStyle}
         />
         <Button title="Save" onClick={this.handleFormButtonClick} />
@@ -49,4 +57,4 @@ class FormColors extends React.Component {
   }
 }
 
-export default FormColors;
+export default FormCanvasDimensions;
