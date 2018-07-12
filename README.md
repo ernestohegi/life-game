@@ -15,14 +15,14 @@ http://en.wikipedia.org/wiki/Conway's_Game_of_Life
 - JavaScript
 - React
 - Next.js
+- Yarn
 
 ### Installation
 
-- Clone the repository.
-- `npm install`.
-- `npm run build`.
-- `npm run serve`.
+- `yarn install`
+- `yarn build`
+- `yarn serve`
 
 ### Tests
 
-**Jest** is used to run tests `npm run test`.
+**Jest** is used to run tests `yarn test`.
