@@ -13,8 +13,8 @@ http://en.wikipedia.org/wiki/Conway's_Game_of_Life
 
 ### Technologies
 - JavaScript
-- CSS
-- HTML
+- React
+- Next.js
 
 ### Installation
 
@@ -25,5 +25,4 @@ http://en.wikipedia.org/wiki/Conway's_Game_of_Life
 
 ###Tests
 
-Karma and PhantomJS must be installed before running the tests.
-Tests can be run executing the following command `karma start karma.conf.js`.
+**Jest** is used to run tests `npm run test`.
