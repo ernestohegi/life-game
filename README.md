@@ -23,6 +23,6 @@ http://en.wikipedia.org/wiki/Conway's_Game_of_Life
 - `npm run build`.
 - `npm run serve`.
 
-###Tests
+### Tests
 
 **Jest** is used to run tests `npm run test`.
