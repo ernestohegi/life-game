@@ -4,7 +4,6 @@ import Life from "../helpers/Life";
 import Button from "../components/Button";
 import Copy from "../components/Copy";
 import FormColors from "../components/FormColors";
-import FormCanvasDimensions from "../components/FormCanvasDimensions";
 import Link from "../components/Link";
 import Title from "../components/Title";
 
@@ -12,12 +11,10 @@ class Index extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      dimensions: {
-        x: 40,
-        y: 40,
-        z: 20
-      }
+    this.dimensions = {
+      x: 40,
+      y: 40,
+      z: 20
     };
 
     this.handleStart = this.handleStart.bind(this);
@@ -27,15 +24,12 @@ class Index extends React.Component {
     this.handleMouseMoveOverCanvas = this.handleMouseMoveOverCanvas.bind(this);
     this.handleStep = this.handleStep.bind(this);
     this.handleFormColorsSubmit = this.handleFormColorsSubmit.bind(this);
-    this.handleFormCanvasDimensionsSubmit = this.handleFormCanvasDimensionsSubmit.bind(
-      this
-    );
   }
 
   componentDidMount() {
     Life.init({
       canvas: this.canvas,
-      dimensions: this.state.dimensions
+      dimensions: this.dimensions
     });
   }
 
@@ -59,13 +53,13 @@ class Index extends React.Component {
 
     let selectedSurvivor = [];
 
-    for (let i = 0; i < this.state.dimensions.x; i++) {
-      for (let j = 0; j < this.state.dimensions.y; j++) {
+    for (let i = 0; i < this.dimensions.x; i++) {
+      for (let j = 0; j < this.dimensions.y; j++) {
         if (
-          x >= i * this.state.dimensions.z &&
-          x < (i + 1) * this.state.dimensions.z &&
-          y >= j * this.state.dimensions.z &&
-          y < (j + 1) * this.state.dimensions.z
+          x >= i * this.dimensions.z &&
+          x < (i + 1) * this.dimensions.z &&
+          y >= j * this.dimensions.z &&
+          y < (j + 1) * this.dimensions.z
         ) {
           selectedSurvivor = [i, j];
         }
@@ -87,17 +81,6 @@ class Index extends React.Component {
 
   handleFormColorsSubmit(colors) {
     Life.setColors(colors);
-  }
-
-  handleFormCanvasDimensionsSubmit(dimensions) {
-    this.setState(
-      {
-        dimensions
-      },
-      () => {
-        Life.setGridSize(this.state.dimensions);
-      }
-    );
   }
 
   render() {
@@ -124,13 +107,6 @@ class Index extends React.Component {
         </section>
 
         <section>
-          <Title type="h2">Dimensions</Title>
-          <FormCanvasDimensions
-            handleFormButtonClick={this.handleFormCanvasDimensionsSubmit}
-          />
-        </section>
-
-        <section>
           <Title type="h2">Action buttons</Title>
           <Button title="Give life" onClick={this.handleStart} />
           <Button title="Stop the world" onClick={this.handleStop} />
@@ -141,8 +117,8 @@ class Index extends React.Component {
 
         <canvas
           id="game"
-          width={this.state.dimensions.x * this.state.dimensions.z}
-          height={this.state.dimensions.y * this.state.dimensions.z}
+          width="800"
+          height="800"
           onClick={this.handleCanvasClicked}
           onMouseMove={this.handleMouseMoveOverCanvas}
           ref={node => (this.canvas = node)}
