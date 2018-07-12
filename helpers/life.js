@@ -19,8 +19,11 @@ const Life = (() => {
       this.drawGrid();
     },
     setUpGrid: function(params) {
-      dimensions = params.dimensions;
+      this.setGridSize(params);
       canvasContext = params.canvas.getContext("2d");
+    },
+    setGridSize: function (params) {
+      dimensions = params.dimensions;
     },
     createGrid: function() {
       let i, j;
@@ -68,8 +71,6 @@ const Life = (() => {
       let neighborsCount = 0,
         i,
         j;
-
-      let newRows = rows;
 
       for (i = x - 1; i <= x + 1; ++i) {
         if (this.isInsideTheXAxis(i, x)) {
