@@ -117,8 +117,8 @@ class Index extends React.Component {
 
         <canvas
           id="game"
-          width="800"
-          height="800"
+          width={this.dimensions.x * this.dimensions.z}
+          height={this.dimensions.x * this.dimensions.z}
           onClick={this.handleCanvasClicked}
           onMouseMove={this.handleMouseMoveOverCanvas}
           ref={node => (this.canvas = node)}
