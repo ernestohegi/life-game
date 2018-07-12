@@ -1,5 +1,7 @@
 import React from "react";
 import Life from "../helpers/life";
+import Button from "../components/Button";
+import Copy from "../components/Copy";
 
 class Index extends React.Component {
   constructor(props) {
@@ -69,7 +71,7 @@ class Index extends React.Component {
 
   render() {
     return (
-      <div className="container">
+      <React.Fragment>
         <h1>
           <a
             href="http://en.wikipedia.org/wiki/Conway's_Game_of_Life"
@@ -80,21 +82,11 @@ class Index extends React.Component {
           </a>
         </h1>
 
-        <ul>
-          <li>
-            <span onClick={this.handleStart}> Give life </span>
-          </li>
-          <li>
-            <span onClick={this.handleStop}> Stop the world </span>
-          </li>
-          <li>
-            <span onClick={this.handleDepopulate}> Depopulate </span>
-          </li>
-        </ul>
+        <Button title="Give life" onClick={this.handleStart} />
+        <Button title="Stop the world" onClick={this.handleStop} />
+        <Button title="Depopulate" onClick={this.handleDepopulate} />
 
-        <span>
-          Press the control key while clicking to draw seeds
-        </span>
+        <Copy text="Press the control key while clicking to draw seeds" />
 
         <canvas
           id="game"
@@ -104,7 +96,7 @@ class Index extends React.Component {
           onMouseMove={this.handleMouseMoveOverCanvas}
           ref={node => this.canvas = node}
         />
-      </div>
+      </React.Fragment>
     );
   }
 }
