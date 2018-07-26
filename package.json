@@ -25,7 +25,8 @@
     "lint": "pretty-quick",
     "dev": "next",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "deploy": "npm run test && now --public && now alias"
   },
   "repository": "git+https://github.com/ernestohegi/life-game.git",
   "author": "Ernesto Hegi",
