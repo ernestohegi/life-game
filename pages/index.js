@@ -12,9 +12,9 @@ class Index extends React.Component {
     super(props);
 
     this.dimensions = {
-      x: 40,
-      y: 40,
-      z: 20
+      x: 200,
+      y: 200,
+      z: 5
     };
 
     this.handleStart = this.handleStart.bind(this);
@@ -112,7 +112,7 @@ class Index extends React.Component {
           <Button title="Stop the world" onClick={this.handleStop} />
           <Button title="Advance generation" onClick={this.handleStep} />
           <Button title="Depopulate" onClick={this.handleDepopulate} />
-          <Copy text="Press the control key while clicking to draw seeds" />
+          <Copy text="Press the control key while moving your mouse over the screen to draw cells" />
         </section>
 
         <canvas

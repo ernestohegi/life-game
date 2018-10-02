@@ -205,6 +205,12 @@ const Life = (() => {
     },
     stop() {
       cancelAnimationFrame(requestAnimationFrameId);
+    },
+    reset() {
+      newRows = [];
+      rows = [];
+      canvasContext = {}
+      requestAnimationFrameId = "";
     }
   };
 })();
