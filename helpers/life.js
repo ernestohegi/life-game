@@ -29,6 +29,13 @@ const Life = (() => {
     setCanvasContext(params) {
       canvasContext = params.canvas.getContext("2d");
     },
+    iterateGrid(grid = [], callback) {
+      grid.map((rows, rowIndex) => {
+        rows.map((cell, cellIndex) => {
+          callback(rowIndex, cellIndex);
+        });
+      });
+    },
     createGrid() {
       let i, j;
 
@@ -46,25 +53,21 @@ const Life = (() => {
       }
     },
     drawGrid() {
-      for (let x = 0; x < dimensions.x; x++) {
-        for (let y = 0; y < dimensions.y; y++) {
-          canvasContext.fillStyle = deadColor;
+      canvasContext.fillStyle = deadColor;
 
-          canvasContext.fillRect(
-            x * dimensions.z,
-            y * dimensions.z,
-            dimensions.z,
-            dimensions.z
-          );
-        }
-      }
+      const drawGrid = (rowIndex, cellIndex) => {
+        canvasContext.fillRect(
+          rowIndex * dimensions.z,
+          cellIndex * dimensions.z,
+          dimensions.z,
+          dimensions.z
+        );
+      };
+
+      this.iterateGrid(rows, drawGrid);
     },
     advanceOneGeneration() {
-      for (let i = 0; i < dimensions.x; ++i) {
-        for (let j = 0; j < dimensions.y; ++j) {
-          this.checkNeighbors(i, j);
-        }
-      }
+      this.iterateGrid(rows, this.checkNeighbors.bind(this));
 
       this.updateRows(newRows);
       this.updateSurvivors(rows);
@@ -127,22 +130,42 @@ const Life = (() => {
         newRows[x][y] === LIVE
       );
     },
+    groupCellByStatus(rowIndex, cellIndex, aliveCells, deadCells) {
+      const cell = rows[rowIndex][cellIndex];
+      const coordinate = [rowIndex, cellIndex];
+
+      (cell === LIVE) ?
+        aliveCells.push(coordinate):
+        deadCells.push(coordinate);
+    },
+    drawCells(cell) {
+      const zDimension = dimensions.z;
+
+      canvasContext.fillRect(
+        cell[0] * zDimension,
+        cell[1] * zDimension,
+        zDimension,
+        zDimension
+      );
+    },
     updateSurvivors(rows) {
-      for (let x = 0; x < dimensions.x; x++) {
-        for (let y = 0; y < dimensions.y; y++) {
-          let thisRowStatus = rows[x][y];
+      const aliveCells = [];
+      const deadCells = [];
 
-          canvasContext.fillStyle =
-            thisRowStatus === LIVE ? aliveColor : deadColor;
+      this.iterateGrid(rows, (rowIndex, cellIndex) => {
+        this.groupCellByStatus(
+          rowIndex,
+          cellIndex,
+          aliveCells,
+          deadCells
+        );
+      });
 
-          canvasContext.fillRect(
-            x * dimensions.z,
-            y * dimensions.z,
-            dimensions.z,
-            dimensions.z
-          );
-        }
-      }
+      canvasContext.fillStyle = aliveColor;
+      aliveCells.map(this.drawCells.bind(this));
+
+      canvasContext.fillStyle = deadColor;
+      deadCells.map(this.drawCells.bind(this));
     },
     getSurvivor(selectedSurvivor) {
       return rows[selectedSurvivor[0]] &&
