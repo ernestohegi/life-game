@@ -101,6 +101,8 @@ class Index extends React.Component {
           />
         </Title>
 
+        <a href="https://github.com/ernestohegi/life-game" target="_blank" style={{fontFamily: 'gaegu'}}> Link to GitHub Project</a>
+
         <section>
           <Title type="h2">Colors</Title>
           <FormColors handleFormButtonClick={this.handleFormColorsSubmit} />
