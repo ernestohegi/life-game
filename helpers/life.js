@@ -1,3 +1,14 @@
+import {
+  checkNeighbors,
+  isNotItself,
+  isInsideTheXAxis,
+  isInsideTheYAxis,
+  isInsideTheCoordinates,
+  isNeighborAlive
+} from "./Doctor";
+import { createGrid, iterateGrid, setGridSize } from "./Grid";
+import { drawCell, setCanvasContext, setFillStyle } from "./Painter";
+
 const Life = (() => {
   const LIVE = "live";
   const DIE = "die";
@@ -8,57 +19,10 @@ const Life = (() => {
   let requestAnimationFrameId = "",
     newRows = [],
     rows = [],
-    dimensions = { x: 0, y: 0, z: 0 },
-    canvasContext = {};
-
-  const setUpGrid = params => {
-    setGridSize(params);
-    setCanvasContext(params);
-  };
-
-  const setGridSize = params => {
-    dimensions = params.dimensions;
-  };
-
-  const setCanvasContext = params => {
-    canvasContext = params.canvas.getContext("2d");
-  };
-
-  const iterateGrid = (grid = [], callback) => {
-    grid.map((rows, rowIndex) => {
-      rows.map((cell, cellIndex) => {
-        callback(rowIndex, cellIndex);
-      });
-    });
-  };
-
-  const createGrid = (rows = [], newRows = []) => {
-    let i, j;
-
-    for (i = 0; i < dimensions.x; ++i) {
-      rows.push([]);
-      newRows.push([]);
-
-      for (j = 0; j < dimensions.y; ++j) {
-        rows[i].push(DIE);
-        newRows[i].push(DIE);
-      }
-    }
-  };
-
-  const drawCell = cell => {
-    const zDimension = dimensions.z;
-
-    canvasContext.fillRect(
-      cell[0] * zDimension,
-      cell[1] * zDimension,
-      zDimension,
-      zDimension
-    );
-  };
+    dimensions = { x: 0, y: 0, z: 0 };
 
   const drawGrid = () => {
-    canvasContext.fillStyle = deadColor;
+    setFillStyle(deadColor);
     iterateGrid(rows, (x, y) => drawCell([x, y]));
   };
 
@@ -105,7 +69,7 @@ const Life = (() => {
     const deadCells = [];
 
     iterateGrid(rows, (rowIndex, cellIndex) => {
-      this.groupCellByStatus(
+      groupCellByStatus(
         rowIndex,
         cellIndex,
         aliveCells,
@@ -113,14 +77,14 @@ const Life = (() => {
       );
     });
 
-    canvasContext.fillStyle = aliveColor;
+    setFillStyle(aliveColor);
     aliveCells.map(drawCell);
 
-    canvasContext.fillStyle = deadColor;
+    setFillStyle(deadColor);
     deadCells.map(drawCell);
   };
 
-  const getSurvivor = selectedSurvivor => {
+  const getSurvivor = (rows, selectedSurvivor) => {
     return rows[selectedSurvivor[0]] &&
       rows[selectedSurvivor[0]][selectedSurvivor[1]]
       ? rows[selectedSurvivor[0]][selectedSurvivor[1]]
@@ -128,7 +92,7 @@ const Life = (() => {
   };
 
   const selectSurvivor = selectedSurvivor => {
-    const survivor = getSurvivor(selectedSurvivor);
+    const survivor = getSurvivor(rows, selectedSurvivor);
 
     if (survivor.length === 0) return false;
 
@@ -139,18 +103,16 @@ const Life = (() => {
     updateSurvivors(rows);
   };
 
-  const updateRows = newRows => {
-    rows = newRows;
-  };
+  const updateRows = newRows => rows = newRows;
 
   const setRowStatus = (x, y, status) => {
     newRows[x][y] = status;
     return newRows;
   };
 
-  const getRandomColor = () => {
-    return "#" + Math.floor(Math.random() * 16777215).toString(16);
-  };
+  const getRandomColor = () => (
+    "#" + Math.floor(Math.random() * 16777215).toString(16)
+  );
 
   const setColors = colors => {
     aliveColor = colors.alive;
@@ -161,8 +123,9 @@ const Life = (() => {
     init(params) {
       if (params === undefined) throw "No params specified.";
 
-      setUpGrid(params);
+      setGridSize(params);
       createGrid(rows, newRows);
+      setCanvasContext(params);
       drawGrid();
     },
     start() {
