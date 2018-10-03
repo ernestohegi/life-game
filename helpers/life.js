@@ -24,7 +24,7 @@ const Life = (() => {
     canvasContext = params.canvas.getContext("2d");
   };
 
-  const iterateGrid = (grid = [], callback) {
+  const iterateGrid = (grid = [], callback) => {
     grid.map((rows, rowIndex) => {
       rows.map((cell, cellIndex) => {
         callback(rowIndex, cellIndex);
@@ -46,23 +46,36 @@ const Life = (() => {
     }
   };
 
+  const drawCell = cell => {
+    const zDimension = dimensions.z;
+
+    canvasContext.fillRect(
+      cell[0] * zDimension,
+      cell[1] * zDimension,
+      zDimension,
+      zDimension
+    );
+  };
+
   const drawGrid = () => {
     canvasContext.fillStyle = deadColor;
+    iterateGrid(rows, (x, y) => drawCell([x, y]));
+  };
 
-    const drawGrid = (rowIndex, cellIndex) => {
-      canvasContext.fillRect(
-        rowIndex * dimensions.z,
-        cellIndex * dimensions.z,
-        dimensions.z,
-        dimensions.z
-      );
-    };
-
-    iterateGrid(rows, drawGrid);
+  const getDestiny = (neighborsCount, isAlive) => {
+    return (isAlive && (neighborsCount === 3 || neighborsCount === 2)) ||
+      (isAlive === false && neighborsCount === 3)
+      ? LIVE
+      : DIE;
   };
 
   const advanceOneGeneration = () => {
-    iterateGrid(rows, checkNeighbors);
+    iterateGrid(rows, (x, y) => {
+      newRows[x][y] = getDestiny(
+        checkNeighbors(x, y),
+        newRows[x][y] === LIVE
+      );
+    });
     updateRows(newRows);
     updateSurvivors(rows);
   };
@@ -71,13 +84,6 @@ const Life = (() => {
     advanceOneGeneration();
 
     requestAnimationFrameId = requestAnimationFrame(runGrid);
-  };
-
-  const getDestiny = (neighborsCount, isAlive) => {
-    return (isAlive && (neighborsCount === 3 || neighborsCount === 2)) ||
-      (isAlive === false && neighborsCount === 3)
-      ? LIVE
-      : DIE;
   };
 
   const groupCellByStatus = (
@@ -92,17 +98,6 @@ const Life = (() => {
     (cell === LIVE) ?
       aliveCells.push(coordinate):
       deadCells.push(coordinate);
-  };
-
-  const drawCell = cell => {
-    const zDimension = dimensions.z;
-
-    canvasContext.fillRect(
-      cell[0] * zDimension,
-      cell[1] * zDimension,
-      zDimension,
-      zDimension
-    );
   };
 
   const updateSurvivors = rows => {
@@ -125,7 +120,7 @@ const Life = (() => {
     deadCells.map(drawCell);
   };
 
-  const getSurvivor = (selectedSurvivor) => {
+  const getSurvivor = selectedSurvivor => {
     return rows[selectedSurvivor[0]] &&
       rows[selectedSurvivor[0]][selectedSurvivor[1]]
       ? rows[selectedSurvivor[0]][selectedSurvivor[1]]
@@ -134,11 +129,10 @@ const Life = (() => {
 
   const selectSurvivor = selectedSurvivor => {
     const survivor = getSurvivor(selectedSurvivor);
-    let newStatus;
 
     if (survivor.length === 0) return false;
 
-    newStatus = survivor === DIE ? LIVE : DIE;
+    const newStatus = survivor === DIE ? LIVE : DIE;
 
     setRowStatus(selectedSurvivor[0], selectedSurvivor[1], newStatus);
     updateRows(newRows);
@@ -151,7 +145,6 @@ const Life = (() => {
 
   const setRowStatus = (x, y, status) => {
     newRows[x][y] = status;
-
     return newRows;
   };
 

@@ -17,9 +17,7 @@ export const checkNeighbors = (x, y) => {
     }
   }
 
-  newRows[x][y] = getDestiny(neighborsCount, newRows[x][y] === LIVE);
-
-  return newRows;
+  return neighborsCount;
 };
 
 export const isNotItself = (x, y, i, j) => {
