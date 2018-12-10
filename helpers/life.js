@@ -1,3 +1,22 @@
+const Canvas = {
+  draw: (canvasContext, options = {}) => {
+    const zDimension = options.dimensions.z;
+
+    canvasContext.fillStyle = options.color;
+
+    canvasContext.fillRect(
+      options.rowIndex * zDimension,
+      options.cellIndex * zDimension,
+      zDimension,
+      zDimension
+    );
+  }
+};
+
+const getRandomColor = () => {
+  return "#" + Math.floor(Math.random() * 16777215).toString(16);
+};
+
 const Life = (() => {
   const LIVE = "live";
   const DIE = "die";
@@ -15,26 +34,14 @@ const Life = (() => {
     init(params) {
       if (params === undefined) throw "No params specified.";
 
-      this.setUpGrid(params);
+      canvasContext = params.canvas.getContext("2d");
+
+      this.setGridSize(params);
       this.createGrid();
       this.drawGrid();
     },
-    setUpGrid(params) {
-      this.setGridSize(params);
-      this.setCanvasContext(params);
-    },
     setGridSize(params) {
       dimensions = params.dimensions;
-    },
-    setCanvasContext(params) {
-      canvasContext = params.canvas.getContext("2d");
-    },
-    iterateGrid(grid = [], callback) {
-      grid.map((rows, rowIndex) => {
-        rows.map((cell, cellIndex) => {
-          callback(rowIndex, cellIndex);
-        });
-      });
     },
     createGrid() {
       let i, j;
@@ -53,28 +60,27 @@ const Life = (() => {
       }
     },
     drawGrid() {
-      canvasContext.fillStyle = deadColor;
-
-      const drawGrid = (rowIndex, cellIndex) => {
-        canvasContext.fillRect(
-          rowIndex * dimensions.z,
-          cellIndex * dimensions.z,
-          dimensions.z,
-          dimensions.z
-        );
-      };
-
-      this.iterateGrid(rows, drawGrid);
+      this.iterateGrid(rows, (rowIndex, cellIndex) => Canvas.draw(canvasContext, {
+        rowIndex,
+        cellIndex,
+        dimensions,
+        color: deadColor
+      }));
+    },
+    iterateGrid(grid = [], callback) {
+      grid.map((rows, rowIndex) => {
+        rows.map((cell, cellIndex) => {
+          callback(rowIndex, cellIndex);
+        });
+      });
     },
     advanceOneGeneration() {
       this.iterateGrid(rows, this.checkNeighbors.bind(this));
-
       this.updateRows(newRows);
       this.updateSurvivors(rows);
     },
     runGrid() {
       this.advanceOneGeneration();
-
       requestAnimationFrameId = requestAnimationFrame(this.runGrid.bind(this));
     },
     checkNeighbors(x, y) {
@@ -138,16 +144,6 @@ const Life = (() => {
         aliveCells.push(coordinate):
         deadCells.push(coordinate);
     },
-    drawCells(cell) {
-      const zDimension = dimensions.z;
-
-      canvasContext.fillRect(
-        cell[0] * zDimension,
-        cell[1] * zDimension,
-        zDimension,
-        zDimension
-      );
-    },
     updateSurvivors(rows) {
       const aliveCells = [];
       const deadCells = [];
@@ -161,11 +157,19 @@ const Life = (() => {
         );
       });
 
-      canvasContext.fillStyle = aliveColor;
-      aliveCells.map(this.drawCells.bind(this));
+      aliveCells.map(cell => Canvas.draw(canvasContext, {
+        dimensions,
+        rowIndex: cell[0],
+        cellIndex: cell[1],
+        color: aliveColor
+      }));
 
-      canvasContext.fillStyle = deadColor;
-      deadCells.map(this.drawCells.bind(this));
+      deadCells.map(cell => Canvas.draw(canvasContext, {
+        dimensions,
+        rowIndex: cell[0],
+        cellIndex: cell[1],
+        color: deadColor
+      }));
     },
     getSurvivor(selectedSurvivor) {
       return rows[selectedSurvivor[0]] &&
@@ -192,13 +196,6 @@ const Life = (() => {
       newRows[x][y] = status;
 
       return newRows;
-    },
-    getRandomColor() {
-      return "#" + Math.floor(Math.random() * 16777215).toString(16);
-    },
-    setColors(colors) {
-      aliveColor = colors.alive;
-      deadColor = colors.dead;
     },
     start() {
       requestAnimationFrameId = requestAnimationFrame(this.runGrid.bind(this));
