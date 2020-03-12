@@ -66,7 +66,7 @@ class Index extends React.Component {
       }
     }
 
-    Life.selectSurvivor(selectedSurvivor);
+    Life.selectSurvivor(selectedSurvivor, 'live');
   }
 
   handleMouseMoveOverCanvas(e) {

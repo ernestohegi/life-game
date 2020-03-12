@@ -173,13 +173,17 @@ const Life = (() => {
         ? rows[selectedSurvivor[0]][selectedSurvivor[1]]
         : [];
     },
-    selectSurvivor(selectedSurvivor) {
+    selectSurvivor(selectedSurvivor, status) {
       const survivor = this.getSurvivor(selectedSurvivor);
       let newStatus;
 
       if (survivor.length === 0) return false;
 
-      newStatus = survivor === DIE ? LIVE : DIE;
+      if (status) {
+        newStatus = status
+      } else {
+        newStatus = survivor === DIE ? LIVE : DIE;
+      }
 
       this.setRowStatus(selectedSurvivor[0], selectedSurvivor[1], newStatus);
       this.updateRows(newRows);

@@ -1,6 +1,6 @@
 {
   "name": "life-game",
-  "version": "3.0.0",
+  "version": "1.1.0",
   "description": "JavaScript version of Conway's Game of Life",
   "main": "/pages/index.js",
   "dependencies": {
