@@ -3,5 +3,5 @@ COPY . app/
 WORKDIR /app
 RUN yarn install
 RUN npm run build
-EXPOSE 5000
-RUN npm run start
+EXPOSE 3000
+ENTRYPOINT npm run start
