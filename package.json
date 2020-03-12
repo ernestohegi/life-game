@@ -28,7 +28,7 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "deploy": "npm run test && now --public && now alias"
+    "deploy": "npm run test && now --public --prod"
   },
   "repository": "git+https://github.com/ernestohegi/life-game.git",
   "author": "Ernesto Hegi",
