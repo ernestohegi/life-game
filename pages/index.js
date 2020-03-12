@@ -53,13 +53,17 @@ class Index extends React.Component {
 
     let selectedSurvivor = [];
 
-    for (let i = 0; i < this.dimensions.x; i++) {
-      for (let j = 0; j < this.dimensions.y; j++) {
+    const {
+      x, y, z
+    } = this.dimensions;
+
+    for (let i = 0; i < x; i++) {
+      for (let j = 0; j < y; j++) {
         if (
-          x >= i * this.dimensions.z &&
-          x < (i + 1) * this.dimensions.z &&
-          y >= j * this.dimensions.z &&
-          y < (j + 1) * this.dimensions.z
+          x >= i * z &&
+          x < (i + 1) * z &&
+          y >= j * z &&
+          y < (j + 1) * z
         ) {
           selectedSurvivor = [i, j];
         }
