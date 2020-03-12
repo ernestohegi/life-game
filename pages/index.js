@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import Life from "../helpers/Life";
+import Life from "../helpers/life";
 import Button from "../components/Button";
 import Copy from "../components/Copy";
 import FormColors from "../components/FormColors";
