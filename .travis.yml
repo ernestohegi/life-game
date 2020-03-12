@@ -5,7 +5,7 @@ services:
   docker
 install:
   - yarn install
-before_script:
-  - npm run dev
+# before_script:
+#   - npm run dev
 script:
   - npm run test
