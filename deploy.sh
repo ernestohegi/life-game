@@ -2,7 +2,7 @@
 
 set -e
 
-IMAGE="<username>:<repository>"
+IMAGE="<username>/<repository>"
 LATEST_COMMIT_ID=$(git log --format="%H" -n 1)
 
 docker build -t ${IMAGE}:${LATEST_COMMIT_ID} .
