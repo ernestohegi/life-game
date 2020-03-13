@@ -14,3 +14,6 @@ deploy:
   script: bash deploy.sh
   on:
     branch: master
+branches:
+  only:
+    - master
