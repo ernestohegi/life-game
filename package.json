@@ -7,7 +7,8 @@
     "next": "^9.3.2",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
-    "serve": "^11.0.0"
+    "serve": "^11.0.0",
+    "vercel": "^19.2.0"
   },
   "devDependencies": {
     "babel-jest": "23.6.0",
@@ -28,7 +29,8 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "deploy": "npm run test && now --public --prod"
+    "deploy:staging": "npm run test && vercel --public",
+    "deploy:prod": "npm run test && vercel --public --prod"
   },
   "repository": "git+https://github.com/ernestohegi/life-game.git",
   "author": "Ernesto Hegi",
