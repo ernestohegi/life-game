@@ -4,7 +4,7 @@
   "description": "JavaScript version of Conway's Game of Life",
   "main": "/pages/index.js",
   "dependencies": {
-    "next": "^7.0.0",
+    "next": "^9.0.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
     "serve": "^9.1.2"
