@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 import Life from "../helpers/life";
 import Button from "../components/Button";
@@ -7,127 +7,114 @@ import FormColors from "../components/FormColors";
 import Link from "../components/Link";
 import Title from "../components/Title";
 
-class Index extends React.Component {
-  constructor(props) {
-    super(props);
+let canvas;
 
-    this.dimensions = {
-      x: 200,
-      y: 200,
-      z: 5
-    };
+const dimensions = {
+  x: 200,
+  y: 200,
+  z: 5
+};
 
-    this.handleStart = this.handleStart.bind(this);
-    this.handleStop = this.handleStop.bind(this);
-    this.handleDepopulate = this.handleDepopulate.bind(this);
-    this.handleCanvasClicked = this.handleCanvasClicked.bind(this);
-    this.handleMouseMoveOverCanvas = this.handleMouseMoveOverCanvas.bind(this);
-    this.handleStep = this.handleStep.bind(this);
-    this.handleFormColorsSubmit = this.handleFormColorsSubmit.bind(this);
-  }
+const handleStart = () => {
+  Life.start();
+};
 
-  componentDidMount() {
-    Life.init({
-      canvas: this.canvas,
-      dimensions: this.dimensions
-    });
-  }
+const handleStop = () => {
+  Life.stop();
+};
 
-  handleStart() {
-    Life.start();
-  }
+const handleDepopulate = () => {
+  Life.stop();
+  Life.drawGrid();
+  Life.createGrid();
+};
 
-  handleStop() {
-    Life.stop();
-  }
+const handleCanvasClicked = (e) => {
+  const x = e.nativeEvent.offsetX;
+  const y = e.nativeEvent.offsetY;
+  let selectedSurvivor = [];
 
-  handleDepopulate() {
-    Life.stop();
-    Life.drawGrid();
-    Life.createGrid();
-  }
-
-  handleCanvasClicked(e) {
-    const x = e.nativeEvent.offsetX;
-    const y = e.nativeEvent.offsetY;
-
-    let selectedSurvivor = [];
-
-    for (let i = 0; i < this.dimensions.x; i++) {
-      for (let j = 0; j < this.dimensions.y; j++) {
-        if (
-          x >= i * this.dimensions.z &&
-          x < (i + 1) * this.dimensions.z &&
-          y >= j * this.dimensions.z &&
-          y < (j + 1) * this.dimensions.z
-        ) {
-          selectedSurvivor = [i, j];
-        }
+  for (let i = 0; i < dimensions.x; i++) {
+    for (let j = 0; j < dimensions.y; j++) {
+      if (
+        x >= i * dimensions.z &&
+        x < (i + 1) * dimensions.z &&
+        y >= j * dimensions.z &&
+        y < (j + 1) * dimensions.z
+      ) {
+        selectedSurvivor = [i, j];
       }
     }
-
-    Life.selectSurvivor(selectedSurvivor, 'live');
   }
 
-  handleMouseMoveOverCanvas(e) {
-    if (e.ctrlKey || e.altKey) {
-      this.handleCanvasClicked(e);
-    }
+  Life.selectSurvivor(selectedSurvivor, 'live');
+};
+
+const handleMouseMoveOverCanvas = (e) => {
+  if (e.ctrlKey || e.altKey) {
+    handleCanvasClicked(e);
   }
+};
 
-  handleStep() {
-    Life.advanceOneGeneration();
-  }
+const handleStep = () => {
+  Life.advanceOneGeneration();
+};
 
-  handleFormColorsSubmit(colors) {
-    Life.setColors(colors);
-  }
+const handleFormColorsSubmit = (colors) => {
+  Life.setColors(colors);
+};
 
-  render() {
-    return (
-      <React.Fragment>
-        <Head>
-          <link
-            href="https://fonts.googleapis.com/css?family=Gaegu|Roboto"
-            rel="stylesheet"
-          />
-        </Head>
+const Index = () => {
+  useEffect(() => {
+    Life.init({
+      canvas,
+      dimensions
+    });
+  }, []);
 
-        <Title type="h1">
-          <Link
-            url="http://en.wikipedia.org/wiki/Conway's_Game_of_Life"
-            target="_blank"
-            title="Game of Life"
-          />
-        </Title>
-
-        <a href="https://github.com/ernestohegi/life-game" target="_blank" style={{fontFamily: 'gaegu'}}> Link to GitHub Project</a>
-
-        <section>
-          <Title type="h2">Colors</Title>
-          <FormColors handleFormButtonClick={this.handleFormColorsSubmit} />
-        </section>
-
-        <section>
-          <Title type="h2">Action buttons</Title>
-          <Button title="Give life" onClick={this.handleStart} />
-          <Button title="Stop the world" onClick={this.handleStop} />
-          <Button title="Advance generation" onClick={this.handleStep} />
-          <Button title="Depopulate" onClick={this.handleDepopulate} />
-          <Copy text="Press the control key while moving your mouse over the screen to draw cells" />
-        </section>
-
-        <canvas
-          id="game"
-          width={this.dimensions.x * this.dimensions.z}
-          height={this.dimensions.x * this.dimensions.z}
-          onClick={this.handleCanvasClicked}
-          onMouseMove={this.handleMouseMoveOverCanvas}
-          ref={node => (this.canvas = node)}
+  return (
+    <React.Fragment>
+      <Head>
+        <link
+          href="https://fonts.googleapis.com/css?family=Gaegu|Roboto"
+          rel="stylesheet"
         />
-      </React.Fragment>
-    );
-  }
-}
+      </Head>
+
+      <Title type="h1">
+        <Link
+          url="http://en.wikipedia.org/wiki/Conway's_Game_of_Life"
+          target="_blank"
+          title="Game of Life"
+        />
+      </Title>
+
+      <a href="https://github.com/ernestohegi/life-game" target="_blank" style={{fontFamily: 'gaegu'}}> Link to GitHub Project</a>
+
+      <section>
+        <Title type="h2">Colors</Title>
+        <FormColors callback={handleFormColorsSubmit} />
+      </section>
+
+      <section>
+        <Title type="h2">Action buttons</Title>
+        <Button title="Give life" onClick={handleStart} />
+        <Button title="Stop the world" onClick={handleStop} />
+        <Button title="Advance generation" onClick={handleStep} />
+        <Button title="Depopulate" onClick={handleDepopulate} />
+        <Copy text="Press the control key while moving your mouse over the screen to draw cells" />
+      </section>
+
+      <canvas
+        id="game"
+        width={dimensions.x * dimensions.z}
+        height={dimensions.x * dimensions.z}
+        onClick={handleCanvasClicked}
+        onMouseMove={handleMouseMoveOverCanvas}
+        ref={node => canvas = node}
+      />
+    </React.Fragment>
+  );
+};
 
 export default Index;

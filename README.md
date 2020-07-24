@@ -22,10 +22,10 @@ http://en.wikipedia.org/wiki/Conway's_Game_of_Life
 
 ### Installation
 
-- `yarn install`
-- `yarn build`
-- `yarn serve`
+- `npm install`
+- `npm run build`
+- `npm run serve`
 
 ### Tests
 
-**Jest** is used to run tests `yarn test`.
+**Jest** is used to run tests `npm test`.
