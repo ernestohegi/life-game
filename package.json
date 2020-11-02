@@ -20,7 +20,7 @@
     "mem": "8.0.0",
     "prettier": "2.0.5",
     "pretty-quick": "2.0.1",
-    "react-test-renderer": "16.13.1",
+    "react-test-renderer": "16.14.0",
     "serve-handler": "5.0.8"
   },
   "scripts": {
