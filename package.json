@@ -18,7 +18,7 @@
     "enzyme-adapter-react-16": "1.15.2",
     "jest": "23.6.0",
     "mem": "8.0.0",
-    "prettier": "2.1.2",
+    "prettier": "2.3.1",
     "pretty-quick": "3.1.0",
     "react-test-renderer": "16.14.0",
     "serve-handler": "5.0.8"
