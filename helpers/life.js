@@ -28,10 +28,11 @@ const Life = (() => {
     },
     setCanvasContext(params) {
       canvasContext = params.canvas.getContext("2d");
+      canvasContext.scale(params.dimensions.scale, params.dimensions.scale);
     },
     iterateGrid(grid = [], callback) {
       grid.map((rows, rowIndex) => {
-        rows.map((cell, cellIndex) => {
+        rows.map((_, cellIndex) => {
           callback(rowIndex, cellIndex);
         });
       });
@@ -88,7 +89,7 @@ const Life = (() => {
             if (
               this.isNotItself(x, y, i, j) &&
               this.isInsideTheYAxis(j, y) &&
-              this.isNeighborAlive(i, j)
+              this.isNeighbourAlive(i, j)
             ) {
               ++neighborsCount;
             }
@@ -123,7 +124,7 @@ const Life = (() => {
         coordinate <= gridCoordinate
       );
     },
-    isNeighborAlive(x, y) {
+    isNeighbourAlive(x, y) {
       return (
         newRows[x] !== undefined &&
         newRows[x][y] !== undefined &&
@@ -197,12 +198,10 @@ const Life = (() => {
 
       return newRows;
     },
-    getRandomColor() {
-      return "#" + Math.floor(Math.random() * 16777215).toString(16);
-    },
     setColors(colors) {
       aliveColor = colors.alive;
       deadColor = colors.dead;
+      this.drawGrid();
     },
     start() {
       requestAnimationFrameId = requestAnimationFrame(this.runGrid.bind(this));

@@ -10,9 +10,10 @@ import Title from "../components/Title";
 let canvas;
 
 const dimensions = {
-  x: 200,
-  y: 200,
-  z: 5
+  x: 100,
+  y: 100,
+  z: 6,
+  scale: 1
 };
 
 const handleStart = () => {
@@ -29,7 +30,7 @@ const handleDepopulate = () => {
   Life.createGrid();
 };
 
-const handleCanvasClicked = (e) => {
+const drawOnCanvas = (e) => {
   const x = e.nativeEvent.offsetX;
   const y = e.nativeEvent.offsetY;
   let selectedSurvivor = [];
@@ -51,16 +52,14 @@ const handleCanvasClicked = (e) => {
 };
 
 const handleMouseMoveOverCanvas = (e) => {
-  if (e.ctrlKey || e.altKey) {
-    handleCanvasClicked(e);
-  }
+  drawOnCanvas(e);
 };
 
 const handleStep = () => {
   Life.advanceOneGeneration();
 };
 
-const handleFormColorsSubmit = (colors) => {
+const handleColourChange = (colors) => {
   Life.setColors(colors);
 };
 
@@ -73,7 +72,7 @@ const Index = () => {
   }, []);
 
   return (
-    <React.Fragment>
+    <>
       <Head>
         <link
           href="https://fonts.googleapis.com/css?family=Gaegu|Roboto"
@@ -93,7 +92,7 @@ const Index = () => {
 
       <section>
         <Title type="h2">Colors</Title>
-        <FormColors callback={handleFormColorsSubmit} />
+        <FormColors callback={handleColourChange} />
       </section>
 
       <section>
@@ -102,18 +101,17 @@ const Index = () => {
         <Button title="Stop the world" onClick={handleStop} />
         <Button title="Advance generation" onClick={handleStep} />
         <Button title="Depopulate" onClick={handleDepopulate} />
-        <Copy text="Press the control key while moving your mouse over the screen to draw cells" />
+        <Copy text="Move mouse over canvas to draw cells" />
       </section>
 
       <canvas
         id="game"
-        width={dimensions.x * dimensions.z}
-        height={dimensions.x * dimensions.z}
-        onClick={handleCanvasClicked}
+        width={dimensions.x * dimensions.z * dimensions.scale}
+        height={dimensions.x * dimensions.z * dimensions.scale}
         onMouseMove={handleMouseMoveOverCanvas}
         ref={node => canvas = node}
       />
-    </React.Fragment>
+    </>
   );
 };
 
