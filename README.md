@@ -1,5 +1,4 @@
 # Game of Life
-
 https://life-game.now.sh
 
 JavaScript version of Conway's Game of Life.
