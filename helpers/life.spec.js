@@ -1,4 +1,4 @@
-import Life from "./life";
+import Life, {isInsideTheXAxis, isInsideTheYAxis, getDestiny, setRowStatus, checkNeighbors, setupGrid, createGrid}  from "./life";
 
 const destinyTestCases = [
   // Any live cell with fewer than two live neighbours dies, as if caused by under-population.
@@ -163,7 +163,7 @@ describe("Game of Life", () => {
   it("should be able to get the right cell status for the next round", () => {
     for (const index in destinyTestCases) {
       const status = destinyTestCases[index];
-      const destiny = Life.getDestiny(status.neighborsCount, status.isAlive);
+      const destiny = getDestiny(status.neighborsCount, status.isAlive);
 
       expect(destiny).toEqual(status.expected);
     }
@@ -172,39 +172,33 @@ describe("Game of Life", () => {
   it("should be able to tell whether the current index is insde the x axis", () => {
     for (const index in xAxisTestCases) {
       const testCase = xAxisTestCases[index];
-      let isInsideTheXAxis = false;
 
-      Life.setGridSize({
+      setupGrid({
         dimensions: {
           x: testCase.rows,
           y: testCase.columns
         }
       });
 
-      isInsideTheXAxis = Life.isInsideTheXAxis(testCase.row, testCase.rows);
-
-      expect(isInsideTheXAxis).toEqual(testCase.expectedResult);
+      expect(isInsideTheXAxis(testCase.row, testCase.rows)).toEqual(testCase.expectedResult);
     }
   });
 
   it("should be able to tell whether the current index is insde the y axis", () => {
     for (const index in yAxisTestCases) {
       const testCase = yAxisTestCases[index];
-      let isInsideTheXAxis = false;
 
-      Life.setGridSize({
+      setupGrid({
         dimensions: {
           x: testCase.columns,
           y: testCase.columns
         }
       });
 
-      isInsideTheXAxis = Life.isInsideTheYAxis(
+      expect(isInsideTheYAxis(
         testCase.column,
         testCase.columns
-      );
-
-      expect(isInsideTheXAxis).toEqual(testCase.expectedResult);
+      )).toEqual(testCase.expectedResult);
     }
   });
 
@@ -212,36 +206,36 @@ describe("Game of Life", () => {
     // Lives
     let checkedNeighbors;
 
-    Life.setGridSize({
+    setupGrid({
       dimensions: {
         x: 3,
         y: 3
       }
     });
 
-    Life.createGrid();
+    createGrid();
 
-    Life.setRowStatus(0, 0, "live");
-    Life.setRowStatus(0, 1, "live");
-    Life.setRowStatus(1, 1, "live");
+    setRowStatus(0, 0, "live");
+    setRowStatus(0, 1, "live");
+    setRowStatus(1, 1, "live");
 
-    checkedNeighbors = Life.checkNeighbors(1, 1);
+    checkedNeighbors = checkNeighbors(1, 1);
 
     expect(checkedNeighbors[1][1]).toEqual("live");
 
     // Dies
-    Life.setGridSize({
+    setupGrid({
       dimensions: {
         x: 3,
         y: 3
       }
     });
 
-    Life.createGrid();
+    createGrid();
 
-    Life.setRowStatus(1, 1, "live");
+    setRowStatus(1, 1, "live");
 
-    checkedNeighbors = Life.checkNeighbors(1, 1);
+    checkedNeighbors = checkNeighbors(1, 1);
 
     expect(checkedNeighbors[1][1]).toEqual("die");
   });

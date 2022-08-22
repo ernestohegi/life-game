@@ -26,8 +26,7 @@ const handleStop = () => {
 
 const handleDepopulate = () => {
   Life.stop();
-  Life.drawGrid();
-  Life.createGrid();
+  Life.clearGrid();
 };
 
 const drawOnCanvas = (e) => {

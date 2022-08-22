@@ -22,8 +22,8 @@ http://en.wikipedia.org/wiki/Conway's_Game_of_Life
 ### Installation
 
 - `npm install`
-- `npm run build`
-- `npm run serve`
+- `npm build`
+- `npm start`
 
 ### Tests
 

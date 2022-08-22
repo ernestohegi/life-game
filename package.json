@@ -3,6 +3,16 @@
   "version": "1.1.0",
   "description": "JavaScript version of Conway's Game of Life",
   "main": "/pages/index.js",
+  "scripts": {
+    "test": "jest",
+    "lint": "pretty-quick",
+    "dev": "next",
+    "build": "next build",
+    "start": "next start",
+    "deploy:staging": "npm run test && vercel --public",
+    "deploy:prod": "npm run test && vercel --public --prod",
+    "deploy:prod:unsafe": "vercel --public --prod"
+  },
   "dependencies": {
     "next": "12.1.0",
     "react": "17.0.2",
@@ -20,16 +30,6 @@
     "prettier": "2.1.2",
     "pretty-quick": "3.1.0",
     "serve-handler": "5.0.8"
-  },
-  "scripts": {
-    "test": "jest",
-    "lint": "pretty-quick",
-    "dev": "next",
-    "build": "next build",
-    "start": "next start",
-    "deploy:staging": "npm run test && vercel --public",
-    "deploy:prod": "npm run test && vercel --public --prod",
-    "deploy:prod:unsafe": "vercel --public --prod"
   },
   "engines": {
     "node" : ">=16.0.0"
