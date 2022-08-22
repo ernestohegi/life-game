@@ -6,10 +6,10 @@
   "dependencies": {
     "next": "12.1.0",
     "react": "17.0.2",
-    "react-dom": "17.0.2",
     "react-color": "2.18.1",
+    "react-dom": "17.0.2",
     "serve": "13.0.2",
-    "vercel": "20.0.0"
+    "vercel": "^19.1.2"
   },
   "devDependencies": {
     "babel-jest": "27.5.1",
