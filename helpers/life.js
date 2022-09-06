@@ -9,24 +9,16 @@ let rows = [];
 let dimensions = { x: 0, y: 0, z: 0 };
 let canvasContext = {};
 
-const isInsideCoordinates = (coordinate, position, gridCoordinate) =>
-  coordinate !== undefined &&
-  position !== undefined &&
-  coordinate > -1 &&
-  coordinate <= gridCoordinate;
+const isInsideCoordinates = (coordinate, gridCoordinate) =>
+  coordinate > -1 && coordinate <= gridCoordinate;
 
 const isNotItself = (x, y, i, j) => (x === i && y === j) === false;
 
-const isInsideTheXAxis = (index, x) =>
-  isInsideCoordinates(index, x, dimensions.x);
+const isInsideTheXAxis = (index) => isInsideCoordinates(index, dimensions.x);
 
-const isInsideTheYAxis = (index, y) =>
-  isInsideCoordinates(index, y, dimensions.y);
+const isInsideTheYAxis = (index) => isInsideCoordinates(index, dimensions.y);
 
-const isNeighbourAlive = (newRows, x, y) =>
-  newRows[x] !== undefined &&
-  newRows[x][y] !== undefined &&
-  newRows[x][y] === LIVE;
+const isNeighbourAlive = (newRows, x, y) => newRows?.[x]?.[y] === LIVE;
 
 const getDestiny = (neighborsCount, isAlive) =>
   (isAlive && (neighborsCount === 3 || neighborsCount === 2)) ||
@@ -40,11 +32,11 @@ const checkNeighbors = (x, y) => {
   let j = 0;
 
   for (i = x - 1; i <= x + 1; ++i) {
-    if (isInsideTheXAxis(i, x)) {
+    if (isInsideTheXAxis(i)) {
       for (j = y - 1; j <= y + 1; ++j) {
         if (
           isNotItself(x, y, i, j) &&
-          isInsideTheYAxis(j, y) &&
+          isInsideTheYAxis(j) &&
           isNeighbourAlive(newRows, i, j)
         ) {
           ++neighborsCount;
@@ -144,6 +136,10 @@ const advanceOneGeneration = () => {
   iterateGrid(rows, checkNeighbors);
   updateRows(newRows);
   updateSurvivors(rows);
+
+  generationsCounter += 1;
+
+  if (callback) callback(generationsCounter);
 };
 
 const runGrid = () => {
@@ -152,14 +148,23 @@ const runGrid = () => {
   requestAnimationFrameId = requestAnimationFrame(runGrid);
 };
 
+let generationsCounter = 0;
+
+let callback;
+
 const Life = (() => ({
   init(params) {
     setupGrid(params);
     createGrid();
     drawGrid();
+
+    callback = params.callback;
   },
   advanceOneGeneration() {
     advanceOneGeneration();
+  },
+  getGenerations() {
+    return generationsCounter;
   },
   selectSurvivor(selectedSurvivor, status) {
     const survivor =

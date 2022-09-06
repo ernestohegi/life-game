@@ -60,11 +60,13 @@ const handleColourChange = (colors) => {
 
 const Index = () => {
   const [isCanvasClicked, setIsCanvasClicked] = useState(false);
+  const [generationCounter, setGenerationCounter] = useState(0);
 
   useEffect(() => {
     Life.init({
       canvas,
       dimensions,
+      callback: setGenerationCounter,
     });
   }, []);
 
@@ -113,6 +115,7 @@ const Index = () => {
         <Button title="Advance generation" onClick={handleStep} />
         <Button title="Depopulate" onClick={handleDepopulate} />
         <Copy text="Left click to draw." />
+        <Copy text={`Current generation: ${generationCounter}`} />
       </section>
 
       <canvas
