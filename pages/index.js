@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 import Life from "../helpers/life";
 import Button from "../components/Button";
@@ -51,10 +51,6 @@ const drawOnCanvas = (e) => {
   Life.selectSurvivor(selectedSurvivor, 'live');
 };
 
-const handleMouseMoveOverCanvas = (e) => {
-  drawOnCanvas(e);
-};
-
 const handleStep = () => {
   Life.advanceOneGeneration();
 };
@@ -64,6 +60,8 @@ const handleColourChange = (colors) => {
 };
 
 const Index = () => {
+  const [isCanvasClicked, setIsCanvasClicked] = useState(false);
+
   useEffect(() => {
     Life.init({
       canvas,
@@ -71,15 +69,22 @@ const Index = () => {
     });
   }, []);
 
+  const handleMouseMoveOverCanvas = (e) => {
+    if (!isCanvasClicked) return false;
+
+    drawOnCanvas(e);
+  };
+
+  const handleMouseDownOverCanvas = (e) => {
+    setIsCanvasClicked(true);
+  };
+
+  const handleMouseUpOverCanvas = (e) => {
+    setIsCanvasClicked(false);
+  };
+
   return (
     <>
-      <Head>
-        <link
-          href="https://fonts.googleapis.com/css?family=Gaegu|Roboto"
-          rel="stylesheet"
-        />
-      </Head>
-
       <Title type="h1">
         <Link
           url="http://en.wikipedia.org/wiki/Conway's_Game_of_Life"
@@ -101,7 +106,7 @@ const Index = () => {
         <Button title="Stop the world" onClick={handleStop} />
         <Button title="Advance generation" onClick={handleStep} />
         <Button title="Depopulate" onClick={handleDepopulate} />
-        <Copy text="Move mouse over canvas to draw cells" />
+        <Copy text="Left click to draw." />
       </section>
 
       <canvas
@@ -109,7 +114,10 @@ const Index = () => {
         width={dimensions.x * dimensions.z * dimensions.scale}
         height={dimensions.x * dimensions.z * dimensions.scale}
         onMouseMove={handleMouseMoveOverCanvas}
+        onMouseDown={handleMouseDownOverCanvas}
+        onMouseUp={handleMouseUpOverCanvas}
         ref={node => canvas = node}
+        style={{ cursor: "crosshair" }}
       />
     </>
   );
