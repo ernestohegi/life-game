@@ -182,8 +182,8 @@ const Life = (() => ({
     updateSurvivors(rows);
   },
   setColors(colors) {
-    aliveColor = colors.alive;
-    deadColor = colors.dead;
+    aliveColor = colors.alive ?? aliveColor;
+    deadColor = colors.dead ?? deadColor;
     drawGrid();
   },
   clearGrid() {
