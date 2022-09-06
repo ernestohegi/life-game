@@ -14,7 +14,7 @@
     "deploy:prod": "npm run test && npm run lint && vercel --public --prod"
   },
   "dependencies": {
-    "next": "12.1.0",
+    "next": "12.2.5",
     "react": "18.0.0",
     "react-dom": "18.0.0",
     "react-color": "2.18.1",
