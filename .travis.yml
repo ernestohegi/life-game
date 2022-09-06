@@ -1,19 +1,17 @@
 language: node_js
 node_js:
-  - 12
+  - 16
 services:
   docker
 install:
   - yarn install
-# before_script:
-#   - npm run dev
 script:
   - npm run test
-deploy:
-  provider: script
-  script: bash deploy.sh
-  on:
-    branch: master
+# deploy:
+#   provider: script
+#   script: bash deploy.sh
+#   on:
+#     branch: master
 branches:
   only:
     - master
