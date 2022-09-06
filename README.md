@@ -1,4 +1,5 @@
 # Game of Life
+
 https://life-game.now.sh
 
 JavaScript version of Conway's Game of Life.
@@ -11,6 +12,7 @@ JavaScript version of Conway's Game of Life.
 http://en.wikipedia.org/wiki/Conway's_Game_of_Life
 
 ### Technologies
+
 - JavaScript
 - React
 - Next.js

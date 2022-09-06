@@ -13,7 +13,7 @@ const dimensions = {
   x: 100,
   y: 100,
   z: 6,
-  scale: 1
+  scale: 1,
 };
 
 const handleStart = () => {
@@ -47,7 +47,7 @@ const drawOnCanvas = (e) => {
     }
   }
 
-  Life.selectSurvivor(selectedSurvivor, 'live');
+  Life.selectSurvivor(selectedSurvivor, "live");
 };
 
 const handleStep = () => {
@@ -64,7 +64,7 @@ const Index = () => {
   useEffect(() => {
     Life.init({
       canvas,
-      dimensions
+      dimensions,
     });
   }, []);
 
@@ -92,7 +92,14 @@ const Index = () => {
         />
       </Title>
 
-      <a href="https://github.com/ernestohegi/life-game" target="_blank" style={{fontFamily: 'gaegu'}}> Link to GitHub Project</a>
+      <a
+        href="https://github.com/ernestohegi/life-game"
+        target="_blank"
+        style={{ fontFamily: "gaegu" }}
+      >
+        {" "}
+        Link to GitHub Project
+      </a>
 
       <section>
         <Title type="h2">Colors</Title>
@@ -115,7 +122,7 @@ const Index = () => {
         onMouseMove={handleMouseMoveOverCanvas}
         onMouseDown={handleMouseDownOverCanvas}
         onMouseUp={handleMouseUpOverCanvas}
-        ref={node => canvas = node}
+        ref={(node) => (canvas = node)}
         style={{ cursor: "crosshair" }}
       />
     </>

@@ -9,35 +9,35 @@ let rows = [];
 let dimensions = { x: 0, y: 0, z: 0 };
 let canvasContext = {};
 
-const isInsideCoordinates = (coordinate, position, gridCoordinate) => (
+const isInsideCoordinates = (coordinate, position, gridCoordinate) =>
   coordinate !== undefined &&
   position !== undefined &&
   coordinate > -1 &&
-  coordinate <= gridCoordinate
-);
+  coordinate <= gridCoordinate;
 
 const isNotItself = (x, y, i, j) => (x === i && y === j) === false;
 
-const isInsideTheXAxis = (index, x) => isInsideCoordinates(index, x, dimensions.x);
+const isInsideTheXAxis = (index, x) =>
+  isInsideCoordinates(index, x, dimensions.x);
 
-const isInsideTheYAxis = (index, y) => isInsideCoordinates(index, y, dimensions.y);
+const isInsideTheYAxis = (index, y) =>
+  isInsideCoordinates(index, y, dimensions.y);
 
-const isNeighbourAlive = (newRows, x, y) => (
+const isNeighbourAlive = (newRows, x, y) =>
   newRows[x] !== undefined &&
   newRows[x][y] !== undefined &&
-  newRows[x][y] === LIVE
-);
+  newRows[x][y] === LIVE;
 
-const getDestiny = (neighborsCount, isAlive) => (
-  isAlive && (neighborsCount === 3 || neighborsCount === 2)) ||
-    (isAlive === false && neighborsCount === 3)
+const getDestiny = (neighborsCount, isAlive) =>
+  (isAlive && (neighborsCount === 3 || neighborsCount === 2)) ||
+  (isAlive === false && neighborsCount === 3)
     ? LIVE
     : DIE;
 
 const checkNeighbors = (x, y) => {
   let neighborsCount = 0;
   let i = 0;
-  let j = 0
+  let j = 0;
 
   for (i = x - 1; i <= x + 1; ++i) {
     if (isInsideTheXAxis(i, x)) {
@@ -54,20 +54,20 @@ const checkNeighbors = (x, y) => {
   }
 
   newRows[x][y] = getDestiny(neighborsCount, newRows[x][y] === LIVE);
+
+  return newRows;
 };
 
 const groupCellByStatus = (rowIndex, cellIndex, aliveCells, deadCells) => {
   const cell = rows[rowIndex][cellIndex];
   const coordinate = [rowIndex, cellIndex];
 
-  (cell === LIVE) ?
-    aliveCells.push(coordinate):
-    deadCells.push(coordinate);
+  cell === LIVE ? aliveCells.push(coordinate) : deadCells.push(coordinate);
 };
 
-const updateRows = (newRows) => rows = newRows;
+const updateRows = (newRows) => (rows = newRows);
 
-const setRowStatus = (x, y, status) => newRows[x][y] = status;
+const setRowStatus = (x, y, status) => (newRows[x][y] = status);
 
 const drawCells = (cell) => {
   const zDimension = dimensions.z;
@@ -100,7 +100,7 @@ const createGrid = () => {
       rows[index].push(DIE);
       newRows[index].push(DIE);
     });
-  })
+  });
 };
 
 const drawGrid = () => {
@@ -130,12 +130,7 @@ const updateSurvivors = (rows) => {
   const deadCells = [];
 
   iterateGrid(rows, (rowIndex, cellIndex) => {
-    groupCellByStatus(
-      rowIndex,
-      cellIndex,
-      aliveCells,
-      deadCells
-    );
+    groupCellByStatus(rowIndex, cellIndex, aliveCells, deadCells);
   });
 
   canvasContext.fillStyle = aliveColor;
@@ -167,10 +162,11 @@ const Life = (() => ({
     advanceOneGeneration();
   },
   selectSurvivor(selectedSurvivor, status) {
-    const survivor = rows[selectedSurvivor[0]] &&
+    const survivor =
+      rows[selectedSurvivor[0]] &&
       rows[selectedSurvivor[0]][selectedSurvivor[1]]
-      ? rows[selectedSurvivor[0]][selectedSurvivor[1]]
-      : [];
+        ? rows[selectedSurvivor[0]][selectedSurvivor[1]]
+        : [];
 
     if (survivor.length === 0) return false;
 
@@ -194,7 +190,7 @@ const Life = (() => ({
   },
   stop() {
     cancelAnimationFrame(requestAnimationFrameId);
-  }
+  },
 }))();
 
 export {
@@ -204,7 +200,7 @@ export {
   setRowStatus,
   checkNeighbors,
   setupGrid,
-  createGrid
-}
+  createGrid,
+};
 
 export default Life;
