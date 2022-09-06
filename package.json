@@ -28,7 +28,8 @@
     "build": "next build",
     "start": "next start",
     "deploy:staging": "npm run test && vercel --public",
-    "deploy:prod": "npm run test && vercel --public --prod"
+    "deploy:prod": "npm run test && vercel --public --prod",
+    "deploy:prod:unsafe": "vercel --public --prod"
   },
   "repository": "git+https://github.com/ernestohegi/life-game.git",
   "author": "Ernesto Hegi",
