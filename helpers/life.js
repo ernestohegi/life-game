@@ -184,7 +184,6 @@ const Life = (() => ({
   setColors(colors) {
     aliveColor = colors.alive ?? aliveColor;
     deadColor = colors.dead ?? deadColor;
-    drawGrid();
   },
   clearGrid() {
     drawGrid();
