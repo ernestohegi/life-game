@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Head from "next/head";
+import React, { useEffect, useState, useRef } from "react";
 import Life from "../helpers/life";
 import Button from "../components/Button";
 import Copy from "../components/Copy";
 import FormColors from "../components/FormColors";
 import Link from "../components/Link";
 import Title from "../components/Title";
-
-let canvas;
 
 const dimensions = {
   x: 100,
@@ -16,59 +13,21 @@ const dimensions = {
   scale: 1,
 };
 
-const handleStart = () => {
-  Life.start();
-};
-
-const handleStop = () => {
-  Life.stop();
-};
-
-const handleDepopulate = () => {
-  Life.stop();
-  Life.clearGrid();
-};
-
-const drawOnCanvas = (e) => {
-  const x = e.nativeEvent.offsetX;
-  const y = e.nativeEvent.offsetY;
-  let selectedSurvivor = [];
-
-  for (let i = 0; i < dimensions.x; i++) {
-    for (let j = 0; j < dimensions.y; j++) {
-      if (
-        x >= i * dimensions.z &&
-        x < (i + 1) * dimensions.z &&
-        y >= j * dimensions.z &&
-        y < (j + 1) * dimensions.z
-      ) {
-        selectedSurvivor = [i, j];
-      }
-    }
-  }
-
-  Life.selectSurvivor(selectedSurvivor, "live");
-};
-
-const handleStep = () => {
-  Life.advanceOneGeneration();
-};
-
-const handleColourChange = (colors) => {
-  Life.setColors(colors);
-};
-
 const Index = () => {
+  const canvas = useRef(null);
+
   const [isCanvasClicked, setIsCanvasClicked] = useState(false);
   const [generationCounter, setGenerationCounter] = useState(0);
 
   useEffect(() => {
-    Life.init({
-      canvas,
-      dimensions,
-      callback: setGenerationCounter,
-    });
-  }, []);
+    if (canvas.current) {
+      Life.init({
+        canvas: canvas.current,
+        dimensions,
+        callback: setGenerationCounter,
+      });
+    }
+  }, [canvas]);
 
   const handleMouseMoveOverCanvas = (e) => {
     if (!isCanvasClicked) return false;
@@ -76,12 +35,30 @@ const Index = () => {
     drawOnCanvas(e);
   };
 
-  const handleMouseDownOverCanvas = (e) => {
-    setIsCanvasClicked(true);
+  const drawOnCanvas = (e) => {
+    const x = e.nativeEvent.offsetX;
+    const y = e.nativeEvent.offsetY;
+    let selectedSurvivor = [];
+
+    for (let i = 0; i < dimensions.x; i++) {
+      for (let j = 0; j < dimensions.y; j++) {
+        if (
+          x >= i * dimensions.z &&
+          x < (i + 1) * dimensions.z &&
+          y >= j * dimensions.z &&
+          y < (j + 1) * dimensions.z
+        ) {
+          selectedSurvivor = [i, j];
+        }
+      }
+    }
+
+    Life.selectSurvivor(selectedSurvivor, "live");
   };
 
-  const handleMouseUpOverCanvas = (e) => {
-    setIsCanvasClicked(false);
+  const handleDepopulate = () => {
+    Life.stop();
+    Life.resetGrid({ callback: setGenerationCounter });
   };
 
   return (
@@ -105,14 +82,17 @@ const Index = () => {
 
       <section>
         <Title type="h2">Colors</Title>
-        <FormColors callback={handleColourChange} />
+        <FormColors callback={(colors) => Life.setColors(colors)} />
       </section>
 
       <section>
         <Title type="h2">Action buttons</Title>
-        <Button title="Give life" onClick={handleStart} />
-        <Button title="Stop the world" onClick={handleStop} />
-        <Button title="Advance generation" onClick={handleStep} />
+        <Button title="Give life" onClick={() => Life.start()} />
+        <Button title="Stop the world" onClick={() => Life.stop()} />
+        <Button
+          title="Advance generation"
+          onClick={() => Life.advanceOneGeneration()}
+        />
         <Button title="Depopulate" onClick={handleDepopulate} />
         <Copy text="Left click to draw." />
         <Copy text={`Current generation: ${generationCounter}`} />
@@ -123,9 +103,9 @@ const Index = () => {
         width={dimensions.x * dimensions.z * dimensions.scale}
         height={dimensions.x * dimensions.z * dimensions.scale}
         onMouseMove={handleMouseMoveOverCanvas}
-        onMouseDown={handleMouseDownOverCanvas}
-        onMouseUp={handleMouseUpOverCanvas}
-        ref={(node) => (canvas = node)}
+        onMouseDown={() => setIsCanvasClicked(true)}
+        onMouseUp={() => setIsCanvasClicked(false)}
+        ref={canvas}
         style={{ cursor: "crosshair" }}
       />
     </>

@@ -1,145 +1,56 @@
-const LIVE = "live";
-const DIE = "die";
+import {
+  ACTIVE_STATUS,
+  INACTIVE_STATUS,
+  drawGrid,
+  iterateGrid,
+  checkNeighbors,
+  setRowStatus,
+  createLogicalGrid,
+  groupCellByStatus,
+  drawCell,
+} from "./utils";
 
-let aliveColor = "#FC6336";
-let deadColor = "#5F4B8B";
 let requestAnimationFrameId = "";
 let newRows = [];
 let rows = [];
-let dimensions = { x: 0, y: 0, z: 0 };
+let globalDimensions = { x: 0, y: 0, z: 0 };
 let canvasContext = {};
+let generationsCounter = 0;
+let generationsCallback;
 
-const isInsideCoordinates = (coordinate, gridCoordinate) =>
-  coordinate > -1 && coordinate <= gridCoordinate;
+let activeColor = "#FC6336";
+let inactiveColor = "#5F4B8B";
 
-const isNotItself = (x, y, i, j) => (x === i && y === j) === false;
-
-const isInsideTheXAxis = (index) => isInsideCoordinates(index, dimensions.x);
-
-const isInsideTheYAxis = (index) => isInsideCoordinates(index, dimensions.y);
-
-const isNeighbourAlive = (newRows, x, y) => newRows?.[x]?.[y] === LIVE;
-
-const getDestiny = (neighborsCount, isAlive) =>
-  (isAlive && (neighborsCount === 3 || neighborsCount === 2)) ||
-  (isAlive === false && neighborsCount === 3)
-    ? LIVE
-    : DIE;
-
-const checkNeighbors = (x, y) => {
-  let neighborsCount = 0;
-  let i = 0;
-  let j = 0;
-
-  for (i = x - 1; i <= x + 1; ++i) {
-    if (isInsideTheXAxis(i)) {
-      for (j = y - 1; j <= y + 1; ++j) {
-        if (
-          isNotItself(x, y, i, j) &&
-          isInsideTheYAxis(j) &&
-          isNeighbourAlive(newRows, i, j)
-        ) {
-          ++neighborsCount;
-        }
-      }
-    }
-  }
-
-  newRows[x][y] = getDestiny(neighborsCount, newRows[x][y] === LIVE);
-
-  return newRows;
-};
-
-const groupCellByStatus = (rowIndex, cellIndex, aliveCells, deadCells) => {
-  const cell = rows[rowIndex][cellIndex];
-  const coordinate = [rowIndex, cellIndex];
-
-  cell === LIVE ? aliveCells.push(coordinate) : deadCells.push(coordinate);
-};
-
-const updateRows = (newRows) => (rows = newRows);
-
-const setRowStatus = (x, y, status) => (newRows[x][y] = status);
-
-const drawCells = (cell) => {
-  const zDimension = dimensions.z;
-
-  canvasContext.fillRect(
-    cell[0] * zDimension,
-    cell[1] * zDimension,
-    zDimension,
-    zDimension
-  );
-};
-
-const iterateGrid = (grid = [], callback) => {
-  grid.map((rows, rowIndex) => {
-    rows.map((_, cellIndex) => {
-      callback(rowIndex, cellIndex);
-    });
-  });
-};
-
-const createGrid = () => {
-  rows = [];
-  newRows = [];
-
-  [...Array(dimensions.x)].forEach((_, index) => {
-    rows.push([]);
-    newRows.push([]);
-
-    [...Array(dimensions.y)].forEach(() => {
-      rows[index].push(DIE);
-      newRows[index].push(DIE);
-    });
-  });
-};
-
-const drawGrid = () => {
-  canvasContext.fillStyle = deadColor;
-
-  iterateGrid(rows, (rowIndex, cellIndex) => {
-    canvasContext.fillRect(
-      rowIndex * dimensions.z,
-      cellIndex * dimensions.z,
-      dimensions.z,
-      dimensions.z
-    );
-  });
-};
-
-const setupGrid = (params) => {
-  dimensions = params.dimensions;
-
-  if (params.canvas) {
-    canvasContext = params.canvas.getContext("2d");
-    canvasContext.scale(params.dimensions.scale, params.dimensions.scale);
-  }
-};
-
-const updateSurvivors = (rows) => {
+const drawSurvivors = (rows) => {
   const aliveCells = [];
   const deadCells = [];
 
   iterateGrid(rows, (rowIndex, cellIndex) => {
-    groupCellByStatus(rowIndex, cellIndex, aliveCells, deadCells);
+    groupCellByStatus(rowIndex, cellIndex, aliveCells, deadCells, rows);
   });
 
-  canvasContext.fillStyle = aliveColor;
-  aliveCells.map(drawCells);
+  const drawCellCallback = (cell) =>
+    drawCell(cell, globalDimensions, canvasContext);
 
-  canvasContext.fillStyle = deadColor;
-  deadCells.map(drawCells);
+  canvasContext.fillStyle = activeColor;
+  aliveCells.map(drawCellCallback, activeColor);
+
+  canvasContext.fillStyle = inactiveColor;
+  deadCells.map(drawCellCallback, inactiveColor);
 };
 
 const advanceOneGeneration = () => {
-  iterateGrid(rows, checkNeighbors);
-  updateRows(newRows);
-  updateSurvivors(rows);
+  iterateGrid(rows, (rowIndex, cellIndex) =>
+    checkNeighbors(rowIndex, cellIndex, globalDimensions, newRows)
+  );
+
+  rows = newRows;
+
+  drawSurvivors(rows);
 
   generationsCounter += 1;
 
-  if (callback) callback(generationsCounter);
+  if (generationsCallback) generationsCallback(generationsCounter);
 };
 
 const runGrid = () => {
@@ -148,63 +59,65 @@ const runGrid = () => {
   requestAnimationFrameId = requestAnimationFrame(runGrid);
 };
 
-let generationsCounter = 0;
+const resetGrid = ({ callback }) => {
+  const { rows: createdRows, newRows: createdNewRows } = createLogicalGrid(
+    globalDimensions
+  );
 
-let callback;
+  rows = createdRows;
+  newRows = createdNewRows;
 
-const Life = (() => ({
-  init(params) {
-    setupGrid(params);
-    createGrid();
-    drawGrid();
+  drawGrid(globalDimensions, canvasContext, rows, inactiveColor);
 
-    callback = params.callback;
-  },
-  advanceOneGeneration() {
-    advanceOneGeneration();
-  },
-  getGenerations() {
-    return generationsCounter;
-  },
-  selectSurvivor(selectedSurvivor, status) {
-    const survivor =
-      rows[selectedSurvivor[0]] &&
-      rows[selectedSurvivor[0]][selectedSurvivor[1]]
-        ? rows[selectedSurvivor[0]][selectedSurvivor[1]]
-        : [];
+  callback(0);
+};
 
-    if (survivor.length === 0) return false;
+const init = ({ dimensions, canvas, callback }) => {
+  globalDimensions = dimensions;
+  generationsCallback = callback;
 
-    let newStatus = status ? status : survivor === DIE ? LIVE : DIE;
+  canvasContext = canvas.getContext("2d", { alpha: false });
+  canvasContext.scale(globalDimensions.scale, globalDimensions.scale);
 
-    setRowStatus(selectedSurvivor[0], selectedSurvivor[1], newStatus);
-    updateRows(newRows);
-    updateSurvivors(rows);
-  },
-  setColors(colors) {
-    aliveColor = colors.alive ?? aliveColor;
-    deadColor = colors.dead ?? deadColor;
-  },
-  clearGrid() {
-    drawGrid();
-    createGrid();
-  },
-  start() {
-    requestAnimationFrameId = requestAnimationFrame(runGrid);
-  },
-  stop() {
-    cancelAnimationFrame(requestAnimationFrameId);
-  },
-}))();
+  resetGrid({ callback });
+};
 
-export {
-  isInsideTheXAxis,
-  isInsideTheYAxis,
-  getDestiny,
-  setRowStatus,
-  checkNeighbors,
-  setupGrid,
-  createGrid,
+const selectSurvivor = (selectedSurvivor, status) => {
+  const survivor = rows[selectedSurvivor[0]]?.[selectedSurvivor[1]] || [];
+
+  if (survivor.length === 0) return false;
+
+  let newStatus = status
+    ? status
+    : survivor === INACTIVE_STATUS
+    ? ACTIVE_STATUS
+    : INACTIVE_STATUS;
+
+  setRowStatus(selectedSurvivor[0], selectedSurvivor[1], newStatus, newRows);
+
+  drawSurvivors(rows);
+};
+
+const setColors = (colors) => {
+  activeColor = colors.alive ?? activeColor;
+  inactiveColor = colors.dead ?? inactiveColor;
+};
+
+const getGenerations = () => generationsCounter;
+
+const start = () => (requestAnimationFrameId = requestAnimationFrame(runGrid));
+
+const stop = () => cancelAnimationFrame(requestAnimationFrameId);
+
+const Life = {
+  init,
+  selectSurvivor,
+  setColors,
+  resetGrid,
+  advanceOneGeneration,
+  getGenerations,
+  start,
+  stop,
 };
 
 export default Life;
