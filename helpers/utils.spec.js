@@ -4,100 +4,101 @@ import {
   getDestiny,
   setRowStatus,
   checkNeighbors,
-  setupGrid,
-  createGrid,
-} from "./life";
+  createLogicalGrid,
+  ACTIVE_STATUS,
+  INACTIVE_STATUS,
+} from "./utils";
 
 const destinyTestCases = [
   // Any live cell with fewer than two live neighbours dies, as if caused by under-population.
   {
     neighborsCount: 1,
     isAlive: true,
-    expected: "die",
+    expected: INACTIVE_STATUS,
   },
   // Any live cell with two or three live neighbours lives on to the next generation.
   {
     neighborsCount: 2,
     isAlive: true,
-    expected: "live",
+    expected: ACTIVE_STATUS,
   },
   // Any live cell with two or three live neighbours lives on to the next generation.
   {
     neighborsCount: 3,
     isAlive: true,
-    expected: "live",
+    expected: ACTIVE_STATUS,
   },
   // Any live cell with more than three live neighbours dies, as if by over-population.
   {
     neighborsCount: 4,
     isAlive: true,
-    expected: "die",
+    expected: INACTIVE_STATUS,
   },
   // Any live cell with more than three live neighbours dies, as if by over-population.
   {
     neighborsCount: 5,
     isAlive: true,
-    expected: "die",
+    expected: INACTIVE_STATUS,
   },
   // Any live cell with more than three live neighbours dies, as if by over-population.
   {
     neighborsCount: 6,
     isAlive: true,
-    expected: "die",
+    expected: INACTIVE_STATUS,
   },
   // Any live cell with more than three live neighbours dies, as if by over-population.
   {
     neighborsCount: 7,
     isAlive: true,
-    expected: "die",
+    expected: INACTIVE_STATUS,
   },
   // Any live cell with more than three live neighbours dies, as if by over-population.
   {
     neighborsCount: 8,
     isAlive: true,
-    expected: "die",
+    expected: INACTIVE_STATUS,
   },
   // Any live cell with more than three live neighbours dies, as if by over-population.
   {
     neighborsCount: 8,
     isAlive: false,
-    expected: "die",
+    expected: INACTIVE_STATUS,
   },
   {
     neighborsCount: 7,
     isAlive: false,
-    expected: "die",
+    expected: INACTIVE_STATUS,
   },
   {
     neighborsCount: 6,
     isAlive: false,
-    expected: "die",
+    expected: INACTIVE_STATUS,
   },
   {
     neighborsCount: 5,
     isAlive: false,
-    expected: "die",
+    expected: INACTIVE_STATUS,
   },
   {
     neighborsCount: 4,
     isAlive: false,
-    expected: "die",
+    expected: INACTIVE_STATUS,
   },
   // Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
   {
     neighborsCount: 3,
     isAlive: false,
-    expected: "live",
+    expected: ACTIVE_STATUS,
   },
   {
     neighborsCount: 2,
     isAlive: false,
-    expected: "die",
+    expected: INACTIVE_STATUS,
   },
   {
     neighborsCount: 1,
     isAlive: false,
-    expected: "die",
+    expected: INACTIVE_STATUS,
   },
 ];
 
@@ -169,83 +170,75 @@ const yAxisTestCases = [
 
 describe("Game of Life", () => {
   it("should be able to get the right cell status for the next round", () => {
-    for (const index in destinyTestCases) {
-      const status = destinyTestCases[index];
-      const destiny = getDestiny(status.neighborsCount, status.isAlive);
+    Object.values(destinyTestCases).map((destinyTestCase) => {
+      const destiny = getDestiny(
+        destinyTestCase.neighborsCount,
+        destinyTestCase.isAlive
+      );
 
-      expect(destiny).toEqual(status.expected);
-    }
+      expect(destiny).toEqual(destinyTestCase.expected);
+    });
   });
 
   it("should be able to tell whether the current index is insde the x axis", () => {
-    for (const index in xAxisTestCases) {
-      const testCase = xAxisTestCases[index];
+    Object.values(xAxisTestCases).map((xAxisTestCase) => {
+      const { row, rows, columns, expectedResult } = xAxisTestCase;
 
-      setupGrid({
-        dimensions: {
-          x: testCase.rows,
-          y: testCase.columns,
-        },
-      });
+      const dimensions = {
+        x: rows,
+        y: columns,
+      };
 
-      expect(isInsideTheXAxis(testCase.row, testCase.rows)).toEqual(
-        testCase.expectedResult
-      );
-    }
+      expect(isInsideTheXAxis(row, dimensions)).toEqual(expectedResult);
+    });
   });
 
   it("should be able to tell whether the current index is insde the y axis", () => {
-    for (const index in yAxisTestCases) {
-      const testCase = yAxisTestCases[index];
+    Object.values(yAxisTestCases).map((yAxisTestCase) => {
+      const { column, rows, columns, expectedResult } = yAxisTestCase;
 
-      setupGrid({
-        dimensions: {
-          x: testCase.columns,
-          y: testCase.columns,
-        },
-      });
+      const dimensions = {
+        x: rows,
+        y: columns,
+      };
 
-      expect(isInsideTheYAxis(testCase.column, testCase.columns)).toEqual(
-        testCase.expectedResult
-      );
-    }
+      expect(isInsideTheYAxis(column, dimensions)).toEqual(expectedResult);
+    });
   });
 
-  it("should be able to tell whether a cell lives or die the next generation", () => {
-    // Lives
+  it("should be able to tell whether a cell survives the next generation", () => {
     let checkedNeighbors;
 
-    setupGrid({
-      dimensions: {
-        x: 3,
-        y: 3,
-      },
-    });
+    const dimensions = {
+      x: 3,
+      y: 3,
+    };
 
-    createGrid();
+    const { newRows } = createLogicalGrid(dimensions);
 
-    setRowStatus(0, 0, "live");
-    setRowStatus(0, 1, "live");
-    setRowStatus(1, 1, "live");
+    setRowStatus(0, 0, ACTIVE_STATUS, newRows);
+    setRowStatus(0, 1, ACTIVE_STATUS, newRows);
+    setRowStatus(1, 1, ACTIVE_STATUS, newRows);
 
-    checkedNeighbors = checkNeighbors(1, 1);
+    checkedNeighbors = checkNeighbors(1, 1, dimensions, newRows);
 
-    expect(checkedNeighbors[1][1]).toEqual("live");
+    expect(checkedNeighbors[1][1]).toEqual(ACTIVE_STATUS);
+  });
 
-    // Dies
-    setupGrid({
-      dimensions: {
-        x: 3,
-        y: 3,
-      },
-    });
+  it("should be able to tell whether a cell does not survive the next generation", () => {
+    let checkedNeighbors;
 
-    createGrid();
+    const dimensions = {
+      x: 3,
+      y: 3,
+    };
 
-    setRowStatus(1, 1, "live");
+    const { newRows } = createLogicalGrid(dimensions);
 
-    checkedNeighbors = checkNeighbors(1, 1);
+    setRowStatus(1, 1, ACTIVE_STATUS, newRows);
 
-    expect(checkedNeighbors[1][1]).toEqual("die");
+    checkedNeighbors = checkNeighbors(1, 1, dimensions, newRows);
+
+    expect(checkedNeighbors[1][1]).toEqual(INACTIVE_STATUS);
   });
 });
