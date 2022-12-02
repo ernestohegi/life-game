@@ -2,9 +2,8 @@ import {
   isInsideTheXAxis,
   isInsideTheYAxis,
   getDestiny,
-  setRowStatus,
-  checkNeighbors,
-  createLogicalGrid,
+  getNextGeneration,
+  createLogicalMatrix,
   ACTIVE_STATUS,
   INACTIVE_STATUS,
 } from "./utils";
@@ -107,7 +106,7 @@ const xAxisTestCases = [
     rows: 0,
     columns: 0,
     row: 0,
-    expectedResult: true,
+    expectedResult: false,
   },
   {
     rows: 1,
@@ -119,7 +118,7 @@ const xAxisTestCases = [
     rows: 1,
     columns: 0,
     row: 1,
-    expectedResult: true,
+    expectedResult: false,
   },
   {
     rows: 1,
@@ -140,7 +139,7 @@ const yAxisTestCases = [
     rows: 0,
     columns: 0,
     column: 0,
-    expectedResult: true,
+    expectedResult: false,
   },
   {
     rows: 0,
@@ -152,7 +151,7 @@ const yAxisTestCases = [
     rows: 0,
     columns: 1,
     column: 1,
-    expectedResult: true,
+    expectedResult: false,
   },
   {
     rows: 0,
@@ -185,8 +184,8 @@ describe("Game of Life", () => {
       const { row, rows, columns, expectedResult } = xAxisTestCase;
 
       const dimensions = {
-        x: rows,
-        y: columns,
+        rows,
+        columns,
       };
 
       expect(isInsideTheXAxis(row, dimensions)).toEqual(expectedResult);
@@ -198,8 +197,8 @@ describe("Game of Life", () => {
       const { column, rows, columns, expectedResult } = yAxisTestCase;
 
       const dimensions = {
-        x: rows,
-        y: columns,
+        rows,
+        columns,
       };
 
       expect(isInsideTheYAxis(column, dimensions)).toEqual(expectedResult);
@@ -207,38 +206,51 @@ describe("Game of Life", () => {
   });
 
   it("should be able to tell whether a cell survives the next generation", () => {
-    let checkedNeighbors;
-
     const dimensions = {
-      x: 3,
-      y: 3,
+      rows: 3,
+      columns: 3,
     };
 
-    const { newRows } = createLogicalGrid(dimensions);
+    const { rows } = createLogicalMatrix(dimensions);
 
-    setRowStatus(0, 0, ACTIVE_STATUS, newRows);
-    setRowStatus(0, 1, ACTIVE_STATUS, newRows);
-    setRowStatus(1, 1, ACTIVE_STATUS, newRows);
+    const newRows = JSON.parse(JSON.stringify(rows));
 
-    checkedNeighbors = checkNeighbors(1, 1, dimensions, newRows);
+    rows[0][0] = INACTIVE_STATUS;
+    rows[0][1] = ACTIVE_STATUS;
+    rows[0][2] = INACTIVE_STATUS;
+    rows[1][0] = ACTIVE_STATUS;
+    rows[1][1] = ACTIVE_STATUS;
+    rows[1][2] = ACTIVE_STATUS;
+    rows[2][0] = INACTIVE_STATUS;
+    rows[2][1] = ACTIVE_STATUS;
+    rows[2][2] = INACTIVE_STATUS;
 
-    expect(checkedNeighbors[1][1]).toEqual(ACTIVE_STATUS);
-  });
-
-  it("should be able to tell whether a cell does not survive the next generation", () => {
-    let checkedNeighbors;
-
-    const dimensions = {
-      x: 3,
-      y: 3,
-    };
-
-    const { newRows } = createLogicalGrid(dimensions);
-
-    setRowStatus(1, 1, ACTIVE_STATUS, newRows);
-
-    checkedNeighbors = checkNeighbors(1, 1, dimensions, newRows);
-
-    expect(checkedNeighbors[1][1]).toEqual(INACTIVE_STATUS);
+    expect(getNextGeneration(0, 0, dimensions, rows, newRows)).toEqual(
+      ACTIVE_STATUS
+    );
+    expect(getNextGeneration(0, 1, dimensions, rows, newRows)).toEqual(
+      ACTIVE_STATUS
+    );
+    expect(getNextGeneration(0, 2, dimensions, rows, newRows)).toEqual(
+      ACTIVE_STATUS
+    );
+    expect(getNextGeneration(1, 0, dimensions, rows, newRows)).toEqual(
+      ACTIVE_STATUS
+    );
+    expect(getNextGeneration(1, 1, dimensions, rows, newRows)).toEqual(
+      INACTIVE_STATUS
+    );
+    expect(getNextGeneration(1, 2, dimensions, rows, newRows)).toEqual(
+      ACTIVE_STATUS
+    );
+    expect(getNextGeneration(2, 0, dimensions, rows, newRows)).toEqual(
+      ACTIVE_STATUS
+    );
+    expect(getNextGeneration(2, 1, dimensions, rows, newRows)).toEqual(
+      ACTIVE_STATUS
+    );
+    expect(getNextGeneration(2, 2, dimensions, rows, newRows)).toEqual(
+      ACTIVE_STATUS
+    );
   });
 });

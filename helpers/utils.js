@@ -1,57 +1,62 @@
-const ACTIVE_STATUS = "live";
+const ACTIVE_STATUS = "active";
 const INACTIVE_STATUS = "inactive";
 
 const isInsideCoordinates = (coordinate, gridCoordinate) =>
-  coordinate > -1 && coordinate <= gridCoordinate;
+  coordinate > -1 && coordinate < gridCoordinate;
 
 const isInsideTheXAxis = (index, dimensions) =>
-  isInsideCoordinates(index, dimensions.x);
+  isInsideCoordinates(index, dimensions.rows);
 
 const isInsideTheYAxis = (index, dimensions) =>
-  isInsideCoordinates(index, dimensions.y);
+  isInsideCoordinates(index, dimensions.columns);
 
 const isSelf = (x, y, i, j) => x === i && y === j;
 
-const isNeighbourAlive = (newRows, x, y) => newRows?.[x]?.[y] === ACTIVE_STATUS;
+const getDestiny = (neighboursCount, isActive) =>
+  (isActive && (neighboursCount === 3 || neighboursCount === 2)) ||
+  (isActive === false && neighboursCount === 3)
+    ? ACTIVE_STATUS
+    : INACTIVE_STATUS;
 
-const setRowStatus = (x, y, status, newRows) => (newRows[x][y] = status);
-
-const checkNeighbors = (x, y, dimensions, newRows) => {
-  let neighborsCount = 0;
+const getNextGeneration = (rowIndex, cellIndex, dimensions, rows, newRows) => {
+  let neighboursCount = 0;
   let i = 0;
   let j = 0;
 
-  for (i = x - 1; i <= x + 1; ++i) {
+  for (i = rowIndex - 1; i <= rowIndex + 1; ++i) {
     if (isInsideTheXAxis(i, dimensions)) {
-      for (j = y - 1; j <= y + 1; ++j) {
+      for (j = cellIndex - 1; j <= cellIndex + 1; ++j) {
         if (
-          !isSelf(x, y, i, j) &&
+          !isSelf(rowIndex, cellIndex, i, j) &&
           isInsideTheYAxis(j, dimensions) &&
-          isNeighbourAlive(newRows, i, j)
+          rows[i][j] === ACTIVE_STATUS
         ) {
-          ++neighborsCount;
+          ++neighboursCount;
         }
       }
     }
   }
 
-  newRows[x][y] = getDestiny(neighborsCount, newRows[x][y] === ACTIVE_STATUS);
+  newRows[rowIndex][cellIndex] = getDestiny(
+    neighboursCount,
+    newRows[rowIndex][cellIndex] === ACTIVE_STATUS
+  );
 
-  return newRows;
+  return newRows[rowIndex][cellIndex];
 };
 
-const createLogicalGrid = (dimensions) => {
+const createLogicalMatrix = (dimensions) => {
   const rows = [];
 
-  [...Array(dimensions.x)].forEach((_, index) => {
+  [...Array(dimensions.rows)].forEach((_, index) => {
     rows.push([]);
 
-    [...Array(dimensions.y)].forEach(() => {
+    [...Array(dimensions.columns)].forEach(() => {
       rows[index].push(INACTIVE_STATUS);
     });
   });
 
-  const newRows = [...rows];
+  const newRows = JSON.parse(JSON.stringify(rows));
 
   return {
     rows,
@@ -59,49 +64,31 @@ const createLogicalGrid = (dimensions) => {
   };
 };
 
-const groupCellByStatus = (
-  rowIndex,
-  cellIndex,
-  aliveCells,
-  deadCells,
-  rows
-) => {
-  const coordinate = [rowIndex, cellIndex];
-
-  rows[rowIndex][cellIndex] === ACTIVE_STATUS
-    ? aliveCells.push(coordinate)
-    : deadCells.push(coordinate);
-};
-
-const iterateGrid = (grid = [], callback) => {
-  grid.map((rows, rowIndex) => {
+const iterateMatrix = (matrix = [], callback) => {
+  matrix.map((rows, rowIndex) => {
     rows.map((_, cellIndex) => {
       callback(rowIndex, cellIndex);
     });
   });
 };
 
-const getDestiny = (neighborsCount, isAlive) =>
-  (isAlive && (neighborsCount === 3 || neighborsCount === 2)) ||
-  (isAlive === false && neighborsCount === 3)
-    ? ACTIVE_STATUS
-    : INACTIVE_STATUS;
+const drawMatrix = (dimensions, canvasContext, rows, deadColor) => {
+  const zDimension = dimensions.cellSize;
 
-const drawGrid = (dimensions, canvasContext, rows, deadColor) => {
   canvasContext.fillStyle = deadColor;
 
-  iterateGrid(rows, (rowIndex, cellIndex) => {
+  iterateMatrix(rows, (rowIndex, cellIndex) => {
     canvasContext.fillRect(
-      rowIndex * dimensions.z,
-      cellIndex * dimensions.z,
-      dimensions.z,
-      dimensions.z
+      rowIndex * zDimension,
+      cellIndex * zDimension,
+      zDimension,
+      zDimension
     );
   });
 };
 
 const drawCell = (cell, dimensions, canvasContext) => {
-  const zDimension = dimensions.z;
+  const zDimension = dimensions.cellSize;
 
   canvasContext.fillRect(
     cell[0] * zDimension,
@@ -111,20 +98,20 @@ const drawCell = (cell, dimensions, canvasContext) => {
   );
 };
 
+const cloneArray = (vanillaArray) => JSON.parse(JSON.stringify(vanillaArray));
+
 export {
   isInsideCoordinates,
   isInsideTheYAxis,
   isInsideTheXAxis,
   isSelf,
-  isNeighbourAlive,
-  setRowStatus,
-  iterateGrid,
-  drawGrid,
+  iterateMatrix,
+  drawMatrix,
   getDestiny,
-  checkNeighbors,
-  createLogicalGrid,
-  groupCellByStatus,
+  getNextGeneration,
+  createLogicalMatrix,
   drawCell,
+  cloneArray,
   ACTIVE_STATUS,
   INACTIVE_STATUS,
 };
