@@ -114,9 +114,9 @@ const Index = () => {
         width={dimensions.rows * dimensions.cellSize * dimensions.scale}
         height={dimensions.rows * dimensions.cellSize * dimensions.scale}
         onMouseMove={handleMouseMoveOverCanvas}
-        onMouseOut={Life.start}
         onMouseDown={() => setIsCanvasClicked(true)}
         onMouseUp={() => setIsCanvasClicked(false)}
+        onMouseOut={() => setIsCanvasClicked(false)}
         ref={canvas}
         style={{ cursor: "crosshair" }}
       />
