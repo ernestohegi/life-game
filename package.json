@@ -30,7 +30,7 @@
     "mem": "8.0.0",
     "prettier": "2.1.2",
     "pretty-quick": "3.1.0",
-    "serve-handler": "6.1.4"
+    "serve-handler": "6.1.5"
   },
   "repository": "git+https://github.com/ernestohegi/life-game.git",
   "author": "Ernesto Hegi",
