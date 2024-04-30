@@ -8,8 +8,8 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <title>Ernesto Hegi - JS/React version of Game of Life</title>
       </Head>
-      <Analytics />
       <Component {...pageProps} />
+      <Analytics />
     </>
   );
 }
