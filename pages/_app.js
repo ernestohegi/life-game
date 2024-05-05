@@ -1,6 +1,7 @@
 import React from "react";
 import Head from "next/head";
 import { Analytics } from "@vercel/analytics/react"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 function MyApp({ Component, pageProps }) {
   return (
@@ -10,6 +11,7 @@ function MyApp({ Component, pageProps }) {
       </Head>
       <Component {...pageProps} />
       <Analytics />
+      <SpeedInsights />
     </>
   );
 }
