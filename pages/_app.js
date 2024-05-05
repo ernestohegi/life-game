@@ -7,7 +7,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <>
       <Head>
-        <title>Ernesto Hegi - JS/React version of Game of Life</title>
+        <title>Ernesto Hegi - Conway's Game of Life</title>
       </Head>
       <Component {...pageProps} />
       <Analytics />
