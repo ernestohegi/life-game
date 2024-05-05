@@ -17,9 +17,7 @@ http://en.wikipedia.org/wiki/Conway's_Game_of_Life
 - React
 - Next.js
 - Yarn
-- Docker
-- Travis
-- Now
+- Vercel
 
 ### Installation
 
