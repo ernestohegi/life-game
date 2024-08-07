@@ -6,7 +6,6 @@ import {
   getNextGeneration,
   createLogicalMatrix,
   drawCell,
-  cloneArray,
 } from "./utils";
 
 let requestAnimationFrameId = "";
@@ -16,7 +15,6 @@ let globalDimensions = { rows: 0, columns: 0, cellSize: 0, scale: 0 };
 let canvasContext = {};
 let generationsCounter = 0;
 let generationsCallback;
-
 let activeColor = "#FC6336";
 let inactiveColor = "#5F4B8B";
 
@@ -47,7 +45,7 @@ const advanceOneGeneration = () => {
     getNextGeneration(rowIndex, cellIndex, globalDimensions, rows, newRows);
   });
 
-  rows = cloneArray(newRows);
+  rows = structuredClone(newRows);
 
   drawSurvivors(rows);
 
@@ -85,24 +83,14 @@ const initialise = ({ dimensions, canvas, callback }) => {
   resetGrid({ callback });
 };
 
-const selectSurvivor = (selectedSurvivor, status) => {
+const selectSurvivor = (selectedSurvivor) => {
   const survivor = rows[selectedSurvivor[0]]?.[selectedSurvivor[1]] || [];
 
   if (survivor.length === 0) return false;
 
-  let newStatus = "";
+  newRows[selectedSurvivor[0]][selectedSurvivor[1]] = ACTIVE_STATUS;
 
-  if (status) {
-    newStatus = status;
-  } else if (survivor === INACTIVE_STATUS) {
-    newStatus = ACTIVE_STATUS;
-  } else {
-    newStatus = INACTIVE_STATUS;
-  }
-
-  newRows[selectedSurvivor[0]][selectedSurvivor[1]] = newStatus;
-
-  rows = cloneArray(newRows);
+  rows = structuredClone(newRows);
 
   drawSurvivors(rows);
 };

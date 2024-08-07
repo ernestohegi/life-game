@@ -12,26 +12,30 @@ const isInsideTheYAxis = (index, dimensions) =>
 
 const isSelf = (x, y, i, j) => x === i && y === j;
 
-const getDestiny = (neighboursCount, isActive) =>
-  (isActive && (neighboursCount === 3 || neighboursCount === 2)) ||
-  (isActive === false && neighboursCount === 3)
+const getDestiny = (neighboursCount, isActive) => {
+  const isActiveStatus =
+  (isActive && ([3, 2].includes(neighboursCount))) ||
+  (!isActive && neighboursCount === 3);
+
+  return isActiveStatus
     ? ACTIVE_STATUS
     : INACTIVE_STATUS;
+}
 
 const getNextGeneration = (rowIndex, cellIndex, dimensions, rows, newRows) => {
   let neighboursCount = 0;
   let i = 0;
   let j = 0;
 
-  for (i = rowIndex - 1; i <= rowIndex + 1; ++i) {
+  for (i = rowIndex - 1; i <= rowIndex + 1; i += 1) {
     if (isInsideTheXAxis(i, dimensions)) {
-      for (j = cellIndex - 1; j <= cellIndex + 1; ++j) {
+      for (j = cellIndex - 1; j <= cellIndex + 1; j += 1) {
         if (
           !isSelf(rowIndex, cellIndex, i, j) &&
           isInsideTheYAxis(j, dimensions) &&
           rows[i][j] === ACTIVE_STATUS
         ) {
-          ++neighboursCount;
+          neighboursCount += 1;
         }
       }
     }
@@ -65,10 +69,10 @@ const createLogicalMatrix = (dimensions) => {
 };
 
 const iterateMatrix = (matrix = [], callback) => {
-  matrix.map((rows, rowIndex) => {
-    rows.map((_, cellIndex) => {
-      callback(rowIndex, cellIndex);
-    });
+  matrix.forEach((rows, rowIndex) => {
+    rows.forEach((_, cellIndex) =>
+      callback(rowIndex, cellIndex)
+    );
   });
 };
 
@@ -98,8 +102,6 @@ const drawCell = (cell, dimensions, canvasContext) => {
   );
 };
 
-const cloneArray = (vanillaArray) => JSON.parse(JSON.stringify(vanillaArray));
-
 export {
   isInsideCoordinates,
   isInsideTheYAxis,
@@ -111,7 +113,6 @@ export {
   getNextGeneration,
   createLogicalMatrix,
   drawCell,
-  cloneArray,
   ACTIVE_STATUS,
   INACTIVE_STATUS,
 };

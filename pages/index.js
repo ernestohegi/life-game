@@ -5,13 +5,12 @@ import Copy from "../components/Copy";
 import FormColors from "../components/FormColors";
 import Link from "../components/Link";
 import Title from "../components/Title";
-import { ACTIVE_STATUS } from "../helpers/utils";
 
 const dimensions = {
   rows: 60,
   columns: 60,
   cellSize: 10,
-  scale: 1.5,
+  scale: 2,
 };
 
 const Index = () => {
@@ -59,7 +58,7 @@ const Index = () => {
       }
     }
 
-    Life.selectSurvivor(selectedSurvivor, ACTIVE_STATUS);
+    Life.selectSurvivor(selectedSurvivor);
   };
 
   const handleDepopulate = () => {
