@@ -21,7 +21,7 @@
     "react-color": "2.19.3",
     "react-dom": "^18.2.0",
     "serve": "14.2.3",
-    "vercel": "^34.0.0"
+    "vercel": "^36.0.0"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "5.16.4",
