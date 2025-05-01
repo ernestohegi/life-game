@@ -17,6 +17,11 @@ const Index = () => {
   const [generationCounter, setGenerationCounter] = useState(0);
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
 
+  // Define cursor styles for drawing and normal states
+  const cursorStyle = isCanvasClicked
+    ? 'url(\'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="%23ffffff" stroke-width="2"><path d="M19.4 3.6L15 2L10.5 9.5 2 22l9-6L19.4 3.6z"/></svg>\') 0 24, auto'
+    : 'crosshair';
+
   useEffect(() => {
     if (canvas.current) {
       Life.initialise({
@@ -192,7 +197,7 @@ const Index = () => {
             onMouseUp={() => setIsCanvasClicked(false)}
             onMouseOut={() => setIsCanvasClicked(false)}
             ref={canvas}
-            className="cursor-crosshair"
+            style={{ cursor: cursorStyle }}
           />
         </div>
       </section>
