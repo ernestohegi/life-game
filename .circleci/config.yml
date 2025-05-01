@@ -2,7 +2,7 @@
 # Stacks detected: cicd:github-actions:.github/workflows,deps:node:.,test:jest:
 version: 2.1
 orbs:
-  node: circleci/node@5.2.0
+  node: circleci/node@7.1.0
 jobs:
   test-node:
     # Install node dependencies and run tests
