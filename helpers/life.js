@@ -1,6 +1,5 @@
 import {
   ACTIVE_STATUS,
-  INACTIVE_STATUS,
   drawMatrix,
   iterateMatrix,
   getNextGeneration,

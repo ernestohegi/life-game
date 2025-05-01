@@ -1,0 +1,29 @@
+@import 'tailwindcss';
+
+/* Additional custom styles can go here */
+body {
+  @apply bg-gray-900 text-gray-100;
+  margin: 0;
+  padding: 0;
+}
+
+/* Canvas styling */
+canvas {
+  background-color: #111;
+  image-rendering: pixelated;
+}
+
+/* Shadow glow effect for the generation counter */
+.shadow-glow {
+  box-shadow: 0 0 15px 2px rgba(168, 85, 247, 0.5);
+  animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 10px 2px rgba(168, 85, 247, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 20px 5px rgba(236, 72, 153, 0.7);
+  }
+}

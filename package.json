@@ -17,21 +17,24 @@
     "eslint-config-next": "^14.2.5",
     "next": "^14.2.5",
     "react": "^18.3.1",
-    "react-color": "2.19.3",
     "react-dom": "^18.3.1",
     "serve": "14.2.3",
     "vercel": "^34.0.0"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.5",
     "@testing-library/jest-dom": "5.16.4",
     "@testing-library/react": "13.4.0",
     "@testing-library/user-event": "14.4.3",
+    "autoprefixer": "^10.4.21",
     "jest": "29.7.0",
     "jest-environment-jsdom": "29.7.0",
     "mem": "8.1.1",
+    "postcss": "^8.5.3",
     "prettier": "2.8.8",
     "pretty-quick": "3.3.1",
-    "serve-handler": "6.1.5"
+    "serve-handler": "6.1.5",
+    "tailwindcss": "^4.1.5"
   },
   "repository": "git+https://github.com/ernestohegi/life-game.git",
   "author": "Ernesto Hegi",
