@@ -1,66 +1,59 @@
-const ACTIVE_STATUS = "active";
-const INACTIVE_STATUS = "inactive";
+const ACTIVE_STATUS = 'active';
+const INACTIVE_STATUS = 'inactive';
 
 const isInsideCoordinates = (coordinate, gridCoordinate) =>
   coordinate > -1 && coordinate < gridCoordinate;
 
-const isInsideTheXAxis = (index, dimensions) =>
-  isInsideCoordinates(index, dimensions.rows);
-
-const isInsideTheYAxis = (index, dimensions) =>
-  isInsideCoordinates(index, dimensions.columns);
-
-const isSelf = (x, y, i, j) => x === i && y === j;
-
 const getDestiny = (neighboursCount, isActive) => {
-  const isActiveStatus =
-  (isActive && ([3, 2].includes(neighboursCount))) ||
-  (!isActive && neighboursCount === 3);
-
-  return isActiveStatus
-    ? ACTIVE_STATUS
-    : INACTIVE_STATUS;
-}
+  // Game of Life rules:
+  // 1. Any live cell with 2 or 3 live neighbors survives
+  // 2. Any dead cell with exactly 3 live neighbors becomes alive
+  // 3. All other cells die or stay dead
+  if (
+    (isActive && (neighboursCount === 2 || neighboursCount === 3)) ||
+    (!isActive && neighboursCount === 3)
+  ) {
+    return ACTIVE_STATUS;
+  }
+  return INACTIVE_STATUS;
+};
 
 const getNextGeneration = (rowIndex, cellIndex, dimensions, rows, newRows) => {
   let neighboursCount = 0;
-  let i = 0;
-  let j = 0;
 
-  for (i = rowIndex - 1; i <= rowIndex + 1; i += 1) {
-    if (isInsideTheXAxis(i, dimensions)) {
-      for (j = cellIndex - 1; j <= cellIndex + 1; j += 1) {
-        if (
-          !isSelf(rowIndex, cellIndex, i, j) &&
-          isInsideTheYAxis(j, dimensions) &&
-          rows[i][j] === ACTIVE_STATUS
-        ) {
-          neighboursCount += 1;
-        }
+  // Count live neighbors with early termination optimization
+  for (let i = Math.max(0, rowIndex - 1); i <= Math.min(rowIndex + 1, dimensions.rows - 1); i++) {
+    for (
+      let j = Math.max(0, cellIndex - 1);
+      j <= Math.min(cellIndex + 1, dimensions.columns - 1);
+      j++
+    ) {
+      if ((i !== rowIndex || j !== cellIndex) && rows[i][j] === ACTIVE_STATUS) {
+        neighboursCount += 1;
+        // Early termination: If we already have 4 neighbors, we know the cell will die
+        if (neighboursCount > 3) break;
       }
     }
+    // Continue the early termination from the outer loop
+    if (neighboursCount > 3) break;
   }
 
-  newRows[rowIndex][cellIndex] = getDestiny(
-    neighboursCount,
-    newRows[rowIndex][cellIndex] === ACTIVE_STATUS
-  );
+  // Use the current cell's state from rows, not from newRows (which might have been modified)
+  const isCurrentlyActive = rows[rowIndex][cellIndex] === ACTIVE_STATUS;
+  newRows[rowIndex][cellIndex] = getDestiny(neighboursCount, isCurrentlyActive);
 
   return newRows[rowIndex][cellIndex];
 };
 
 const createLogicalMatrix = (dimensions) => {
-  const rows = [];
+  const rows = Array(dimensions.rows)
+    .fill()
+    .map(() => Array(dimensions.columns).fill(INACTIVE_STATUS));
 
-  [...Array(dimensions.rows)].forEach((_, index) => {
-    rows.push([]);
-
-    [...Array(dimensions.columns)].forEach(() => {
-      rows[index].push(INACTIVE_STATUS);
-    });
-  });
-
-  const newRows = JSON.parse(JSON.stringify(rows));
+  // Create newRows efficiently without using JSON methods
+  const newRows = Array(dimensions.rows)
+    .fill()
+    .map(() => Array(dimensions.columns).fill(INACTIVE_STATUS));
 
   return {
     rows,
@@ -69,11 +62,13 @@ const createLogicalMatrix = (dimensions) => {
 };
 
 const iterateMatrix = (matrix = [], callback) => {
-  matrix.forEach((rows, rowIndex) => {
-    rows.forEach((_, cellIndex) =>
-      callback(rowIndex, cellIndex)
-    );
-  });
+  // Using traditional for loops for better performance than forEach
+  for (let rowIndex = 0; rowIndex < matrix.length; rowIndex++) {
+    const row = matrix[rowIndex];
+    for (let cellIndex = 0; cellIndex < row.length; cellIndex++) {
+      callback(rowIndex, cellIndex);
+    }
+  }
 };
 
 const drawMatrix = (dimensions, canvasContext, rows, deadColor) => {
@@ -82,31 +77,18 @@ const drawMatrix = (dimensions, canvasContext, rows, deadColor) => {
   canvasContext.fillStyle = deadColor;
 
   iterateMatrix(rows, (rowIndex, cellIndex) => {
-    canvasContext.fillRect(
-      rowIndex * zDimension,
-      cellIndex * zDimension,
-      zDimension,
-      zDimension
-    );
+    canvasContext.fillRect(rowIndex * zDimension, cellIndex * zDimension, zDimension, zDimension);
   });
 };
 
 const drawCell = (cell, dimensions, canvasContext) => {
   const zDimension = dimensions.cellSize;
 
-  canvasContext.fillRect(
-    cell[0] * zDimension,
-    cell[1] * zDimension,
-    zDimension,
-    zDimension
-  );
+  canvasContext.fillRect(cell[0] * zDimension, cell[1] * zDimension, zDimension, zDimension);
 };
 
 export {
   isInsideCoordinates,
-  isInsideTheYAxis,
-  isInsideTheXAxis,
-  isSelf,
   iterateMatrix,
   drawMatrix,
   getDestiny,
