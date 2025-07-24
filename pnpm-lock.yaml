@@ -10,16 +10,16 @@ importers:
     dependencies:
       '@vercel/analytics':
         specifier: ^1.2.2
-        version: 1.5.0(next@15.4.3(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        version: 1.5.0(next@15.4.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       '@vercel/speed-insights':
         specifier: ^1.0.10
-        version: 1.2.0(next@15.4.3(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
+        version: 1.2.0(next@15.4.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)
       eslint-config-next:
         specifier: ^15.0.0
-        version: 15.4.3(eslint@8.57.1)(typescript@4.9.5)
+        version: 15.4.4(eslint@8.57.1)(typescript@4.9.5)
       next:
         specifier: ^15.0.0
-        version: 15.4.3(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        version: 15.4.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react:
         specifier: 18.3.1
         version: 18.3.1
@@ -50,7 +50,7 @@ importers:
         version: 10.4.21(postcss@8.5.6)
       jest:
         specifier: 30.0.5
-        version: 30.0.5(@types/node@24.0.14)(ts-node@10.9.1(@types/node@24.0.14)(typescript@4.9.5))
+        version: 30.0.5(@types/node@16.18.11)(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5))
       jest-environment-jsdom:
         specifier: 30.0.5
         version: 30.0.5
@@ -243,8 +243,8 @@ packages:
     resolution: {integrity: sha512-1x3D2xEk2fRo3PAhwQwu5UubzgiVWSXTBfWpVd2Mx2AzRqJuDJCsgaDVZ7HB5iGzDW1Hl1sWN2mFyKjmR9uAog==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/runtime@7.27.6':
-    resolution: {integrity: sha512-vbavdySgbTTrmFE+EsiqUTzlOr5bzlnJtUv9PynGCAKvfQqjIXbvFdumPM/GxMDfyuGMJaJAU6TO4zc1Jf1i8Q==}
+  '@babel/runtime@7.28.2':
+    resolution: {integrity: sha512-KHp2IflsnGywDjBWDkR9iEqiWSpc8GIi0lgTT3mOElT0PP1tG26P4tmFI2YvAdzgq9RGyoHZQEIEdZy6Ec5xCA==}
     engines: {node: '>=6.9.0'}
 
   '@babel/template@7.27.2':
@@ -624,56 +624,56 @@ packages:
   '@napi-rs/wasm-runtime@0.2.12':
     resolution: {integrity: sha512-ZVWUcfwY4E/yPitQJl481FjFo3K22D6qF0DuFH6Y/nbnE11GY5uguDxZMGXPQ8WQ0128MXQD7TnfHyK4oWoIJQ==}
 
-  '@next/env@15.4.3':
-    resolution: {integrity: sha512-lKJ9KJAvaWzqurIsz6NWdQOLj96mdhuDMusLSYHw9HBe2On7BjUwU1WeRvq19x7NrEK3iOgMeSBV5qEhVH1cMw==}
+  '@next/env@15.4.4':
+    resolution: {integrity: sha512-SJKOOkULKENyHSYXE5+KiFU6itcIb6wSBjgM92meK0HVKpo94dNOLZVdLLuS7/BxImROkGoPsjR4EnuDucqiiA==}
 
-  '@next/eslint-plugin-next@15.4.3':
-    resolution: {integrity: sha512-wYYbP29uZlm9lqD1C6HDgW9WNNt6AlTogYKYpDyATs0QrKYIv/rPueoIDRH6qttXGCe3zNrb7hxfQx4w8OSkLA==}
+  '@next/eslint-plugin-next@15.4.4':
+    resolution: {integrity: sha512-1FDsyN//ai3Jd97SEd7scw5h1yLdzDACGOPRofr2GD3sEFsBylEEoL0MHSerd4n2dq9Zm/mFMqi4+NRMOreOKA==}
 
-  '@next/swc-darwin-arm64@15.4.3':
-    resolution: {integrity: sha512-YAhZWKeEYY7LHQJiQ8fe3Y6ymfcDcTn7rDC8PDu/pdeIl1Z2LHD4uyPNuQUGCEQT//MSNv6oZCeQzZfTCKZv+A==}
+  '@next/swc-darwin-arm64@15.4.4':
+    resolution: {integrity: sha512-eVG55dnGwfUuG+TtnUCt+mEJ+8TGgul6nHEvdb8HEH7dmJIFYOCApAaFrIrxwtEq2Cdf+0m5sG1Np8cNpw9EAw==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [darwin]
 
-  '@next/swc-darwin-x64@15.4.3':
-    resolution: {integrity: sha512-ZPHRdd51xaxCMpT4viQ6h8TgYM1zPW1JIeksPY9wKlyvBVUQqrWqw8kEh1sa7/x0Ied+U7pYHkAkutrUwxbMcg==}
+  '@next/swc-darwin-x64@15.4.4':
+    resolution: {integrity: sha512-zqG+/8apsu49CltEj4NAmCGZvHcZbOOOsNoTVeIXphYWIbE4l6A/vuQHyqll0flU2o3dmYCXsBW5FmbrGDgljQ==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [darwin]
 
-  '@next/swc-linux-arm64-gnu@15.4.3':
-    resolution: {integrity: sha512-QUdqftCXC5vw5cowucqi9FeOPQ0vdMxoOHLY0J5jPdercwSJFjdi9CkEO4Xkq1eG4t1TB/BG81n6rmTsWoILnw==}
+  '@next/swc-linux-arm64-gnu@15.4.4':
+    resolution: {integrity: sha512-LRD4l2lq4R+2QCHBQVC0wjxxkLlALGJCwigaJ5FSRSqnje+MRKHljQNZgDCaKUZQzO/TXxlmUdkZP/X3KNGZaw==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
 
-  '@next/swc-linux-arm64-musl@15.4.3':
-    resolution: {integrity: sha512-HTL31NsmoafX+r5g91Yj3+q34nrn1xKmCWVuNA+fUWO4X0pr+n83uGzLyEOn0kUqbMZ40KmWx+4wsbMoUChkiQ==}
+  '@next/swc-linux-arm64-musl@15.4.4':
+    resolution: {integrity: sha512-LsGUCTvuZ0690fFWerA4lnQvjkYg9gHo12A3wiPUR4kCxbx/d+SlwmonuTH2SWZI+RVGA9VL3N0S03WTYv6bYg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
 
-  '@next/swc-linux-x64-gnu@15.4.3':
-    resolution: {integrity: sha512-HRQLWoeFkKXd2YCEEy9GhfwOijRm37x4w5r0MMVHxBKSA6ms3JoPUXvGhfHT6srnGRcEUWNrQ2vzkHir5ZWTSw==}
+  '@next/swc-linux-x64-gnu@15.4.4':
+    resolution: {integrity: sha512-aOy5yNRpLL3wNiJVkFYl6w22hdREERNjvegE6vvtix8LHRdsTHhWTpgvcYdCK7AIDCQW5ATmzr9XkPHvSoAnvg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
 
-  '@next/swc-linux-x64-musl@15.4.3':
-    resolution: {integrity: sha512-NyXUx6G7AayaRGUsVPenuwhyAoyxjQuQPaK50AXoaAHPwRuif4WmSrXUs8/Y0HJIZh8E/YXRm9H7uuGfiacpuQ==}
+  '@next/swc-linux-x64-musl@15.4.4':
+    resolution: {integrity: sha512-FL7OAn4UkR8hKQRGBmlHiHinzOb07tsfARdGh7v0Z0jEJ3sz8/7L5bR23ble9E6DZMabSStqlATHlSxv1fuzAg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
 
-  '@next/swc-win32-arm64-msvc@15.4.3':
-    resolution: {integrity: sha512-2CUTmpzN/7cL1a7GjdLkDFlfH3nwMwW8a6JiaAUsL9MtKmNNO3fnXqnY0Zk30fii3hVEl4dr7ztrpYt0t2CcGQ==}
+  '@next/swc-win32-arm64-msvc@15.4.4':
+    resolution: {integrity: sha512-eEdNW/TXwjYhOulQh0pffTMMItWVwKCQpbziSBmgBNFZIIRn2GTXrhrewevs8wP8KXWYMx8Z+mNU0X+AfvtrRg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [win32]
 
-  '@next/swc-win32-x64-msvc@15.4.3':
-    resolution: {integrity: sha512-i54YgUhvrUQxQD84SjAbkfWhYkOdm/DNRAVekCHLWxVg3aUbyC6NFQn9TwgCkX5QAS2pXCJo3kFboSFvrsd7dA==}
+  '@next/swc-win32-x64-msvc@15.4.4':
+    resolution: {integrity: sha512-SE5pYNbn/xZKMy1RE3pAs+4xD32OI4rY6mzJa4XUkp/ItZY+OMjIgilskmErt8ls/fVJ+Ihopi2QIeW6O3TrMw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [win32]
@@ -1954,8 +1954,8 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
-  eslint-config-next@15.4.3:
-    resolution: {integrity: sha512-blytVMTpdqqlLBvYOvwT51m5eqRHNofKR/pfBSeeHiQMSY33kCph31hAK3DiAsL/RamVJRQzHwTRbbNr+7c/sw==}
+  eslint-config-next@15.4.4:
+    resolution: {integrity: sha512-sK/lWLUVF5om18O5w76Jt3F8uzu/LP5mVa6TprCMWkjWHUmByq80iHGHcdH7k1dLiJlj+DRIWf98d5piwRsSuA==}
     peerDependencies:
       eslint: ^7.23.0 || ^8.0.0 || ^9.0.0
       typescript: '>=3.3.1'
@@ -3054,8 +3054,8 @@ packages:
     resolution: {integrity: sha512-+EUsqGPLsM+j/zdChZjsnX51g4XrHFOIXwfnCVPGlQk/k5giakcKsuxCObBRu6DSm9opw/O6slWbJdghQM4bBg==}
     engines: {node: '>= 0.6'}
 
-  next@15.4.3:
-    resolution: {integrity: sha512-uW7Qe6poVasNIE1X382nI29oxSdFJzjQzTgJFLD43MxyPfGKKxCMySllhBpvqr48f58Om+tLMivzRwBpXEytvA==}
+  next@15.4.4:
+    resolution: {integrity: sha512-kNcubvJjOL9yUOfwtZF3HfDhuhp+kVD+FM2A6Tyua1eI/xfmY4r/8ZS913MMz+oWKDlbps/dQOWdDricuIkXLw==}
     engines: {node: ^18.18.0 || ^19.8.0 || >= 20.0.0}
     hasBin: true
     peerDependencies:
@@ -4253,7 +4253,7 @@ snapshots:
 
   '@babel/runtime@7.27.1': {}
 
-  '@babel/runtime@7.27.6': {}
+  '@babel/runtime@7.28.2': {}
 
   '@babel/template@7.27.2':
     dependencies:
@@ -4487,7 +4487,7 @@ snapshots:
       jest-util: 30.0.5
       slash: 3.0.0
 
-  '@jest/core@30.0.5(ts-node@10.9.1(@types/node@24.0.14)(typescript@4.9.5))':
+  '@jest/core@30.0.5(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5))':
     dependencies:
       '@jest/console': 30.0.5
       '@jest/pattern': 30.0.1
@@ -4502,7 +4502,7 @@ snapshots:
       exit-x: 0.2.2
       graceful-fs: 4.2.11
       jest-changed-files: 30.0.5
-      jest-config: 30.0.5(@types/node@24.0.14)(ts-node@10.9.1(@types/node@24.0.14)(typescript@4.9.5))
+      jest-config: 30.0.5(@types/node@24.0.14)(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5))
       jest-haste-map: 30.0.5
       jest-message-util: 30.0.5
       jest-regex-util: 30.0.1
@@ -4724,34 +4724,34 @@ snapshots:
       '@tybys/wasm-util': 0.10.0
     optional: true
 
-  '@next/env@15.4.3': {}
+  '@next/env@15.4.4': {}
 
-  '@next/eslint-plugin-next@15.4.3':
+  '@next/eslint-plugin-next@15.4.4':
     dependencies:
       fast-glob: 3.3.1
 
-  '@next/swc-darwin-arm64@15.4.3':
+  '@next/swc-darwin-arm64@15.4.4':
     optional: true
 
-  '@next/swc-darwin-x64@15.4.3':
+  '@next/swc-darwin-x64@15.4.4':
     optional: true
 
-  '@next/swc-linux-arm64-gnu@15.4.3':
+  '@next/swc-linux-arm64-gnu@15.4.4':
     optional: true
 
-  '@next/swc-linux-arm64-musl@15.4.3':
+  '@next/swc-linux-arm64-musl@15.4.4':
     optional: true
 
-  '@next/swc-linux-x64-gnu@15.4.3':
+  '@next/swc-linux-x64-gnu@15.4.4':
     optional: true
 
-  '@next/swc-linux-x64-musl@15.4.3':
+  '@next/swc-linux-x64-musl@15.4.4':
     optional: true
 
-  '@next/swc-win32-arm64-msvc@15.4.3':
+  '@next/swc-win32-arm64-msvc@15.4.4':
     optional: true
 
-  '@next/swc-win32-x64-msvc@15.4.3':
+  '@next/swc-win32-x64-msvc@15.4.4':
     optional: true
 
   '@nodelib/fs.scandir@2.1.5':
@@ -4876,7 +4876,7 @@ snapshots:
   '@testing-library/dom@8.20.1':
     dependencies:
       '@babel/code-frame': 7.27.1
-      '@babel/runtime': 7.27.6
+      '@babel/runtime': 7.28.2
       '@types/aria-query': 5.0.4
       aria-query: 5.1.3
       chalk: 4.1.2
@@ -5174,9 +5174,9 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.11.1':
     optional: true
 
-  '@vercel/analytics@1.5.0(next@15.4.3(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
+  '@vercel/analytics@1.5.0(next@15.4.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
     optionalDependencies:
-      next: 15.4.3(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      next: 15.4.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
 
   '@vercel/blob@1.0.2':
@@ -5319,9 +5319,9 @@ snapshots:
 
   '@vercel/ruby@2.2.1': {}
 
-  '@vercel/speed-insights@1.2.0(next@15.4.3(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
+  '@vercel/speed-insights@1.2.0(next@15.4.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react@18.3.1)':
     optionalDependencies:
-      next: 15.4.3(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      next: 15.4.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
 
   '@vercel/static-build@2.7.16':
@@ -6138,9 +6138,9 @@ snapshots:
 
   escape-string-regexp@4.0.0: {}
 
-  eslint-config-next@15.4.3(eslint@8.57.1)(typescript@4.9.5):
+  eslint-config-next@15.4.4(eslint@8.57.1)(typescript@4.9.5):
     dependencies:
-      '@next/eslint-plugin-next': 15.4.3
+      '@next/eslint-plugin-next': 15.4.4
       '@rushstack/eslint-patch': 1.12.0
       '@typescript-eslint/eslint-plugin': 8.38.0(@typescript-eslint/parser@8.38.0(eslint@8.57.1)(typescript@4.9.5))(eslint@8.57.1)(typescript@4.9.5)
       '@typescript-eslint/parser': 8.38.0(eslint@8.57.1)(typescript@4.9.5)
@@ -6904,15 +6904,15 @@ snapshots:
       - babel-plugin-macros
       - supports-color
 
-  jest-cli@30.0.5(@types/node@24.0.14)(ts-node@10.9.1(@types/node@24.0.14)(typescript@4.9.5)):
+  jest-cli@30.0.5(@types/node@16.18.11)(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5)):
     dependencies:
-      '@jest/core': 30.0.5(ts-node@10.9.1(@types/node@24.0.14)(typescript@4.9.5))
+      '@jest/core': 30.0.5(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5))
       '@jest/test-result': 30.0.5
       '@jest/types': 30.0.5
       chalk: 4.1.2
       exit-x: 0.2.2
       import-local: 3.2.0
-      jest-config: 30.0.5(@types/node@24.0.14)(ts-node@10.9.1(@types/node@24.0.14)(typescript@4.9.5))
+      jest-config: 30.0.5(@types/node@16.18.11)(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5))
       jest-util: 30.0.5
       jest-validate: 30.0.5
       yargs: 17.7.2
@@ -6923,7 +6923,40 @@ snapshots:
       - supports-color
       - ts-node
 
-  jest-config@30.0.5(@types/node@24.0.14)(ts-node@10.9.1(@types/node@24.0.14)(typescript@4.9.5)):
+  jest-config@30.0.5(@types/node@16.18.11)(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5)):
+    dependencies:
+      '@babel/core': 7.28.0
+      '@jest/get-type': 30.0.1
+      '@jest/pattern': 30.0.1
+      '@jest/test-sequencer': 30.0.5
+      '@jest/types': 30.0.5
+      babel-jest: 30.0.5(@babel/core@7.28.0)
+      chalk: 4.1.2
+      ci-info: 4.3.0
+      deepmerge: 4.3.1
+      glob: 10.4.5
+      graceful-fs: 4.2.11
+      jest-circus: 30.0.5
+      jest-docblock: 30.0.1
+      jest-environment-node: 30.0.5
+      jest-regex-util: 30.0.1
+      jest-resolve: 30.0.5
+      jest-runner: 30.0.5
+      jest-util: 30.0.5
+      jest-validate: 30.0.5
+      micromatch: 4.0.8
+      parse-json: 5.2.0
+      pretty-format: 30.0.5
+      slash: 3.0.0
+      strip-json-comments: 3.1.1
+    optionalDependencies:
+      '@types/node': 16.18.11
+      ts-node: 10.9.1(@types/node@16.18.11)(typescript@4.9.5)
+    transitivePeerDependencies:
+      - babel-plugin-macros
+      - supports-color
+
+  jest-config@30.0.5(@types/node@24.0.14)(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5)):
     dependencies:
       '@babel/core': 7.28.0
       '@jest/get-type': 30.0.1
@@ -6951,7 +6984,7 @@ snapshots:
       strip-json-comments: 3.1.1
     optionalDependencies:
       '@types/node': 24.0.14
-      ts-node: 10.9.1(@types/node@24.0.14)(typescript@4.9.5)
+      ts-node: 10.9.1(@types/node@16.18.11)(typescript@4.9.5)
     transitivePeerDependencies:
       - babel-plugin-macros
       - supports-color
@@ -7220,12 +7253,12 @@ snapshots:
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
-  jest@30.0.5(@types/node@24.0.14)(ts-node@10.9.1(@types/node@24.0.14)(typescript@4.9.5)):
+  jest@30.0.5(@types/node@16.18.11)(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5)):
     dependencies:
-      '@jest/core': 30.0.5(ts-node@10.9.1(@types/node@24.0.14)(typescript@4.9.5))
+      '@jest/core': 30.0.5(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5))
       '@jest/types': 30.0.5
       import-local: 3.2.0
-      jest-cli: 30.0.5(@types/node@24.0.14)(ts-node@10.9.1(@types/node@24.0.14)(typescript@4.9.5))
+      jest-cli: 30.0.5(@types/node@16.18.11)(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5))
     transitivePeerDependencies:
       - '@types/node'
       - babel-plugin-macros
@@ -7512,9 +7545,9 @@ snapshots:
 
   negotiator@0.6.3: {}
 
-  next@15.4.3(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  next@15.4.4(@babel/core@7.28.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@next/env': 15.4.3
+      '@next/env': 15.4.4
       '@swc/helpers': 0.5.15
       caniuse-lite: 1.0.30001727
       postcss: 8.4.31
@@ -7522,14 +7555,14 @@ snapshots:
       react-dom: 18.3.1(react@18.3.1)
       styled-jsx: 5.1.6(@babel/core@7.28.0)(react@18.3.1)
     optionalDependencies:
-      '@next/swc-darwin-arm64': 15.4.3
-      '@next/swc-darwin-x64': 15.4.3
-      '@next/swc-linux-arm64-gnu': 15.4.3
-      '@next/swc-linux-arm64-musl': 15.4.3
-      '@next/swc-linux-x64-gnu': 15.4.3
-      '@next/swc-linux-x64-musl': 15.4.3
-      '@next/swc-win32-arm64-msvc': 15.4.3
-      '@next/swc-win32-x64-msvc': 15.4.3
+      '@next/swc-darwin-arm64': 15.4.4
+      '@next/swc-darwin-x64': 15.4.4
+      '@next/swc-linux-arm64-gnu': 15.4.4
+      '@next/swc-linux-arm64-musl': 15.4.4
+      '@next/swc-linux-x64-gnu': 15.4.4
+      '@next/swc-linux-x64-musl': 15.4.4
+      '@next/swc-win32-arm64-msvc': 15.4.4
+      '@next/swc-win32-x64-msvc': 15.4.4
       sharp: 0.34.3
     transitivePeerDependencies:
       - '@babel/core'
@@ -8325,25 +8358,6 @@ snapshots:
       typescript: 4.9.5
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
-
-  ts-node@10.9.1(@types/node@24.0.14)(typescript@4.9.5):
-    dependencies:
-      '@cspotcode/source-map-support': 0.8.1
-      '@tsconfig/node10': 1.0.11
-      '@tsconfig/node12': 1.0.11
-      '@tsconfig/node14': 1.0.3
-      '@tsconfig/node16': 1.0.4
-      '@types/node': 24.0.14
-      acorn: 8.15.0
-      acorn-walk: 8.3.4
-      arg: 4.1.3
-      create-require: 1.1.1
-      diff: 4.0.2
-      make-error: 1.3.6
-      typescript: 4.9.5
-      v8-compile-cache-lib: 3.0.1
-      yn: 3.1.1
-    optional: true
 
   ts-toolbelt@6.15.5: {}
 
