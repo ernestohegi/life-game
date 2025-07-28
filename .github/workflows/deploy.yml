@@ -13,6 +13,7 @@ on:
       - "next.config.js"
       - "package.json"
       - "pnpm-lock.yaml"
+      - ".github/workflows/deploy.yml"
 
 jobs:
   build-and-push:
