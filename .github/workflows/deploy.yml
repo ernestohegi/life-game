@@ -1,4 +1,4 @@
-name: Build Life Game
+name: Build Life Game.
 
 on:
   push:
