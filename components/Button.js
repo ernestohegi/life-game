@@ -2,7 +2,6 @@ import React from 'react';
 
 /**
  * Button Component for Game of Life
- *
  * @param {Object} props - Component props
  * @param {Function} props.onClick - Click handler function
  * @param {string} props.color - Button color variant ('green', 'amber', 'blue', 'red')
