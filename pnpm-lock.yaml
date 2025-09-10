@@ -31,7 +31,7 @@ importers:
         version: 14.2.5
       vercel:
         specifier: ^47.0.0
-        version: 47.0.6
+        version: 47.0.7
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.1.5
@@ -3943,8 +3943,8 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  vercel@47.0.6:
-    resolution: {integrity: sha512-oHYLH8FunvFS91JXER/7K1HhE5GIMCA3IAloGx2oMtzdmExo+NIobXGe0Zlbsg4cAG7yOmvCRMds6RfAxOs+ng==}
+  vercel@47.0.7:
+    resolution: {integrity: sha512-+lmU4xptuIkSXDh3iQutPcb4dDh2olr6nKD7924g203IA1/nZaeRBYyqC61+QeVdB4w6jtmZFyfJIePRsl91mg==}
     engines: {node: '>= 18'}
     hasBin: true
 
@@ -6944,7 +6944,7 @@ snapshots:
       '@jest/expect': 30.1.2
       '@jest/test-result': 30.1.3
       '@jest/types': 30.0.5
-      '@types/node': 24.3.0
+      '@types/node': 24.3.1
       chalk: 4.1.2
       co: 4.6.0
       dedent: 1.6.0
@@ -7059,7 +7059,7 @@ snapshots:
       '@jest/environment': 30.1.2
       '@jest/fake-timers': 30.1.2
       '@jest/types': 30.0.5
-      '@types/node': 24.3.0
+      '@types/node': 24.3.1
       jest-mock: 30.0.5
       jest-util: 30.0.5
       jest-validate: 30.1.0
@@ -8537,7 +8537,7 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vercel@47.0.6:
+  vercel@47.0.7:
     dependencies:
       '@vercel/blob': 1.0.2
       '@vercel/build-utils': 12.1.0
