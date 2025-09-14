@@ -30,8 +30,8 @@ importers:
         specifier: 14.2.5
         version: 14.2.5
       vercel:
-        specifier: ^47.0.0
-        version: 47.1.4
+        specifier: ^48.0.0
+        version: 48.0.0
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.1.5
@@ -50,7 +50,7 @@ importers:
         version: 10.4.21(postcss@8.5.6)
       jest:
         specifier: 30.1.3
-        version: 30.1.3(@types/node@24.3.0)(ts-node@10.9.1(@types/node@24.3.0)(typescript@4.9.5))
+        version: 30.1.3(@types/node@16.18.11)(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5))
       jest-environment-jsdom:
         specifier: 30.1.2
         version: 30.1.2
@@ -1180,8 +1180,8 @@ packages:
   '@vercel/node@5.3.22':
     resolution: {integrity: sha512-z3v0IlS5fqIEwPKpH9Epyam5DE+wadyKCk+MOaDZYVsriDp3ffJWT0neofHnNfOmnkZztMS194gwbV73v4QTBA==}
 
-  '@vercel/python@5.0.3':
-    resolution: {integrity: sha512-kalXcbgwnAyP97VrE+Rb7tLtBlkgUVsbxvOD4zleBXo5hpw5jugCOqrtGglECuUXLOYQhlBCnNgNczb8HfrG2g==}
+  '@vercel/python@5.0.4':
+    resolution: {integrity: sha512-QtwyRRjW3SB5K8QvXn4yI78gQusmdLXCwWa2kXdMwx53eln5UCuVCXrNpA3TASLIgbVQ6i7VFcVwdyFKt3qKcg==}
 
   '@vercel/redwood@2.3.6':
     resolution: {integrity: sha512-Rm9xECWNIJOwtPsZ1/XcgyJj95KM7cWwNHYPMw8dzFAnLQGyapGe/YHEjxV6POI2RF8R0nFmU1t+45XBweYJJA==}
@@ -3937,8 +3937,8 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  vercel@47.1.4:
-    resolution: {integrity: sha512-drRpsy8MWfQ1V0m+AEi302M9zZ9GXcsE8ZoijeE62TmVzdmurlc+GUflPDNyDWKRvQ819SPfwZqCnSKmsxDm9Q==}
+  vercel@48.0.0:
+    resolution: {integrity: sha512-cwJsYDrWA2lBh+dJ8qmSvytn9OcmfsFmegS9QGpZLudiKl9O0BUNf3x4V/SpybIXsicY07YAU2kMmw3gboBwLg==}
     engines: {node: '>= 18'}
     hasBin: true
 
@@ -4505,7 +4505,7 @@ snapshots:
       jest-util: 30.0.5
       slash: 3.0.0
 
-  '@jest/core@30.1.3(ts-node@10.9.1(@types/node@24.3.0)(typescript@4.9.5))':
+  '@jest/core@30.1.3(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5))':
     dependencies:
       '@jest/console': 30.1.2
       '@jest/pattern': 30.0.1
@@ -4520,7 +4520,7 @@ snapshots:
       exit-x: 0.2.2
       graceful-fs: 4.2.11
       jest-changed-files: 30.0.5
-      jest-config: 30.1.3(@types/node@24.3.0)(ts-node@10.9.1(@types/node@24.3.0)(typescript@4.9.5))
+      jest-config: 30.1.3(@types/node@24.3.0)(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5))
       jest-haste-map: 30.1.0
       jest-message-util: 30.1.0
       jest-regex-util: 30.0.1
@@ -5341,7 +5341,7 @@ snapshots:
       - rollup
       - supports-color
 
-  '@vercel/python@5.0.3': {}
+  '@vercel/python@5.0.4': {}
 
   '@vercel/redwood@2.3.6':
     dependencies:
@@ -6953,15 +6953,15 @@ snapshots:
       - babel-plugin-macros
       - supports-color
 
-  jest-cli@30.1.3(@types/node@24.3.0)(ts-node@10.9.1(@types/node@24.3.0)(typescript@4.9.5)):
+  jest-cli@30.1.3(@types/node@16.18.11)(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5)):
     dependencies:
-      '@jest/core': 30.1.3(ts-node@10.9.1(@types/node@24.3.0)(typescript@4.9.5))
+      '@jest/core': 30.1.3(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5))
       '@jest/test-result': 30.1.3
       '@jest/types': 30.0.5
       chalk: 4.1.2
       exit-x: 0.2.2
       import-local: 3.2.0
-      jest-config: 30.1.3(@types/node@24.3.0)(ts-node@10.9.1(@types/node@24.3.0)(typescript@4.9.5))
+      jest-config: 30.1.3(@types/node@16.18.11)(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5))
       jest-util: 30.0.5
       jest-validate: 30.1.0
       yargs: 17.7.2
@@ -6972,7 +6972,40 @@ snapshots:
       - supports-color
       - ts-node
 
-  jest-config@30.1.3(@types/node@24.3.0)(ts-node@10.9.1(@types/node@24.3.0)(typescript@4.9.5)):
+  jest-config@30.1.3(@types/node@16.18.11)(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5)):
+    dependencies:
+      '@babel/core': 7.28.0
+      '@jest/get-type': 30.1.0
+      '@jest/pattern': 30.0.1
+      '@jest/test-sequencer': 30.1.3
+      '@jest/types': 30.0.5
+      babel-jest: 30.1.2(@babel/core@7.28.0)
+      chalk: 4.1.2
+      ci-info: 4.3.0
+      deepmerge: 4.3.1
+      glob: 10.4.5
+      graceful-fs: 4.2.11
+      jest-circus: 30.1.3
+      jest-docblock: 30.0.1
+      jest-environment-node: 30.1.2
+      jest-regex-util: 30.0.1
+      jest-resolve: 30.1.3
+      jest-runner: 30.1.3
+      jest-util: 30.0.5
+      jest-validate: 30.1.0
+      micromatch: 4.0.8
+      parse-json: 5.2.0
+      pretty-format: 30.0.5
+      slash: 3.0.0
+      strip-json-comments: 3.1.1
+    optionalDependencies:
+      '@types/node': 16.18.11
+      ts-node: 10.9.1(@types/node@16.18.11)(typescript@4.9.5)
+    transitivePeerDependencies:
+      - babel-plugin-macros
+      - supports-color
+
+  jest-config@30.1.3(@types/node@24.3.0)(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5)):
     dependencies:
       '@babel/core': 7.28.0
       '@jest/get-type': 30.1.0
@@ -7000,7 +7033,7 @@ snapshots:
       strip-json-comments: 3.1.1
     optionalDependencies:
       '@types/node': 24.3.0
-      ts-node: 10.9.1(@types/node@24.3.0)(typescript@4.9.5)
+      ts-node: 10.9.1(@types/node@16.18.11)(typescript@4.9.5)
     transitivePeerDependencies:
       - babel-plugin-macros
       - supports-color
@@ -7269,12 +7302,12 @@ snapshots:
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
-  jest@30.1.3(@types/node@24.3.0)(ts-node@10.9.1(@types/node@24.3.0)(typescript@4.9.5)):
+  jest@30.1.3(@types/node@16.18.11)(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5)):
     dependencies:
-      '@jest/core': 30.1.3(ts-node@10.9.1(@types/node@24.3.0)(typescript@4.9.5))
+      '@jest/core': 30.1.3(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5))
       '@jest/types': 30.0.5
       import-local: 3.2.0
-      jest-cli: 30.1.3(@types/node@24.3.0)(ts-node@10.9.1(@types/node@24.3.0)(typescript@4.9.5))
+      jest-cli: 30.1.3(@types/node@16.18.11)(ts-node@10.9.1(@types/node@16.18.11)(typescript@4.9.5))
     transitivePeerDependencies:
       - '@types/node'
       - babel-plugin-macros
@@ -8377,25 +8410,6 @@ snapshots:
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
 
-  ts-node@10.9.1(@types/node@24.3.0)(typescript@4.9.5):
-    dependencies:
-      '@cspotcode/source-map-support': 0.8.1
-      '@tsconfig/node10': 1.0.11
-      '@tsconfig/node12': 1.0.11
-      '@tsconfig/node14': 1.0.3
-      '@tsconfig/node16': 1.0.4
-      '@types/node': 24.3.0
-      acorn: 8.15.0
-      acorn-walk: 8.3.4
-      arg: 4.1.3
-      create-require: 1.1.1
-      diff: 4.0.2
-      make-error: 1.3.6
-      typescript: 4.9.5
-      v8-compile-cache-lib: 3.0.1
-      yn: 3.1.1
-    optional: true
-
   ts-toolbelt@6.15.5: {}
 
   tsconfig-paths@3.15.0:
@@ -8526,7 +8540,7 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vercel@47.1.4:
+  vercel@48.0.0:
     dependencies:
       '@vercel/blob': 1.0.2
       '@vercel/build-utils': 12.1.0
@@ -8538,7 +8552,7 @@ snapshots:
       '@vercel/hydrogen': 1.2.4
       '@vercel/next': 4.12.4
       '@vercel/node': 5.3.22
-      '@vercel/python': 5.0.3
+      '@vercel/python': 5.0.4
       '@vercel/redwood': 2.3.6
       '@vercel/remix-builder': 5.4.12
       '@vercel/ruby': 2.2.1
