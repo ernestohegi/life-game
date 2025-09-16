@@ -31,7 +31,7 @@ importers:
         version: 14.2.5
       vercel:
         specifier: ^48.0.0
-        version: 48.0.1
+        version: 48.0.2
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.1.5
@@ -922,8 +922,8 @@ packages:
   '@types/node@24.3.0':
     resolution: {integrity: sha512-aPTXCrfwnDLj4VvXrm+UUCQjNEvJgNA8s5F1cvwQU+3KNltTOkBm1j30uNLyqqPNe7gE3KFzImYoZEfLhp4Yow==}
 
-  '@types/node@24.4.0':
-    resolution: {integrity: sha512-gUuVEAK4/u6F9wRLznPUU4WGUacSEBDPoC2TrBkw3GAnOLHBL45QdfHOXp1kJ4ypBGLxTOB+t7NJLpKoC3gznQ==}
+  '@types/node@24.5.1':
+    resolution: {integrity: sha512-/SQdmUP2xa+1rdx7VwB9yPq8PaKej8TD5cQ+XfKDPWWC+VDJU4rvVVagXqKUzhKjtFoNA8rXDJAkCxQPAe00+Q==}
 
   '@types/prop-types@15.7.15':
     resolution: {integrity: sha512-F6bEyamV9jKGAFBEmlQnesRPGOQqS2+Uwi0Em15xenOxHaf2hv6L8YCVn3rPdPJOiJfPiCnLIRyvwVaqMY3MIw==}
@@ -1163,8 +1163,8 @@ packages:
   '@vercel/go@3.2.3':
     resolution: {integrity: sha512-PErgHlV7cf8hyPq31aRsL4xm5t4rCSO6vN5AQLlAGSy3ctdgqG7sI6hq/CAKo3CfgIhVHUwNYapFJgGJB/s4OA==}
 
-  '@vercel/hono@0.0.24':
-    resolution: {integrity: sha512-RwCFYA4afT82gxcfzWi2361eeCKcvIEU7v6zeb7UnU0QDxmQuwVzObxGCEG1sZi2sgT+ovt2PRUXPqCoh0G8EA==}
+  '@vercel/hono@0.0.25':
+    resolution: {integrity: sha512-5jL697pw1Gf6NXHLnAfAZ+ySqK8CiLcsk22aw1c5Zprx+IaqOFkMrTdOfHhZ4lIn1Cj4tABs/WvG86WJT2XmVQ==}
 
   '@vercel/hydrogen@1.2.4':
     resolution: {integrity: sha512-eb16oesfgHuBlXxe+WqI+rMdP4QpeHXLJh9ropFy+StkWC2F0ZFKegutEpvJCRg0FHttRnn9uMzMmzJ2F4xKkg==}
@@ -3899,8 +3899,8 @@ packages:
   undici-types@7.10.0:
     resolution: {integrity: sha512-t5Fy/nfn+14LuOc2KNYg75vZqClpAiqscVvMygNnlsHBFpSXdJaYtXMcdNLpl/Qvc3P2cB3s6lOV51nqsFq4ag==}
 
-  undici-types@7.11.0:
-    resolution: {integrity: sha512-kt1ZriHTi7MU+Z/r9DOdAI3ONdaR3M3csEaRc6ewa4f4dTvX4cQCbJ4NkEn0ohE4hHtq85+PhPSTY+pO/1PwgA==}
+  undici-types@7.12.0:
+    resolution: {integrity: sha512-goOacqME2GYyOZZfb5Lgtu+1IDmAlAEu5xnD3+xTzS10hT0vzpf0SPjkXwAw9Jm+4n/mQGDP3LO8CPbYROeBfQ==}
 
   undici@5.28.4:
     resolution: {integrity: sha512-72RFADWFqKmUb2hmmvNODKL3p9hcB6Gt2DOQMis1SEBaV6a4MH8soBvzg+95CYhCKPFedut2JY9bMfrDl9D23g==}
@@ -3944,8 +3944,8 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  vercel@48.0.1:
-    resolution: {integrity: sha512-Uw+k0PJdEhDbQF5K43wRiAS8Qmt2zen0n49Q7z8vxZ2mMx97dRa1dU8BfCiJCTp+rRbxUIMUBJNmM76katjWmw==}
+  vercel@48.0.2:
+    resolution: {integrity: sha512-saQWQuu2nXI8I8yxrHXDNeyV/A1v2fGri/B8XS/hMtZqzpiXeMw2edzlZPoLiinRAtNJsCaXf6Y5kEgstXhoIg==}
     engines: {node: '>= 18'}
     hasBin: true
 
@@ -4696,7 +4696,7 @@ snapshots:
       '@jest/schemas': 29.6.3
       '@types/istanbul-lib-coverage': 2.0.6
       '@types/istanbul-reports': 3.0.4
-      '@types/node': 24.4.0
+      '@types/node': 24.5.1
       '@types/yargs': 17.0.33
       chalk: 4.1.2
 
@@ -5018,9 +5018,9 @@ snapshots:
     dependencies:
       undici-types: 7.10.0
 
-  '@types/node@24.4.0':
+  '@types/node@24.5.1':
     dependencies:
-      undici-types: 7.11.0
+      undici-types: 7.12.0
 
   '@types/prop-types@15.7.15':
     optional: true
@@ -5273,7 +5273,7 @@ snapshots:
 
   '@vercel/go@3.2.3': {}
 
-  '@vercel/hono@0.0.24':
+  '@vercel/hono@0.0.25':
     dependencies:
       '@vercel/node': 5.3.22
       '@vercel/static-config': 3.1.2
@@ -7235,7 +7235,7 @@ snapshots:
   jest-util@29.7.0:
     dependencies:
       '@jest/types': 29.6.3
-      '@types/node': 24.4.0
+      '@types/node': 24.5.1
       chalk: 4.1.2
       ci-info: 3.9.0
       graceful-fs: 4.2.11
@@ -8474,7 +8474,7 @@ snapshots:
 
   undici-types@7.10.0: {}
 
-  undici-types@7.11.0: {}
+  undici-types@7.12.0: {}
 
   undici@5.28.4:
     dependencies:
@@ -8537,7 +8537,7 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vercel@48.0.1:
+  vercel@48.0.2:
     dependencies:
       '@vercel/blob': 1.0.2
       '@vercel/build-utils': 12.1.0
@@ -8545,7 +8545,7 @@ snapshots:
       '@vercel/express': 0.0.16
       '@vercel/fun': 1.1.6
       '@vercel/go': 3.2.3
-      '@vercel/hono': 0.0.24
+      '@vercel/hono': 0.0.25
       '@vercel/hydrogen': 1.2.4
       '@vercel/next': 4.12.5
       '@vercel/node': 5.3.22
