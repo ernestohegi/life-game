@@ -31,7 +31,7 @@ importers:
         version: 14.2.5
       vercel:
         specifier: ^48.0.0
-        version: 48.1.4
+        version: 48.1.6
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.1.5
@@ -1235,8 +1235,8 @@ packages:
   '@vercel/error-utils@2.0.3':
     resolution: {integrity: sha512-CqC01WZxbLUxoiVdh9B/poPbNpY9U+tO1N9oWHwTl5YAZxcqXmmWJ8KNMFItJCUUWdY3J3xv8LvAuQv2KZ5YdQ==}
 
-  '@vercel/express@0.0.20':
-    resolution: {integrity: sha512-ST7f/ccShhr0s5eQWy0hmjEDKfbJncJCMupZT/7c4Uxw2LRRARRWatZSMJ5gbUmuKo/o6E+wAuy14KD9hH/Zjw==}
+  '@vercel/express@0.0.22':
+    resolution: {integrity: sha512-tbTy5tLA2ouIlLtiJvkb4VcCgzbgOonTupYYJzJrhFd4FDxcS0nSSmu7O/QDivpZz5c3Uk9xW5qLYnPn4rjrXQ==}
 
   '@vercel/fun@1.1.6':
     resolution: {integrity: sha512-xDiM+bD0fSZyzcjsAua3D+guXclvHOSTzr03UcZEQwYzIjwWjLduT7bl2gAaeNIe7fASAIZd0P00clcj0On4rQ==}
@@ -1260,8 +1260,8 @@ packages:
   '@vercel/hydrogen@1.2.4':
     resolution: {integrity: sha512-eb16oesfgHuBlXxe+WqI+rMdP4QpeHXLJh9ropFy+StkWC2F0ZFKegutEpvJCRg0FHttRnn9uMzMmzJ2F4xKkg==}
 
-  '@vercel/next@4.12.6':
-    resolution: {integrity: sha512-mPd7veJooGiZBCh+OQH2N2LBHkSfKV+4febvNq7gqbgIUvtfW/mCA9QDc2Jlj8FhEbKuHYX2w3rwXU+vX/7u1w==}
+  '@vercel/next@4.13.0':
+    resolution: {integrity: sha512-DIfZucRjTihIUolR2v9MpugpazPoo02NkwA+Pk+/NmmSunf7XLSC42QG1OkSyzeGsXQ0t4nPAY6NQKYp9+NZnQ==}
 
   '@vercel/nft@0.30.1':
     resolution: {integrity: sha512-2mgJZv4AYBFkD/nJ4QmiX5Ymxi+AisPLPcS/KPXVqniyQNqKXX+wjieAbDXQP3HcogfEbpHoRMs49Cd4pfkk8g==}
@@ -1816,6 +1816,10 @@ packages:
 
   detect-libc@2.1.0:
     resolution: {integrity: sha512-vEtk+OcP7VBRtQZ1EJ3bdgzSfBjgnEalLTp5zjJrS+2Z1w2KZly4SBdac/WDU3hhsNAZ9E8SC96ME4Ey8MZ7cg==}
+    engines: {node: '>=8'}
+
+  detect-libc@2.1.1:
+    resolution: {integrity: sha512-ecqj/sy1jcK1uWrwpR67UhYrIFQ+5WlGxth34WquCbamhFA6hkkwiu37o6J5xCHdo1oixJRfVRw+ywV+Hq/0Aw==}
     engines: {node: '>=8'}
 
   detect-newline@3.1.0:
@@ -4037,8 +4041,8 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  vercel@48.1.4:
-    resolution: {integrity: sha512-LiTNWO/8dxvZPUoc4tE08U60v5jvLElUcLZYV4E393RSzsdc7rUE8tAajvOqPfgz8ZD9tuimBZZZDcy1CZUlTg==}
+  vercel@48.1.6:
+    resolution: {integrity: sha512-bcfocpaHfG0FHpTdY59Pfgm26cznI7+9KhGAnVkv4pU+oM6Ggc+w/nnsjuS5EY+/v3vI3f8cYamE6DDqQ3CpEQ==}
     engines: {node: '>= 18'}
     hasBin: true
 
@@ -4836,7 +4840,7 @@ snapshots:
   '@mapbox/node-pre-gyp@2.0.0':
     dependencies:
       consola: 3.4.2
-      detect-libc: 2.1.0
+      detect-libc: 2.1.1
       https-proxy-agent: 7.0.6
       node-fetch: 2.7.0
       nopt: 8.1.0
@@ -5379,7 +5383,7 @@ snapshots:
 
   '@vercel/error-utils@2.0.3': {}
 
-  '@vercel/express@0.0.20':
+  '@vercel/express@0.0.22':
     dependencies:
       '@vercel/nft': 0.30.1
       '@vercel/node': 5.3.24
@@ -5462,7 +5466,7 @@ snapshots:
       '@vercel/static-config': 3.1.2
       ts-morph: 12.0.0
 
-  '@vercel/next@4.12.6':
+  '@vercel/next@4.13.0':
     dependencies:
       '@vercel/nft': 0.30.1
     transitivePeerDependencies:
@@ -6088,6 +6092,8 @@ snapshots:
   depd@1.1.2: {}
 
   detect-libc@2.1.0: {}
+
+  detect-libc@2.1.1: {}
 
   detect-newline@3.1.0: {}
 
@@ -8725,18 +8731,18 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vercel@48.1.4:
+  vercel@48.1.6:
     dependencies:
       '@vercel/blob': 1.0.2
       '@vercel/build-utils': 12.1.0
       '@vercel/detect-agent': 1.0.0
-      '@vercel/express': 0.0.20
+      '@vercel/express': 0.0.22
       '@vercel/fun': 1.1.6
       '@vercel/go': 3.2.3
       '@vercel/h3': 0.1.2
       '@vercel/hono': 0.1.2
       '@vercel/hydrogen': 1.2.4
-      '@vercel/next': 4.12.6
+      '@vercel/next': 4.13.0
       '@vercel/node': 5.3.24
       '@vercel/python': 5.0.5
       '@vercel/redwood': 2.3.6
