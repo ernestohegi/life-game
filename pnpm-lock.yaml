@@ -31,7 +31,7 @@ importers:
         version: 14.2.5
       vercel:
         specifier: ^48.0.0
-        version: 48.1.7
+        version: 48.2.0
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.1.5
@@ -1274,8 +1274,8 @@ packages:
   '@vercel/node@5.3.24':
     resolution: {integrity: sha512-yk8pdoNbAbUO5zcmqyMPQ6kNvN896c/gJbsiGS5RvO9Gyehib5IxUOap6SnLSExH4tWAl1XTbOptfuysqZpYog==}
 
-  '@vercel/python@5.0.6':
-    resolution: {integrity: sha512-JWOpsoZu4XvOcKnPt7ytOiJOSeY74vWK68TLN87RJM/uHf9MnPVB9wiuj7EzB+jyZbeO7aY9Kycy6zW4tAdAwA==}
+  '@vercel/python@5.0.7':
+    resolution: {integrity: sha512-hswxQErqha3aLxPqdisPEN2WpN422OMbxK1O2DA8saPi1opRh1SjD9kFaPu74iY9H0lIjN+evQpBVeCFmn6n2g==}
 
   '@vercel/redwood@2.3.6':
     resolution: {integrity: sha512-Rm9xECWNIJOwtPsZ1/XcgyJj95KM7cWwNHYPMw8dzFAnLQGyapGe/YHEjxV6POI2RF8R0nFmU1t+45XBweYJJA==}
@@ -4031,8 +4031,8 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  vercel@48.1.7:
-    resolution: {integrity: sha512-X9FexPHqnaV5KpNejtRnEjmkD5iBXFuQ+H6ijNwA7l0HG7emorMxStQ+122knyXkImGRX5Xb/hWeGp+MZBr5dg==}
+  vercel@48.2.0:
+    resolution: {integrity: sha512-TwzIEm5pYB9J2ZwfZbiET3BTaV5eaW8zxvEmWyua6dTPo42TVz7IfQjume8wo6CrzZ2ru0W/ti/Ydsmf7g4jeA==}
     engines: {node: '>= 18'}
     hasBin: true
 
@@ -5519,7 +5519,7 @@ snapshots:
       - rollup
       - supports-color
 
-  '@vercel/python@5.0.6': {}
+  '@vercel/python@5.0.7': {}
 
   '@vercel/redwood@2.3.6':
     dependencies:
@@ -8710,7 +8710,7 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vercel@48.1.7:
+  vercel@48.2.0:
     dependencies:
       '@vercel/blob': 1.0.2
       '@vercel/build-utils': 12.1.0
@@ -8723,7 +8723,7 @@ snapshots:
       '@vercel/hydrogen': 1.2.4
       '@vercel/next': 4.13.0
       '@vercel/node': 5.3.24
-      '@vercel/python': 5.0.6
+      '@vercel/python': 5.0.7
       '@vercel/redwood': 2.3.6
       '@vercel/remix-builder': 5.4.12
       '@vercel/ruby': 2.2.1
