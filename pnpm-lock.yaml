@@ -31,7 +31,7 @@ importers:
         version: 14.2.5
       vercel:
         specifier: ^50.0.0
-        version: 50.1.4(rollup@4.53.3)(typescript@5.9.3)
+        version: 50.1.5(rollup@4.53.3)(typescript@5.9.3)
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.1.5
@@ -4733,8 +4733,8 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
 
-  vercel@50.1.4:
-    resolution: {integrity: sha512-zEXQ0ildXpPWqIgbL2zpQOpSee8cop5tvUYjfgrBKL2RuikdMmdyIdQX0blGOrVl+L+Jnl5enKHhv6m8XJGA9A==}
+  vercel@50.1.5:
+    resolution: {integrity: sha512-ELp+Hpdw2DEwg7RPUTND5voE1RJexND+9TBrwN+wMJ4WzTVK5dx8dAZILVytMnmWFVLs1EWrfRRr317KM/WZew==}
     engines: {node: '>= 18'}
     hasBin: true
 
@@ -10085,7 +10085,7 @@ snapshots:
 
   vary@1.1.2: {}
 
-  vercel@50.1.4(rollup@4.53.3)(typescript@5.9.3):
+  vercel@50.1.5(rollup@4.53.3)(typescript@5.9.3):
     dependencies:
       '@vercel/backends': 0.0.17(rollup@4.53.3)(typescript@5.9.3)
       '@vercel/blob': 1.0.2
