@@ -1,97 +1,143 @@
 import {
   ACTIVE_STATUS,
+  INACTIVE_STATUS,
   drawMatrix,
   iterateMatrix,
   getNextGeneration,
   createLogicalMatrix,
   drawCell,
-} from "./utils";
+} from './utils';
 
-let requestAnimationFrameId = "";
+let requestAnimationFrameId = '';
 let newRows = [];
 let rows = [];
 let globalDimensions = { rows: 0, columns: 0, cellSize: 0, scale: 0 };
 let canvasContext = {};
 let generationsCounter = 0;
 let generationsCallback;
-let activeColor = "#FC6336";
-let inactiveColor = "#5F4B8B";
+let activeColor = '#FC6336';
+let inactiveColor = '#5F4B8B';
+// Frame rate control variables
+let lastFrameTime = 0;
+let targetFPS = 30; // Default FPS
+let fpsInterval = 1000 / targetFPS;
+
+// Efficient array cloning helper
+const cloneGrid = (grid) => {
+  return grid.map((row) => [...row]);
+};
 
 const drawSurvivors = (rows) => {
-  const activeCells = [];
-  const inactiveCells = [];
-
-  iterateMatrix(rows, (rowIndex, cellIndex) => {
-    const coordinates = [rowIndex, cellIndex];
-
-    rows[rowIndex][cellIndex] === ACTIVE_STATUS
-      ? activeCells.push(coordinates)
-      : inactiveCells.push(coordinates);
-  });
-
-  const drawCellCallback = (cell) =>
-    drawCell(cell, globalDimensions, canvasContext);
-
-  canvasContext.fillStyle = activeColor;
-  activeCells.map(drawCellCallback, activeColor);
-
-  canvasContext.fillStyle = inactiveColor;
-  inactiveCells.map(drawCellCallback, inactiveColor);
+  try {
+    iterateMatrix(rows, (rowIndex, cellIndex) => {
+      const isActive = rows[rowIndex][cellIndex] === ACTIVE_STATUS;
+      canvasContext.fillStyle = isActive ? activeColor : inactiveColor;
+      drawCell([rowIndex, cellIndex], globalDimensions, canvasContext);
+    });
+  } catch (error) {
+    console.error('Error drawing survivors:', error);
+    stop(); // Stop animation if there's an error
+  }
 };
 
 const advanceOneGeneration = () => {
-  iterateMatrix(rows, (rowIndex, cellIndex) => {
-    getNextGeneration(rowIndex, cellIndex, globalDimensions, rows, newRows);
-  });
+  try {
+    iterateMatrix(rows, (rowIndex, cellIndex) => {
+      getNextGeneration(rowIndex, cellIndex, globalDimensions, rows, newRows);
+    });
 
-  rows = structuredClone(newRows);
+    rows = cloneGrid(newRows);
 
-  drawSurvivors(rows);
+    drawSurvivors(rows);
 
-  generationsCounter += 1;
+    generationsCounter += 1;
 
-  if (generationsCallback) generationsCallback(generationsCounter);
+    if (generationsCallback) generationsCallback(generationsCounter);
+  } catch (error) {
+    console.error('Error advancing generation:', error);
+    stop(); // Stop animation if there's an error
+  }
 };
 
-const runGrid = () => {
-  advanceOneGeneration();
-
+const runGrid = (timestamp) => {
   requestAnimationFrameId = requestAnimationFrame(runGrid);
+
+  // Control frame rate
+  const elapsed = timestamp - lastFrameTime;
+
+  if (elapsed > fpsInterval) {
+    // Adjust for timing drift
+    lastFrameTime = timestamp - (elapsed % fpsInterval);
+    advanceOneGeneration();
+  }
 };
 
 const resetGrid = ({ callback }) => {
-  const { rows: createdRows, newRows: createdNewRows } = createLogicalMatrix(
-    globalDimensions
-  );
+  try {
+    const { rows: createdRows, newRows: createdNewRows } = createLogicalMatrix(globalDimensions);
 
-  rows = createdRows;
-  newRows = createdNewRows;
+    rows = createdRows;
+    newRows = createdNewRows;
 
-  drawMatrix(globalDimensions, canvasContext, rows, inactiveColor);
+    drawMatrix(globalDimensions, canvasContext, rows, inactiveColor);
 
-  callback(0);
+    generationsCounter = 0;
+    callback(0);
+  } catch (error) {
+    console.error('Error resetting grid:', error);
+  }
 };
 
-const initialise = ({ dimensions, canvas, callback }) => {
-  globalDimensions = dimensions;
-  generationsCallback = callback;
+const initialise = ({ dimensions, canvas, callback, fps }) => {
+  try {
+    globalDimensions = dimensions;
+    generationsCallback = callback;
 
-  canvasContext = canvas.getContext("2d", { alpha: false });
-  canvasContext.scale(globalDimensions.scale, globalDimensions.scale);
+    // Set FPS if provided
+    if (fps && !isNaN(fps)) {
+      setFPS(fps);
+    }
 
-  resetGrid({ callback });
+    canvasContext = canvas.getContext('2d', { alpha: false });
+    canvasContext.scale(globalDimensions.scale, globalDimensions.scale);
+
+    resetGrid({ callback });
+    return true;
+  } catch (error) {
+    console.error('Error initializing game:', error);
+    return false;
+  }
 };
 
 const selectSurvivor = (selectedSurvivor) => {
-  const survivor = rows[selectedSurvivor[0]]?.[selectedSurvivor[1]] || [];
+  try {
+    const [rowIndex, cellIndex] = selectedSurvivor;
 
-  if (survivor.length === 0) return false;
+    // Check if coordinates are valid
+    if (
+      rowIndex < 0 ||
+      rowIndex >= globalDimensions.rows ||
+      cellIndex < 0 ||
+      cellIndex >= globalDimensions.columns
+    ) {
+      return false;
+    }
 
-  newRows[selectedSurvivor[0]][selectedSurvivor[1]] = ACTIVE_STATUS;
+    // Toggle the cell state
+    const newState = rows[rowIndex][cellIndex] === ACTIVE_STATUS ? INACTIVE_STATUS : ACTIVE_STATUS;
+    newRows[rowIndex][cellIndex] = newState;
 
-  rows = structuredClone(newRows);
+    // Update main grid
+    rows = cloneGrid(newRows);
 
-  drawSurvivors(rows);
+    // Redraw the grid
+    drawSurvivors(rows);
+
+    return true;
+  } catch (error) {
+    console.error('Error selecting survivor:', error);
+    return false;
+  }
 };
 
 const setColors = (colors) => {
@@ -99,9 +145,27 @@ const setColors = (colors) => {
   inactiveColor = colors.dead ?? inactiveColor;
 };
 
-const start = () => (requestAnimationFrameId = requestAnimationFrame(runGrid));
+// Control the animation frame rate
+const setFPS = (fps) => {
+  if (fps > 0) {
+    targetFPS = fps;
+    fpsInterval = 1000 / targetFPS;
+    return true;
+  }
+  return false;
+};
 
-const stop = () => cancelAnimationFrame(requestAnimationFrameId);
+const start = () => {
+  lastFrameTime = performance.now();
+  requestAnimationFrameId = requestAnimationFrame(runGrid);
+};
+
+const stop = () => {
+  if (requestAnimationFrameId) {
+    cancelAnimationFrame(requestAnimationFrameId);
+    requestAnimationFrameId = null;
+  }
+};
 
 const Life = {
   initialise,
@@ -109,6 +173,7 @@ const Life = {
   setColors,
   resetGrid,
   advanceOneGeneration,
+  setFPS,
   start,
   stop,
 };
